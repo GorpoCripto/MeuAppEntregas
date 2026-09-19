@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minhas Entregas</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f2f4f7;
+            color: #222;
+        }
+
+        .app {
+            max-width: 600px;
+            margin: auto;
+            min-height: 100vh;
+            background: white;
+        }
+
+        header {
+            background: #1f2937;
+            color: white;
+            padding: 22px 20px;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 24px;
+        }
+
+        header p {
+            margin: 6px 0 0;
+            color: #d1d5db;
+        }
+
+        .conteudo {
+            padding: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 7px;
+            font-weight: bold;
+        }
+
+        select,
+        input,
+        button {
+            width: 100%;
+            padding: 13px;
+            border-radius: 8px;
+            border: 1px solid #d1d5db;
+            font-size: 16px;
+        }
+
+        .campo {
+            margin-bottom: 18px;
+        }
+
+        button {
+            background: #2563eb;
+            color: white;
+            border: none;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #1d4ed8;
+        }
+
+        .resumo {
+            margin: 20px 0;
+            padding: 15px;
+            background: #eef2ff;
+            border-radius: 10px;
+        }
+
+        .empresa {
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 12px;
+        }
+
+        .empresa h3 {
+            margin: 0 0 7px;
+        }
+
+        .endereco {
+            color: #666;
+            margin-bottom: 12px;
+        }
+
+        .acoes {
+            display: flex;
+            gap: 8px;
+        }
+
+        .acoes button {
+            flex: 1;
+        }
+
+        .mapa {
+            background: #16a34a;
+        }
+
+        .mapa:hover {
+            background: #15803d;
+        }
+
+        .entregue {
+            background: #e5e7eb;
+            opacity: 0.65;
+        }
+
+        .entregue h3 {
+            text-decoration: line-through;
+        }
+
+        .status {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .vazio {
+            text-align: center;
+            color: #777;
+            padding: 30px 10px;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="app">
+
+    <header>
+        <h1>🚚 Minhas Entregas</h1>
+        <p>Organizador das suas entregas</p>
+    </header>
+
+    <div class="conteudo">
+
+        <div class="campo">
+            <label for="cidade">Cidade</label>
+
+            <select id="cidade">
+                <option value="Salto">Salto</option>
+                <option value="Itu">Itu</option>
+                <option value="Indaiatuba">Indaiatuba</option>
+            </select>
+        </div>
+
+        <div class="campo">
+            <label for="dia">Dia de entrega</label>
+
+            <select id="dia">
+                <option value="1">Dia 1</option>
+                <option value="2">Dia 2</option>
+                <option value="3">Dia 3</option>
+            </select>
+        </div>
+
+        <button id="adicionar">
+            + Cadastrar empresa
+        </button>
+
+        <div class="resumo">
+            <strong id="tituloRota">Salto — Dia 1</strong>
+            <br>
+            <span id="contador">0 empresas</span>
+        </div>
+
+        <div id="lista"></div>
+
+    </div>
+
+</div>
+
+<script>
+
+    let empresas = JSON.parse(
+        localStorage.getItem("empresas_entregas")
+    ) || [];
+
+    const cidade = document.getElementById("cidade");
+    const dia = document.getElementById("dia");
+    const lista = document.getElementById("lista");
+    const contador = document.getElementById("contador");
+    const tituloRota = document.getElementById("tituloRota");
+
+    function salvar() {
+        localStorage.setItem(
+            "empresas_entregas",
+            JSON.stringify(empresas)
+        );
+    }
+
+    function mostrarEmpresas() {
+
+        const cidadeSelecionada = cidade.value;
+        const diaSelecionado = dia.value;
+
+        const filtradas = empresas.filter(
+            empresa =>
+                empresa.cidade === cidadeSelecionada &&
+                empresa.dia === diaSelecionado
+        );
+
+        tituloRota.textContent =
+            cidadeSelecionada + " — Dia " + diaSelecionado;
+
+        contador.textContent =
+            filtradas.length +
+            (filtradas.length === 1 ? " empresa" : " empresas");
+
+        lista.innerHTML = "";
+
+        if (filtradas.length === 0) {
+
+            lista.innerHTML = `
+                <div class="vazio">
+                    Nenhuma empresa cadastrada neste dia.
+                    <br><br>
+                    Clique em "Cadastrar empresa" para começar.
+                </div>
+            `;
+
+            return;
+        }
+
+        filtradas.forEach(empresa => {
+
+            const div = document.createElement("div");
+
+            div.className =
+                "empresa " +
+                (empresa.entregue ? "entregue" : "");
+
+            div.innerHTML = `
+                <h3>🏢 ${empresa.nome}</h3>
+
+                <div class="endereco">
+                    📍 ${empresa.endereco}
+                </div>
+
+                <div class="status">
+                    ${empresa.entregue ? "✅ Entregue" : "⬜ Pendente"}
+                </div>
+
+                <div class="acoes">
+
+                    <button
+                        class="mapa"
+                        onclick="irParaEmpresa(${empresa.id})">
+                        🧭 Ir até lá
+                    </button>
+
+                    <button
+                        onclick="marcarEntregue(${empresa.id})">
+                        ${empresa.entregue ? "↩️ Desfazer" : "✅ Entregue"}
+                    </button>
+
+                </div>
+            `;
+
+            lista.appendChild(div);
+        });
+    }
+
+    document.getElementById("adicionar")
+        .addEventListener("click", function() {
+
+            const nome = prompt("Nome da empresa:");
+
+            if (!nome) {
+                return;
+            }
+
+            const endereco = prompt(
+                "Digite o endereço completo da empresa:"
+            );
+
+            if (!endereco) {
+                return;
+            }
+
+            empresas.push({
+                id: Date.now(),
+                nome: nome,
+                endereco: endereco,
+                cidade: cidade.value,
+                dia: dia.value,
+                entregue: false
+            });
+
+            salvar();
+            mostrarEmpresas();
+        });
+
+    function marcarEntregue(id) {
+
+        const empresa = empresas.find(
+            empresa => empresa.id === id
+        );
+
+        if (!empresa) {
+            return;
+        }
+
+        empresa.entregue = !empresa.entregue;
+
+        salvar();
+        mostrarEmpresas();
+    }
+
+    function irParaEmpresa(id) {
+
+        const empresa = empresas.find(
+            empresa => empresa.id === id
+        );
+
+        if (!empresa) {
+            return;
+        }
+
+        const destino =
+            encodeURIComponent(empresa.endereco);
+
+        window.open(
+            "https://www.google.com/maps/search/?api=1&query=" +
+            destino,
+            "_blank"
+        );
+    }
+
+    cidade.addEventListener("change", mostrarEmpresas);
+    dia.addEventListener("change", mostrarEmpresas);
+
+    mostrarEmpresas();
+
+</script>
+
+</body>
+</html>
