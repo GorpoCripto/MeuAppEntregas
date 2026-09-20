@@ -475,7 +475,7 @@ button:disabled{
 
         <select id="cidade"></select>
 
-        <button id="adicionarCidade">
+        <button id="adicionarCidade" class="soAdmin">
           + Cidade
         </button>
 
@@ -802,6 +802,8 @@ const jornaisFaltando =
 
 let usuarioAtual = null;
 
+let ehAdmin = false;
+
 let filtroAtual = "pendentes";
 
 
@@ -878,19 +880,19 @@ async function carregarCidades(){
 
   try{
 
-    const usuarioRef =
+    const cidadesRef =
       doc(
         db,
-        "usuarios",
-        usuarioAtual.uid
+        "configuracao",
+        "cidades"
       );
 
 
     const resultado =
-      await getDoc(usuarioRef);
+      await getDoc(cidadesRef);
 
 
-    let cidades;
+    let cidades = null;
 
 
     if(resultado.exists()){
@@ -899,28 +901,83 @@ async function carregarCidades(){
         resultado.data();
 
 
-      cidades =
-        Array.isArray(dados.cidades)
+      if(
+        Array.isArray(dados.lista)
         &&
-        dados.cidades.length > 0
-        ?
-        dados.cidades
-        :
-        [...cidadesIniciais];
+        dados.lista.length > 0
+      ){
 
-    }else{
+        cidades =
+          dados.lista;
+
+      }
+
+    }
+
+
+    if(!cidades){
 
       cidades =
         [...cidadesIniciais];
 
 
-      await setDoc(
-        usuarioRef,
-        {
-          cidades:cidades,
-          criadoEm:serverTimestamp()
+      /*
+        Primeira vez: o administrador cria a lista
+        compartilhada, aproveitando as cidades que
+        ele já tinha no cadastro pessoal.
+      */
+
+      if(ehAdmin){
+
+        try{
+
+          const usuarioResultado =
+            await getDoc(
+              doc(
+                db,
+                "usuarios",
+                usuarioAtual.uid
+              )
+            );
+
+
+          if(usuarioResultado.exists()){
+
+            const dadosUsuario =
+              usuarioResultado.data();
+
+
+            if(
+              Array.isArray(dadosUsuario.cidades)
+              &&
+              dadosUsuario.cidades.length > 0
+            ){
+
+              cidades =
+                [...dadosUsuario.cidades];
+
+            }
+
+          }
+
+
+          await setDoc(
+            cidadesRef,
+            {
+              lista:cidades
+            }
+          );
+
+        }catch(erroCriar){
+
+          console.warn(
+            "Não foi possível criar a lista compartilhada de cidades:",
+            erroCriar
+          );
+
         }
-      );
+
+      }
 
     }
 
@@ -1007,6 +1064,17 @@ adicionarCidade.addEventListener(
     }
 
 
+    if(!ehAdmin){
+
+      alert(
+        "Somente o administrador pode adicionar cidades."
+      );
+
+      return;
+
+    }
+
+
     const novaCidade =
       prompt(
         "Digite o nome da nova cidade:"
@@ -1025,19 +1093,20 @@ adicionarCidade.addEventListener(
 
     try{
 
-      const usuarioRef =
+      const cidadesRef =
         doc(
           db,
-          "usuarios",
-          usuarioAtual.uid
+          "configuracao",
+          "cidades"
         );
 
 
       const resultado =
-        await getDoc(usuarioRef);
+        await getDoc(cidadesRef);
 
 
-      let cidades;
+      let cidades =
+        [...cidadesIniciais];
 
 
       if(resultado.exists()){
@@ -1046,17 +1115,16 @@ adicionarCidade.addEventListener(
           resultado.data();
 
 
-        cidades =
-          Array.isArray(dados.cidades)
-          ?
-          [...dados.cidades]
-          :
-          [...cidadesIniciais];
+        if(
+          Array.isArray(dados.lista)
+          &&
+          dados.lista.length > 0
+        ){
 
-      }else{
+          cidades =
+            [...dados.lista];
 
-        cidades =
-          [...cidadesIniciais];
+        }
 
       }
 
@@ -1085,12 +1153,9 @@ adicionarCidade.addEventListener(
 
 
       await setDoc(
-        usuarioRef,
+        cidadesRef,
         {
-          cidades:cidades
-        },
-        {
-          merge:true
+          lista:cidades
         }
       );
 
@@ -3992,9 +4057,12 @@ onAuthStateChanged(
             ? resultado.data()
             : { tipo:"usuario" };
 
+        ehAdmin =
+          dadosUsuario.tipo === "admin";
+
         document.body.classList.toggle(
           "usuarioComum",
-          dadosUsuario.tipo !== "admin"
+          !ehAdmin
         );
 
 
@@ -4034,6 +4102,10 @@ onAuthStateChanged(
 
       usuarioAtual =
         null;
+
+
+      ehAdmin =
+        false;
 
 
       document.body.classList.add(
