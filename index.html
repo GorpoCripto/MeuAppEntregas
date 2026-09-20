@@ -3948,6 +3948,53 @@ onAuthStateChanged(
         usuario;
 
 
+      try{
+
+        const usuarioRef =
+          doc(
+            db,
+            "usuarios",
+            usuario.uid
+          );
+
+
+        const resultado =
+          await getDoc(
+            usuarioRef
+          );
+
+
+        // Se for o primeiro acesso,
+        // cria automaticamente como usuário comum
+        if(!resultado.exists()){
+
+          await setDoc(
+            usuarioRef,
+            {
+              tipo:"usuario",
+              criadoEm:serverTimestamp()
+            }
+          );
+
+        }
+
+
+      }catch(error){
+
+        console.error(
+          "Erro ao verificar usuário:",
+          error
+        );
+
+        alert(
+          "Não foi possível carregar o cadastro do usuário."
+        );
+
+        return;
+
+      }
+
+
       loginTela.style.display =
         "none";
 
@@ -3981,8 +4028,3 @@ onAuthStateChanged(
 
   }
 );
-
-</script>
-
-</body>
-</html>
