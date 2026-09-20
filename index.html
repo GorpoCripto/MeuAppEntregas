@@ -4,406 +4,409 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>STI — Rota do Jornal</title>
-
 <link rel="manifest" href="manifest.json">
 
 <style>
-
 *{
-box-sizing:border-box
+  box-sizing:border-box;
 }
 
 body{
-margin:0;
-font-family:Arial,sans-serif;
-background:#f2f4f7;
-color:#222
+  margin:0;
+  font-family:Arial,sans-serif;
+  background:#f2f4f7;
+  color:#222;
 }
 
 .app{
-max-width:600px;
-margin:auto;
-min-height:100vh;
-background:#fff;
-display:none
+  max-width:600px;
+  margin:auto;
+  min-height:100vh;
+  background:#fff;
+  display:none;
 }
 
 header{
-background:#1f2937;
-color:#fff;
-padding:22px 20px
+  background:#1f2937;
+  color:#fff;
+  padding:22px 20px;
 }
 
 header h1{
-margin:0;
-font-size:24px
+  margin:0;
+  font-size:24px;
 }
 
 header p{
-margin:6px 0 0;
-color:#d1d5db
+  margin:6px 0 0;
+  color:#d1d5db;
 }
 
 .conteudo{
-padding:20px
+  padding:20px;
 }
 
 label{
-display:block;
-margin-bottom:7px;
-font-weight:bold
+  display:block;
+  margin-bottom:7px;
+  font-weight:bold;
 }
 
 select,
 input,
 button{
-width:100%;
-padding:13px;
-border-radius:8px;
-border:1px solid #d1d5db;
-font-size:16px
+  width:100%;
+  padding:13px;
+  border-radius:8px;
+  border:1px solid #d1d5db;
+  font-size:16px;
 }
 
 button{
-background:#2563eb;
-color:#fff;
-border:none;
-font-weight:bold;
-cursor:pointer
+  background:#2563eb;
+  color:#fff;
+  border:none;
+  font-weight:bold;
+  cursor:pointer;
 }
 
 button:hover{
-background:#1d4ed8
+  background:#1d4ed8;
 }
 
 button:disabled{
-opacity:.6;
-cursor:not-allowed
+  opacity:.6;
+  cursor:not-allowed;
 }
 
 .campo{
-margin-bottom:18px
+  margin-bottom:18px;
 }
 
 .cidadeLinha{
-display:flex;
-gap:8px
+  display:flex;
+  gap:8px;
 }
 
 .cidadeLinha select{
-flex:1
+  flex:1;
 }
 
 .cidadeLinha button{
-width:auto;
-white-space:nowrap;
-background:#16a34a
+  width:auto;
+  white-space:nowrap;
+  background:#16a34a;
 }
 
 .resumo{
-margin:20px 0;
-padding:15px;
-background:#eef2ff;
-border-radius:10px
+  margin:20px 0;
+  padding:15px;
+  background:#eef2ff;
+  border-radius:10px;
 }
 
 .resumo strong{
-font-size:18px
+  font-size:18px;
 }
 
 .estatisticas{
-display:grid;
-grid-template-columns:1fr 1fr;
-gap:10px;
-margin-bottom:20px
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+  margin-bottom:20px;
 }
 
 .estatistica{
-padding:13px;
-border-radius:10px;
-background:#f8fafc;
-border:1px solid #e2e8f0
+  padding:13px;
+  border-radius:10px;
+  background:#f8fafc;
+  border:1px solid #e2e8f0;
 }
 
 .estatistica .titulo{
-font-size:13px;
-color:#64748b;
-margin-bottom:5px
+  font-size:13px;
+  color:#64748b;
+  margin-bottom:5px;
 }
 
 .estatistica .numero{
-font-size:21px;
-font-weight:bold
+  font-size:21px;
+  font-weight:bold;
 }
 
 .filtrosStatus{
-display:grid;
-grid-template-columns:1fr 1fr;
-gap:8px;
-margin-bottom:20px
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:8px;
+  margin-bottom:20px;
 }
 
 .filtroStatus{
-background:#e5e7eb;
-color:#374151
+  background:#e5e7eb;
+  color:#374151;
 }
 
 .filtroStatus.ativo{
-background:#2563eb;
-color:#fff
+  background:#2563eb;
+  color:#fff;
 }
 
 .badge{
-display:inline-block;
-margin-left:5px;
-background:rgba(255,255,255,.25);
-padding:2px 7px;
-border-radius:20px;
-font-size:13px
+  display:inline-block;
+  margin-left:5px;
+  background:rgba(255,255,255,.25);
+  padding:2px 7px;
+  border-radius:20px;
+  font-size:13px;
 }
 
 .filtroStatus:not(.ativo) .badge{
-background:#d1d5db
+  background:#d1d5db;
 }
 
 .gerenciarEntrega{
-grid-column:1 / -1
+  grid-column:1 / -1;
 }
 
 .gerenciarEntrega summary{
-list-style:none;
-background:#e5e7eb;
-color:#374151;
-padding:13px;
-border-radius:8px;
-font-weight:bold;
-cursor:pointer;
-text-align:center
+  list-style:none;
+  background:#e5e7eb;
+  color:#374151;
+  padding:13px;
+  border-radius:8px;
+  font-weight:bold;
+  cursor:pointer;
+  text-align:center;
 }
 
 .gerenciarEntrega summary::-webkit-details-marker{
-display:none
+  display:none;
 }
 
 .gerenciarEntrega[open] summary{
-background:#2563eb;
-color:#fff
+  background:#2563eb;
+  color:#fff;
 }
 
 .gerenciarEntrega button{
-margin-top:8px
+  margin-top:8px;
 }
 
 .empresa{
-border:1px solid #ddd;
-border-radius:10px;
-padding:15px;
-margin-bottom:12px
+  border:1px solid #ddd;
+  border-radius:10px;
+  padding:15px;
+  margin-bottom:12px;
 }
 
 .empresa h3{
-margin:0 0 7px
+  margin:0 0 7px;
 }
 
 .endereco{
-color:#666;
-margin-bottom:10px
+  color:#666;
+  margin-bottom:10px;
 }
 
 .informacoes{
-margin-bottom:10px;
-font-size:15px
+  margin-bottom:10px;
+  font-size:15px;
 }
 
 .informacoes div{
-margin-bottom:4px
+  margin-bottom:4px;
 }
 
 .status{
-font-weight:bold;
-margin-bottom:10px
+  font-weight:bold;
+  margin-bottom:10px;
 }
 
 .statusPendente{
-color:#dc2626
+  color:#dc2626;
 }
 
 .statusEntregue{
-color:#16a34a
+  color:#16a34a;
 }
 
 .acoes{
-display:grid;
-grid-template-columns:1fr 1fr;
-gap:8px
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:8px;
 }
 
 .mapa{
-background:#16a34a
+  background:#16a34a;
 }
 
 .mapa:hover{
-background:#15803d
+  background:#15803d;
 }
 
 .entregar{
-background:#2563eb
+  background:#2563eb;
 }
 
 .pendenteNovamente{
-background:#f59e0b
+  background:#f59e0b;
 }
 
 .editar{
-background:#2563eb
+  background:#2563eb;
 }
 
 .excluir{
-background:#dc2626
+  background:#dc2626;
 }
 
 .excluir:hover{
-background:#b91c1c
+  background:#b91c1c;
 }
 
 .carregando{
-text-align:center;
-padding:30px;
-color:#666
+  text-align:center;
+  padding:30px;
+  color:#666;
 }
 
 .vazio{
-text-align:center;
-color:#777;
-padding:30px 10px
+  text-align:center;
+  color:#777;
+  padding:30px 10px;
 }
 
 #loginTela{
-min-height:100vh;
-display:flex;
-align-items:center;
-justify-content:center;
-padding:20px
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
 }
 
 .loginCaixa{
-width:100%;
-max-width:400px;
-background:#fff;
-padding:30px;
-border-radius:14px;
-box-shadow:0 4px 20px rgba(0,0,0,.08);
-text-align:center
+  width:100%;
+  max-width:400px;
+  background:#fff;
+  padding:30px;
+  border-radius:14px;
+  box-shadow:0 4px 20px rgba(0,0,0,.08);
+  text-align:center;
 }
 
 .loginCaixa h1{
-margin-top:0
+  margin-top:0;
 }
 
 .loginCaixa p{
-color:#666;
-margin-bottom:25px
+  color:#666;
+  margin-bottom:25px;
 }
 
 #entrarGoogle{
-background:#2563eb
+  background:#2563eb;
 }
 
 #usuarioArea{
-margin-top:12px;
-font-size:14px;
-color:#d1d5db
+  margin-top:12px;
+  font-size:14px;
+  color:#d1d5db;
 }
 
 #sair{
-margin-top:10px;
-width:auto;
-padding:8px 14px;
-font-size:14px;
-background:#374151
+  margin-top:10px;
+  width:auto;
+  padding:8px 14px;
+  font-size:14px;
+  background:#374151;
 }
 
 #mensagem{
-margin-top:15px;
-padding:12px;
-border-radius:8px;
-display:none;
-background:#fee2e2;
-color:#991b1b;
-font-size:14px
+  margin-top:15px;
+  padding:12px;
+  border-radius:8px;
+  display:none;
+  background:#fee2e2;
+  color:#991b1b;
+  font-size:14px;
 }
 
 .fundoObsoletas{
-position:fixed;
-top:0;
-left:0;
-width:100%;
-height:100%;
-background:rgba(0,0,0,.65);
-z-index:9999;
-overflow-y:auto;
-padding:20px
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  background:rgba(0,0,0,.65);
+  z-index:9999;
+  overflow-y:auto;
+  padding:20px;
 }
 
 .caixaObsoletas{
-background:#fff;
-max-width:700px;
-margin:20px auto;
-border-radius:15px;
-padding:20px
+  background:#fff;
+  max-width:700px;
+  margin:20px auto;
+  border-radius:15px;
+  padding:20px;
 }
 
 .cardObsoleta{
-border:1px solid #ddd;
-border-radius:12px;
-padding:16px;
-margin-bottom:15px
+  border:1px solid #ddd;
+  border-radius:12px;
+  padding:16px;
+  margin-bottom:15px;
 }
 
 .cardObsoleta h3{
-margin-top:0
+  margin-top:0;
 }
 
 .botoesObsoleta{
-display:grid;
-grid-template-columns:1fr 1fr;
-gap:10px;
-margin-top:15px
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+  margin-top:15px;
 }
 
 .restaurar{
-background:#16a34a
+  background:#16a34a;
 }
 
 .excluirDefinitivo{
-background:#dc2626
+  background:#dc2626;
 }
 
 .fecharObsoletas{
-background:#555;
-margin-bottom:20px
+  background:#555;
+  margin-bottom:20px;
 }
 
 .progressoRota{
-background:#eef2ff;
-padding:15px;
-border-radius:10px;
-text-align:center;
-margin-bottom:15px
+  background:#eef2ff;
+  padding:15px;
+  border-radius:10px;
+  text-align:center;
+  margin-bottom:15px;
+}
+
+.distanciaRota{
+  font-size:15px;
+  color:#374151;
+  margin-top:8px;
 }
 
 @media(max-width:500px){
 
-.filtrosStatus{
-grid-template-columns:1fr
-}
+  .filtrosStatus{
+    grid-template-columns:1fr;
+  }
 
-.acoes{
-grid-template-columns:1fr 1fr
-}
+  .acoes{
+    grid-template-columns:1fr 1fr;
+  }
 
 }
-
 </style>
 </head>
 
@@ -411,1107 +414,1225 @@ grid-template-columns:1fr 1fr
 
 <div id="loginTela">
 
-<div class="loginCaixa">
+  <div class="loginCaixa">
 
-<h1>📰 STI — Rota do Jornal</h1>
+    <h1>📰 STI — Rota do Jornal</h1>
 
-<p>
-Entre com sua conta Google para acessar suas entregas.
-</p>
+    <p>
+      Entre com sua conta Google para acessar suas entregas.
+    </p>
 
-<button id="entrarGoogle">
-🔐 Entrar com Google
-</button>
+    <button id="entrarGoogle">
+      🔐 Entrar com Google
+    </button>
 
-<div id="mensagem"></div>
+    <div id="mensagem"></div>
 
-</div>
+  </div>
 
 </div>
 
 
 <div class="app">
 
-<header>
+  <header>
 
-<h1>📰 STI — Rota do Jornal</h1>
+    <h1>📰 STI — Rota do Jornal</h1>
 
-<p>
-Organizador das suas entregas
-</p>
+    <p>
+      Organizador das suas entregas
+    </p>
 
-<div id="usuarioArea">
+    <div id="usuarioArea">
 
-<span id="usuarioEmail"></span>
+      <span id="usuarioEmail"></span>
 
-<br>
+      <br>
 
-<button id="sair">
-Sair
-</button>
+      <button id="sair">
+        Sair
+      </button>
 
-</div>
+    </div>
 
-</header>
+  </header>
 
 
-<div class="conteudo">
+  <div class="conteudo">
 
-<div class="campo">
+    <div class="campo">
 
-<label for="cidade">
-Cidade
-</label>
+      <label for="cidade">
+        Cidade
+      </label>
 
-<div class="cidadeLinha">
+      <div class="cidadeLinha">
 
-<select id="cidade"></select>
+        <select id="cidade"></select>
 
-<button id="adicionarCidade">
-+ Cidade
-</button>
+        <button id="adicionarCidade">
+          + Cidade
+        </button>
 
-</div>
+      </div>
 
-</div>
+    </div>
 
 
-<button id="adicionar">
-+ Cadastrar empresa
-</button>
+    <button id="adicionar">
+      + Cadastrar empresa
+    </button>
 
 
-<div class="resumo">
+    <div class="resumo">
 
-<strong id="tituloRota">
-Salto
-</strong>
+      <strong id="tituloRota">
+        Salto
+      </strong>
 
-<br>
+      <br>
 
-<span id="contador">
-0 empresas
-</span>
+      <span id="contador">
+        0 empresas
+      </span>
 
-</div>
+    </div>
 
 
-<div class="estatisticas">
+    <div class="estatisticas">
 
-<div class="estatistica">
+      <div class="estatistica">
 
-<div class="titulo">
-🏢 Total de empresas
-</div>
+        <div class="titulo">
+          🏢 Total de empresas
+        </div>
 
-<div class="numero" id="totalEmpresas">
-0
-</div>
+        <div class="numero" id="totalEmpresas">
+          0
+        </div>
 
-</div>
+      </div>
 
 
-<div class="estatistica">
+      <div class="estatistica">
 
-<div class="titulo">
-👥 Total funcionários
-</div>
+        <div class="titulo">
+          👥 Total funcionários
+        </div>
 
-<div class="numero" id="totalFuncionarios">
-0
-</div>
+        <div class="numero" id="totalFuncionarios">
+          0
+        </div>
 
-</div>
+      </div>
 
 
-<div class="estatistica">
+      <div class="estatistica">
 
-<div class="titulo">
-📰 Jornais entregues
-</div>
+        <div class="titulo">
+          📰 Jornais entregues
+        </div>
 
-<div class="numero" id="jornaisEntregues">
-0
-</div>
+        <div class="numero" id="jornaisEntregues">
+          0
+        </div>
 
-</div>
+      </div>
 
 
-<div class="estatistica">
+      <div class="estatistica">
 
-<div class="titulo">
-📰 Jornais faltando
-</div>
+        <div class="titulo">
+          📰 Jornais faltando
+        </div>
 
-<div class="numero" id="jornaisFaltando">
-0
-</div>
+        <div class="numero" id="jornaisFaltando">
+          0
+        </div>
 
-</div>
+      </div>
 
-</div>
+    </div>
 
 
-<div class="filtrosStatus">
+    <div class="filtrosStatus">
 
-<button id="btnPendentes" class="filtroStatus ativo">
+      <button id="btnPendentes" class="filtroStatus ativo">
 
-🔴 Pendentes
+        🔴 Pendentes
 
-<span id="badgePendentes" class="badge">
-0
-</span>
+        <span id="badgePendentes" class="badge">
+          0
+        </span>
 
-</button>
+      </button>
 
 
-<button id="btnEntregues" class="filtroStatus">
+      <button id="btnEntregues" class="filtroStatus">
 
-🟢 Entregues
+        🟢 Entregues
 
-<span id="badgeEntregues" class="badge">
-0
-</span>
+        <span id="badgeEntregues" class="badge">
+          0
+        </span>
 
-</button>
+      </button>
 
 
-<button id="btnProximaEntrega" class="filtroStatus">
+      <button id="btnProximaEntrega" class="filtroStatus">
 
-🗺️ Próxima entrega
+        🗺️ Próxima entrega
 
-</button>
+      </button>
 
 
-<button id="btnObsoletas" class="filtroStatus">
+      <button id="btnObsoletas" class="filtroStatus">
 
-🚫 Obsoletas
+        🚫 Obsoletas
 
-</button>
+      </button>
 
 
-<details class="gerenciarEntrega">
+      <details class="gerenciarEntrega">
 
-<summary>
-⚙️ Gerenciar entrega
-</summary>
+        <summary>
+          ⚙️ Gerenciar entrega
+        </summary>
 
-<button id="novaEntrega" class="filtroStatus">
+        <button id="novaEntrega" class="filtroStatus">
 
-🔄 Iniciar nova entrega
+          🔄 Iniciar nova entrega
 
-</button>
+        </button>
 
-</details>
+      </details>
 
-</div>
+    </div>
 
 
-<div id="lista">
+    <div id="lista">
 
-<div class="carregando">
-Carregando empresas...
-</div>
+      <div class="carregando">
+        Carregando empresas...
+      </div>
 
-</div>
+    </div>
 
-</div>
+  </div>
 
 </div>
 
 
 <script type="module">
 
-
 import {
-initializeApp
+  initializeApp
 }
 from
 "https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js";
 
 
 import {
-getAuth,
-GoogleAuthProvider,
-signInWithPopup,
-onAuthStateChanged,
-signOut
+  getAuth,
+  GoogleAuthProvider,
+  signInWithPopup,
+  onAuthStateChanged,
+  signOut
 }
 from
 "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
 
 
 import {
-getFirestore,
-collection,
-addDoc,
-getDocs,
-updateDoc,
-deleteDoc,
-doc,
-query,
-where,
-serverTimestamp,
-getDoc,
-setDoc
+  getFirestore,
+  collection,
+  addDoc,
+  getDocs,
+  updateDoc,
+  deleteDoc,
+  doc,
+  query,
+  where,
+  serverTimestamp,
+  getDoc,
+  setDoc
 }
 from
 "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
 
 
-const firebaseConfig={
+const firebaseConfig = {
 
-apiKey:
-"AIzaSyCD_pBQlMyrPucvK7ruSRM0wFiKmRHkrlc",
+  apiKey:
+    "AIzaSyCD_pBQlMyrPucvK7ruSRM0wFiKmRHkrlc",
 
-authDomain:
-"meuappentregas-8829f.firebaseapp.com",
+  authDomain:
+    "meuappentregas-8829f.firebaseapp.com",
 
-projectId:
-"meuappentregas-8829f",
+  projectId:
+    "meuappentregas-8829f",
 
-storageBucket:
-"meuappentregas-8829f.firebasestorage.app",
+  storageBucket:
+    "meuappentregas-8829f.firebasestorage.app",
 
-messagingSenderId:
-"812561892421",
+  messagingSenderId:
+    "812561892421",
 
-appId:
-"1:812561892421:web:ffc5c628a15a36c8384f2c"
+  appId:
+    "1:812561892421:web:ffc5c628a15a36c8384f2c"
 
 };
 
 
-const app=initializeApp(firebaseConfig);
-
-const auth=getAuth(app);
-
-const provider=new GoogleAuthProvider();
-
-const db=getFirestore(app);
+const app =
+  initializeApp(firebaseConfig);
 
 
-const loginTela=
-document.getElementById("loginTela");
-
-const entrarGoogle=
-document.getElementById("entrarGoogle");
-
-const mensagem=
-document.getElementById("mensagem");
-
-const appTela=
-document.querySelector(".app");
-
-const usuarioEmail=
-document.getElementById("usuarioEmail");
-
-const sair=
-document.getElementById("sair");
-
-const cidade=
-document.getElementById("cidade");
-
-const lista=
-document.getElementById("lista");
-
-const contador=
-document.getElementById("contador");
-
-const tituloRota=
-document.getElementById("tituloRota");
-
-const adicionar=
-document.getElementById("adicionar");
-
-const adicionarCidade=
-document.getElementById("adicionarCidade");
-
-const btnPendentes=
-document.getElementById("btnPendentes");
-
-const btnEntregues=
-document.getElementById("btnEntregues");
-
-const novaEntrega=
-document.getElementById("novaEntrega");
-
-const btnProximaEntrega=
-document.getElementById("btnProximaEntrega");
-
-const btnObsoletas=
-document.getElementById("btnObsoletas");
-
-const badgePendentes=
-document.getElementById("badgePendentes");
-
-const badgeEntregues=
-document.getElementById("badgeEntregues");
-
-const totalEmpresas=
-document.getElementById("totalEmpresas");
-
-const totalFuncionarios=
-document.getElementById("totalFuncionarios");
-
-const jornaisEntregues=
-document.getElementById("jornaisEntregues");
-
-const jornaisFaltando=
-document.getElementById("jornaisFaltando");
+const auth =
+  getAuth(app);
 
 
-let usuarioAtual=null;
+const provider =
+  new GoogleAuthProvider();
 
-let filtroAtual="pendentes";
+
+const db =
+  getFirestore(app);
 
 
-const cidadesIniciais=[
-"Salto",
-"Itu",
-"Indaiatuba"
+const loginTela =
+  document.getElementById("loginTela");
+
+
+const entrarGoogle =
+  document.getElementById("entrarGoogle");
+
+
+const mensagem =
+  document.getElementById("mensagem");
+
+
+const appTela =
+  document.querySelector(".app");
+
+
+const usuarioEmail =
+  document.getElementById("usuarioEmail");
+
+
+const sair =
+  document.getElementById("sair");
+
+
+const cidade =
+  document.getElementById("cidade");
+
+
+const lista =
+  document.getElementById("lista");
+
+
+const contador =
+  document.getElementById("contador");
+
+
+const tituloRota =
+  document.getElementById("tituloRota");
+
+
+const adicionar =
+  document.getElementById("adicionar");
+
+
+const adicionarCidade =
+  document.getElementById("adicionarCidade");
+
+
+const btnPendentes =
+  document.getElementById("btnPendentes");
+
+
+const btnEntregues =
+  document.getElementById("btnEntregues");
+
+
+const novaEntrega =
+  document.getElementById("novaEntrega");
+
+
+const btnProximaEntrega =
+  document.getElementById("btnProximaEntrega");
+
+
+const btnObsoletas =
+  document.getElementById("btnObsoletas");
+
+
+const badgePendentes =
+  document.getElementById("badgePendentes");
+
+
+const badgeEntregues =
+  document.getElementById("badgeEntregues");
+
+
+const totalEmpresas =
+  document.getElementById("totalEmpresas");
+
+
+const totalFuncionarios =
+  document.getElementById("totalFuncionarios");
+
+
+const jornaisEntregues =
+  document.getElementById("jornaisEntregues");
+
+
+const jornaisFaltando =
+  document.getElementById("jornaisFaltando");
+
+
+let usuarioAtual = null;
+
+let filtroAtual = "pendentes";
+
+
+const cidadesIniciais = [
+  "Salto",
+  "Itu",
+  "Indaiatuba"
 ];
 
 
 function mostrarMensagem(texto){
 
-mensagem.textContent=texto;
+  mensagem.textContent = texto;
 
-mensagem.style.display="block";
+  mensagem.style.display = "block";
 
 }
 
 
 entrarGoogle.addEventListener(
-"click",
-async()=>{
+  "click",
+  async()=>{
 
-mensagem.style.display="none";
+    mensagem.style.display = "none";
 
-try{
+    try{
 
-await signInWithPopup(
-auth,
-provider
+      await signInWithPopup(
+        auth,
+        provider
+      );
+
+    }catch(error){
+
+      console.error(
+        "Erro no login:",
+        error
+      );
+
+      mostrarMensagem(
+        "Não foi possível entrar com Google."
+      );
+
+    }
+
+  }
 );
-
-}catch(error){
-
-console.error(
-"Erro no login:",
-error
-);
-
-mostrarMensagem(
-"Não foi possível entrar com Google."
-);
-
-}
-
-});
 
 
 sair.addEventListener(
-"click",
-async()=>{
+  "click",
+  async()=>{
 
-try{
+    try{
 
-await signOut(auth);
+      await signOut(auth);
 
-}catch(error){
+    }catch(error){
 
-console.error(
-"Erro ao sair:",
-error
+      console.error(
+        "Erro ao sair:",
+        error
+      );
+
+    }
+
+  }
 );
-
-}
-
-});
 
 
 async function carregarCidades(){
 
-if(!usuarioAtual)return;
+  if(!usuarioAtual)return;
 
-try{
+  try{
 
-const usuarioRef=doc(
-db,
-"usuarios",
-usuarioAtual.uid
-);
-
-const resultado=
-await getDoc(usuarioRef);
-
-let cidades;
-
-if(resultado.exists()){
-
-const dados=resultado.data();
-
-cidades=
-Array.isArray(dados.cidades)
-&&
-dados.cidades.length>0
-?
-dados.cidades
-:
-[...cidadesIniciais];
-
-}else{
-
-cidades=[...cidadesIniciais];
-
-await setDoc(
-usuarioRef,
-{
-cidades:cidades,
-criadoEm:serverTimestamp()
-}
-);
-
-}
+    const usuarioRef =
+      doc(
+        db,
+        "usuarios",
+        usuarioAtual.uid
+      );
 
 
-cidade.innerHTML="";
+    const resultado =
+      await getDoc(usuarioRef);
 
 
-cidades.forEach(
-nomeCidade=>{
-
-const option=
-document.createElement("option");
-
-option.value=nomeCidade;
-
-option.textContent=
-nomeCidade;
-
-cidade.appendChild(option);
-
-});
+    let cidades;
 
 
-if(cidade.options.length>0){
+    if(resultado.exists()){
 
-cidade.selectedIndex=0;
+      const dados =
+        resultado.data();
 
-}
+
+      cidades =
+        Array.isArray(dados.cidades)
+        &&
+        dados.cidades.length > 0
+        ?
+        dados.cidades
+        :
+        [...cidadesIniciais];
+
+    }else{
+
+      cidades =
+        [...cidadesIniciais];
 
 
-atualizarTitulo();
+      await setDoc(
+        usuarioRef,
+        {
+          cidades:cidades,
+          criadoEm:serverTimestamp()
+        }
+      );
 
-await mostrarEmpresas();
+    }
 
-}catch(error){
 
-console.error(
-"Erro ao carregar cidades:",
-error
-);
+    cidade.innerHTML = "";
 
-lista.innerHTML=`
 
-<div class="vazio">
+    cidades.forEach(
+      nomeCidade=>{
 
-⚠️ Não foi possível carregar as cidades.
+        const option =
+          document.createElement("option");
 
-</div>
 
-`;
+        option.value =
+          nomeCidade;
 
-}
+
+        option.textContent =
+          nomeCidade;
+
+
+        cidade.appendChild(option);
+
+      }
+    );
+
+
+    if(cidade.options.length > 0){
+
+      cidade.selectedIndex = 0;
+
+    }
+
+
+    atualizarTitulo();
+
+    await mostrarEmpresas();
+
+
+  }catch(error){
+
+    console.error(
+      "Erro ao carregar cidades:",
+      error
+    );
+
+
+    lista.innerHTML = `
+
+      <div class="vazio">
+
+        ⚠️ Não foi possível carregar as cidades.
+
+      </div>
+
+    `;
+
+  }
 
 }
 
 
 function atualizarTitulo(){
 
-tituloRota.textContent=
-cidade.value;
+  tituloRota.textContent =
+    cidade.value;
 
 }
 
 
 adicionarCidade.addEventListener(
-"click",
-async()=>{
+  "click",
+  async()=>{
 
-if(!usuarioAtual){
+    if(!usuarioAtual){
 
-alert(
-"Você precisa entrar primeiro."
+      alert(
+        "Você precisa entrar primeiro."
+      );
+
+      return;
+
+    }
+
+
+    const novaCidade =
+      prompt(
+        "Digite o nome da nova cidade:"
+      );
+
+
+    if(!novaCidade)return;
+
+
+    const nome =
+      novaCidade.trim();
+
+
+    if(!nome)return;
+
+
+    try{
+
+      const usuarioRef =
+        doc(
+          db,
+          "usuarios",
+          usuarioAtual.uid
+        );
+
+
+      const resultado =
+        await getDoc(usuarioRef);
+
+
+      let cidades;
+
+
+      if(resultado.exists()){
+
+        const dados =
+          resultado.data();
+
+
+        cidades =
+          Array.isArray(dados.cidades)
+          ?
+          [...dados.cidades]
+          :
+          [...cidadesIniciais];
+
+      }else{
+
+        cidades =
+          [...cidadesIniciais];
+
+      }
+
+
+      const existe =
+        cidades.some(
+          item=>
+            item.toLowerCase()
+            ===
+            nome.toLowerCase()
+        );
+
+
+      if(existe){
+
+        alert(
+          "Essa cidade já está cadastrada."
+        );
+
+        return;
+
+      }
+
+
+      cidades.push(nome);
+
+
+      await setDoc(
+        usuarioRef,
+        {
+          cidades:cidades
+        },
+        {
+          merge:true
+        }
+      );
+
+
+      await carregarCidades();
+
+
+      cidade.value =
+        nome;
+
+
+      atualizarTitulo();
+
+
+      filtroAtual =
+        "pendentes";
+
+
+      atualizarBotoesFiltro();
+
+
+      await mostrarEmpresas();
+
+
+    }catch(error){
+
+      console.error(
+        "Erro ao adicionar cidade:",
+        error
+      );
+
+
+      alert(
+        "Não foi possível salvar a nova cidade."
+      );
+
+    }
+
+  }
 );
-
-return;
-
-}
-
-
-const novaCidade=
-prompt(
-"Digite o nome da nova cidade:"
-);
-
-if(!novaCidade)return;
-
-
-const nome=novaCidade.trim();
-
-if(!nome)return;
-
-
-try{
-
-const usuarioRef=doc(
-db,
-"usuarios",
-usuarioAtual.uid
-);
-
-const resultado=
-await getDoc(usuarioRef);
-
-let cidades;
-
-if(resultado.exists()){
-
-const dados=resultado.data();
-
-cidades=
-Array.isArray(dados.cidades)
-?
-[...dados.cidades]
-:
-[...cidadesIniciais];
-
-}else{
-
-cidades=[...cidadesIniciais];
-
-}
-
-
-const existe=
-cidades.some(
-item=>
-item.toLowerCase()
-===
-nome.toLowerCase()
-);
-
-
-if(existe){
-
-alert(
-"Essa cidade já está cadastrada."
-);
-
-return;
-
-}
-
-
-cidades.push(nome);
-
-
-await setDoc(
-usuarioRef,
-{
-cidades:cidades
-},
-{
-merge:true
-}
-);
-
-
-await carregarCidades();
-
-
-cidade.value=nome;
-
-
-atualizarTitulo();
-
-
-filtroAtual="pendentes";
-
-
-atualizarBotoesFiltro();
-
-
-await mostrarEmpresas();
-
-
-}catch(error){
-
-console.error(
-"Erro ao adicionar cidade:",
-error
-);
-
-alert(
-"Não foi possível salvar a nova cidade."
-);
-
-}
-
-});
 
 
 async function buscarEmpresas(){
 
-if(!usuarioAtual)return[];
+  if(!usuarioAtual)return[];
 
 
-const consulta=query(
-collection(db,"empresas"),
-where(
-"uid",
-"==",
-usuarioAtual.uid
-)
-);
+  const consulta =
+    query(
+      collection(
+        db,
+        "empresas"
+      ),
+      where(
+        "uid",
+        "==",
+        usuarioAtual.uid
+      )
+    );
 
 
-const resultado=
-await getDocs(consulta);
+  const resultado =
+    await getDocs(consulta);
 
 
-const empresas=[];
+  const empresas = [];
 
 
-resultado.forEach(
-documento=>{
+  resultado.forEach(
+    documento=>{
 
-const dados=documento.data();
-
-
-if(dados.cidade!==cidade.value)
-return;
+      const dados =
+        documento.data();
 
 
-if(dados.obsoleta===true)
-return;
+      if(
+        dados.cidade !==
+        cidade.value
+      ){
+
+        return;
+
+      }
 
 
-empresas.push({
+      if(
+        dados.obsoleta === true
+      ){
 
-id:documento.id,
+        return;
 
-...dados,
-
-funcionarios:
-Number(dados.funcionarios)||0,
-
-jornais:
-Number(dados.jornais)||0
-
-});
-
-});
+      }
 
 
-return empresas;
+      empresas.push({
+
+        id:
+          documento.id,
+
+        ...dados,
+
+        funcionarios:
+          Number(dados.funcionarios)||0,
+
+        jornais:
+          Number(dados.jornais)||0
+
+      });
+
+    }
+  );
+
+
+  return empresas;
 
 }
 
 
 async function mostrarEmpresas(){
 
-if(!usuarioAtual)return;
+  if(!usuarioAtual)return;
 
 
-lista.innerHTML=`
+  lista.innerHTML = `
 
-<div class="carregando">
+    <div class="carregando">
+      Carregando empresas...
+    </div>
 
-Carregando empresas...
-
-</div>
-
-`;
+  `;
 
 
-try{
+  try{
 
-const empresas=
-await buscarEmpresas();
-
-
-const pendentes=
-empresas.filter(
-empresa=>
-empresa.entregue!==true
-);
+    const empresas =
+      await buscarEmpresas();
 
 
-const entregues=
-empresas.filter(
-empresa=>
-empresa.entregue===true
-);
+    const pendentes =
+      empresas.filter(
+        empresa=>
+          empresa.entregue !== true
+      );
 
 
-let funcionariosTotal=0;
-
-let jornaisEntreguesTotal=0;
-
-let jornaisPendentesTotal=0;
-
-
-empresas.forEach(
-empresa=>{
-
-funcionariosTotal+=
-empresa.funcionarios;
+    const entregues =
+      empresas.filter(
+        empresa=>
+          empresa.entregue === true
+      );
 
 
-if(empresa.entregue===true){
+    let funcionariosTotal = 0;
 
-jornaisEntreguesTotal+=
-empresa.jornais;
+    let jornaisEntreguesTotal = 0;
 
-}else{
+    let jornaisPendentesTotal = 0;
 
-jornaisPendentesTotal+=
-empresa.jornais;
+
+    empresas.forEach(
+      empresa=>{
+
+        funcionariosTotal +=
+          empresa.funcionarios;
+
+
+        if(
+          empresa.entregue === true
+        ){
+
+          jornaisEntreguesTotal +=
+            empresa.jornais;
+
+        }else{
+
+          jornaisPendentesTotal +=
+            empresa.jornais;
+
+        }
+
+      }
+    );
+
+
+    totalEmpresas.textContent =
+      empresas.length;
+
+
+    totalFuncionarios.textContent =
+      funcionariosTotal;
+
+
+    jornaisEntregues.textContent =
+      jornaisEntreguesTotal;
+
+
+    jornaisFaltando.textContent =
+      jornaisPendentesTotal;
+
+
+    badgePendentes.textContent =
+      pendentes.length;
+
+
+    badgeEntregues.textContent =
+      entregues.length;
+
+
+    contador.textContent =
+      filtroAtual === "pendentes"
+      ?
+      `${pendentes.length} empresas faltando`
+      :
+      `${entregues.length} empresas entregues`;
+
+
+    const empresasMostrar =
+      filtroAtual === "pendentes"
+      ?
+      pendentes
+      :
+      entregues;
+
+
+    lista.innerHTML = "";
+
+
+    if(empresasMostrar.length === 0){
+
+      lista.innerHTML = `
+
+        <div class="vazio">
+
+          ${
+            filtroAtual === "pendentes"
+            ?
+            "📭 Nenhuma empresa pendente."
+            :
+            "📭 Nenhuma empresa entregue ainda."
+          }
+
+        </div>
+
+      `;
+
+      return;
+
+    }
+
+
+    empresasMostrar.forEach(
+      empresa=>{
+
+        const div =
+          document.createElement("div");
+
+
+        div.className =
+          "empresa";
+
+
+        const titulo =
+          document.createElement("h3");
+
+
+        titulo.textContent =
+          "🏢 " + empresa.nome;
+
+
+        const endereco =
+          document.createElement("div");
+
+
+        endereco.className =
+          "endereco";
+
+
+        endereco.textContent =
+          "📍 " + empresa.endereco;
+
+
+        const informacoes =
+          document.createElement("div");
+
+
+        informacoes.className =
+          "informacoes";
+
+
+        const funcionariosTexto =
+          document.createElement("div");
+
+
+        funcionariosTexto.textContent =
+          "👥 " +
+          empresa.funcionarios +
+          " funcionários";
+
+
+        const jornaisTexto =
+          document.createElement("div");
+
+
+        jornaisTexto.textContent =
+          "📰 " +
+          empresa.jornais +
+          " jornais";
+
+
+        informacoes.appendChild(
+          funcionariosTexto
+        );
+
+
+        informacoes.appendChild(
+          jornaisTexto
+        );
+
+
+        const status =
+          document.createElement("div");
+
+
+        status.className =
+          "status";
+
+
+        if(
+          empresa.entregue === true
+        ){
+
+          status.classList.add(
+            "statusEntregue"
+          );
+
+
+          status.textContent =
+            "✅ Entregue";
+
+        }else{
+
+          status.classList.add(
+            "statusPendente"
+          );
+
+
+          status.textContent =
+            "⬜ Pendente";
+
+        }
+
+
+        const acoes =
+          document.createElement("div");
+
+
+        acoes.className =
+          "acoes";
+
+
+        const mapa =
+          document.createElement("button");
+
+
+        mapa.className =
+          "mapa";
+
+
+        mapa.textContent =
+          "🧭 Ir até lá";
+
+
+        mapa.addEventListener(
+          "click",
+          ()=>{
+
+            const destino =
+              encodeURIComponent(
+                empresa.endereco +
+                ", " +
+                empresa.cidade
+              );
+
+
+            window.open(
+              "https://www.google.com/maps/dir/?api=1" +
+              "&destination=" +
+              destino +
+              "&travelmode=driving",
+              "_blank"
+            );
+
+          }
+        );
+
+
+        const botaoEntrega =
+          document.createElement("button");
+
+
+        if(
+          empresa.entregue === true
+        ){
+
+          botaoEntrega.className =
+            "pendenteNovamente";
+
+
+          botaoEntrega.textContent =
+            "↩️ Pendente";
+
+
+          botaoEntrega.addEventListener(
+            "click",
+            async()=>{
+
+              await alterarEntrega(
+                empresa.id,
+                false
+              );
+
+            }
+          );
+
+        }else{
+
+          botaoEntrega.className =
+            "entregar";
+
+
+          botaoEntrega.textContent =
+            "✅ Entregue";
+
+
+          botaoEntrega.addEventListener(
+            "click",
+            async()=>{
+
+              await alterarEntrega(
+                empresa.id,
+                true
+              );
+
+            }
+          );
+
+        }
+
+
+        const botaoEditar =
+          document.createElement("button");
+
+
+        botaoEditar.className =
+          "editar";
+
+
+        botaoEditar.textContent =
+          "✏️ Editar";
+
+
+        botaoEditar.addEventListener(
+          "click",
+          async()=>{
+
+            await editarEmpresa(
+              empresa
+            );
+
+          }
+        );
+
+
+        const botaoObsoletar =
+          document.createElement("button");
+
+
+        botaoObsoletar.className =
+          "excluir";
+
+
+        botaoObsoletar.textContent =
+          "🚫 Obsoletar";
+
+
+        botaoObsoletar.addEventListener(
+          "click",
+          async()=>{
+
+            await obsoletarEmpresa(
+              empresa.id
+            );
+
+          }
+        );
+
+
+        acoes.appendChild(mapa);
+
+        acoes.appendChild(
+          botaoEntrega
+        );
+
+        acoes.appendChild(
+          botaoEditar
+        );
+
+        acoes.appendChild(
+          botaoObsoletar
+        );
+
+
+        div.appendChild(titulo);
+
+        div.appendChild(endereco);
+
+        div.appendChild(informacoes);
+
+        div.appendChild(status);
+
+        div.appendChild(acoes);
+
+
+        lista.appendChild(div);
+
+      }
+    );
+
+
+  }catch(error){
+
+    console.error(
+      "Erro ao buscar empresas:",
+      error
+    );
+
+
+    lista.innerHTML = `
+
+      <div class="vazio">
+
+        ⚠️ Não foi possível carregar as empresas.
+
+      </div>
+
+    `;
+
+  }
 
 }
-
-});
-
-
-totalEmpresas.textContent=
-empresas.length;
-
-totalFuncionarios.textContent=
-funcionariosTotal;
-
-jornaisEntregues.textContent=
-jornaisEntreguesTotal;
-
-jornaisFaltando.textContent=
-jornaisPendentesTotal;
-
-
-badgePendentes.textContent=
-pendentes.length;
-
-badgeEntregues.textContent=
-entregues.length;
-
-
-contador.textContent=
-filtroAtual==="pendentes"
-?
-`${pendentes.length} empresas faltando`
-:
-`${entregues.length} empresas entregues`;
-
-
-const empresasMostrar=
-filtroAtual==="pendentes"
-?
-pendentes
-:
-entregues;
-
-
-lista.innerHTML="";
-
-
-if(empresasMostrar.length===0){
-
-lista.innerHTML=`
-
-<div class="vazio">
-
-${
-filtroAtual==="pendentes"
-?
-"📭 Nenhuma empresa pendente."
-:
-"📭 Nenhuma empresa entregue ainda."
-}
-
-</div>
-
-`;
-
-return;
-
-}
-
-
-empresasMostrar.forEach(
-empresa=>{
-
-
-const div=
-document.createElement("div");
-
-div.className="empresa";
-
-
-const titulo=
-document.createElement("h3");
-
-titulo.textContent=
-"🏢 "+empresa.nome;
-
-
-const endereco=
-document.createElement("div");
-
-endereco.className="endereco";
-
-endereco.textContent=
-"📍 "+empresa.endereco;
-
-
-const informacoes=
-document.createElement("div");
-
-informacoes.className=
-"informacoes";
-
-
-const funcionariosTexto=
-document.createElement("div");
-
-funcionariosTexto.textContent=
-"👥 "+
-empresa.funcionarios+
-" funcionários";
-
-
-const jornaisTexto=
-document.createElement("div");
-
-jornaisTexto.textContent=
-"📰 "+
-empresa.jornais+
-" jornais";
-
-
-informacoes.appendChild(
-funcionariosTexto
-);
-
-informacoes.appendChild(
-jornaisTexto
-);
-
-
-const status=
-document.createElement("div");
-
-status.className="status";
-
-
-if(empresa.entregue===true){
-
-status.classList.add(
-"statusEntregue"
-);
-
-status.textContent=
-"✅ Entregue";
-
-}else{
-
-status.classList.add(
-"statusPendente"
-);
-
-status.textContent=
-"⬜ Pendente";
-
-}
-
-
-const acoes=
-document.createElement("div");
-
-acoes.className="acoes";
-
-
-const mapa=
-document.createElement("button");
-
-mapa.className="mapa";
-
-mapa.textContent=
-"🧭 Ir até lá";
-
-
-mapa.addEventListener(
-"click",
-()=>{
-
-const destino=
-encodeURIComponent(
-empresa.endereco+
-", "+
-empresa.cidade
-);
-
-
-window.open(
-"https://www.google.com/maps/dir/?api=1&destination="+
-destino+
-"&travelmode=driving",
-"_blank"
-);
-
-});
-
-
-const botaoEntrega=
-document.createElement("button");
-
-
-if(empresa.entregue===true){
-
-botaoEntrega.className=
-"pendenteNovamente";
-
-botaoEntrega.textContent=
-"↩️ Pendente";
-
-
-botaoEntrega.addEventListener(
-"click",
-async()=>{
-
-await alterarEntrega(
-empresa.id,
-false
-);
-
-});
-
-}else{
-
-botaoEntrega.className=
-"entregar";
-
-botaoEntrega.textContent=
-"✅ Entregue";
-
-
-botaoEntrega.addEventListener(
-"click",
-async()=>{
-
-await alterarEntrega(
-empresa.id,
-true
-);
-
-});
-
-}
-
-
-const botaoEditar=
-document.createElement("button");
-
-botaoEditar.className="editar";
-
-botaoEditar.textContent=
-"✏️ Editar";
-
-
-botaoEditar.addEventListener(
-"click",
-async()=>{
-
-await editarEmpresa(
-empresa
-);
-
-});
-
-
-const botaoObsoletar=
-document.createElement("button");
-
-botaoObsoletar.className=
-"excluir";
-
-botaoObsoletar.textContent=
-"🚫 Obsoletar";
-
-
-botaoObsoletar.addEventListener(
-"click",
-async()=>{
-
-await obsoletarEmpresa(
-empresa.id
-);
-
-});
-
-
-acoes.appendChild(mapa);
-
-acoes.appendChild(
-botaoEntrega
-);
-
-acoes.appendChild(
-botaoEditar
-);
-
-acoes.appendChild(
-botaoObsoletar
-);
-
-
-div.appendChild(titulo);
-
-div.appendChild(endereco);
-
-div.appendChild(informacoes);
-
-div.appendChild(status);
-
-div.appendChild(acoes);
-
-
-lista.appendChild(div);
-
-});
-
-}catch(error){
-
-console.error(
-"Erro ao buscar empresas:",
-error
-);
-
-lista.innerHTML=`
-
-<div class="vazio">
-
-⚠️ Não foi possível carregar as empresas.
-
-</div>
-
-`;
-
-}
-
-}
-
-
 /* =========================================================
    LOCALIZAÇÃO E DISTÂNCIA
    ========================================================= */
@@ -1519,387 +1640,477 @@ lista.innerHTML=`
 
 function esperar(ms){
 
-return new Promise(
-resolve=>setTimeout(
-resolve,
-ms
-)
-);
-
-}
-
-
-async function obterCoordenadas(
-endereco,
-cidadeNome
-){
-
-const consulta=
-encodeURIComponent(
-endereco+
-", "+
-cidadeNome+
-", Brasil"
-);
-
-
-const url=
-"https://nominatim.openstreetmap.org/search"+
-"?format=jsonv2"+
-"&limit=1"+
-"&countrycodes=br"+
-"&q="+
-consulta;
-
-
-const resposta=
-await fetch(url);
-
-
-if(!resposta.ok){
-
-throw new Error(
-"Erro ao consultar localização."
-);
-
-}
-
-
-const dados=
-await resposta.json();
-
-
-if(!dados.length){
-
-return null;
-
-}
-
-
-return{
-
-latitude:Number(
-dados[0].lat
-),
-
-longitude:Number(
-dados[0].lon
-)
-
-};
-
-}
-
-
-function obterMinhaLocalizacao(){
-
-return new Promise(
-(resolve,reject)=>{
-
-if(!navigator.geolocation){
-
-reject(
-new Error(
-"Seu navegador não possui localização."
-)
-);
-
-return;
-
-}
-
-
-navigator.geolocation.getCurrentPosition(
-
-posicao=>{
-
-resolve({
-
-latitude:
-posicao.coords.latitude,
-
-longitude:
-posicao.coords.longitude
-
-});
-
-},
-
-erro=>{
-
-let mensagemErro=
-"Não foi possível obter sua localização.";
-
-if(erro.code===1){
-
-mensagemErro=
-"Permissão de localização negada. Ative a localização do navegador.";
-
-}
-
-if(erro.code===2){
-
-mensagemErro=
-"Não foi possível determinar sua localização.";
-
-}
-
-if(erro.code===3){
-
-mensagemErro=
-"O GPS demorou demais para responder.";
-
-}
-
-reject(
-new Error(mensagemErro)
-);
-
-},
-
-{
-
-enableHighAccuracy:true,
-
-timeout:15000,
-
-maximumAge:60000
-
-}
-
-);
-
-});
-
-}
-
-
-function calcularDistanciaKm(
-lat1,
-lon1,
-lat2,
-lon2
-){
-
-const raioTerra=6371;
-
-
-const dLat=
-(lat2-lat1)*
-Math.PI/
-180;
-
-
-const dLon=
-(lon2-lon1)*
-Math.PI/
-180;
-
-
-const a=
-Math.sin(dLat/2)*
-Math.sin(dLat/2)
-+
-Math.cos(
-lat1*Math.PI/180
-)*
-Math.cos(
-lat2*Math.PI/180
-)*
-Math.sin(dLon/2)*
-Math.sin(dLon/2);
-
-
-const c=
-2*
-Math.atan2(
-Math.sqrt(a),
-Math.sqrt(1-a)
-);
-
-
-return raioTerra*c;
-
-}
-
-
-async function garantirCoordenadas(
-empresas
-){
-
-const semCoordenadas=
-empresas.filter(
-empresa=>
-typeof empresa.latitude!=="number"
-||
-typeof empresa.longitude!=="number"
-);
-
-
-if(semCoordenadas.length===0){
-
-return true;
-
-}
-
-
-const continuar=confirm(
-
-"📍 Existem "+
-semCoordenadas.length+
-" empresas sem localização salva.\n\n"+
-"Para calcular qual é a mais próxima, o aplicativo precisa localizar esses endereços.\n\n"+
-"Esse processo pode demorar dependendo da quantidade de empresas.\n\n"+
-"Deseja continuar?"
-
-);
-
-
-if(!continuar){
-
-return false;
-
-}
-
-
-lista.innerHTML=`
-
-<div class="progressoRota">
-
-📍 Localizando empresas...
-
-<br><br>
-
-Aguarde, não feche o aplicativo.
-
-</div>
-
-`;
-
-
-for(
-let i=0;
-i<semCoordenadas.length;
-i++
-){
-
-const empresa=
-semCoordenadas[i];
-
-
-lista.innerHTML=`
-
-<div class="progressoRota">
-
-📍 Localizando empresas...
-
-<br><br>
-
-${i+1} de ${semCoordenadas.length}
-
-<br><br>
-
-🏢 ${empresa.nome}
-
-</div>
-
-`;
-
-
-try{
-
-const coordenadas=
-await obterCoordenadas(
-empresa.endereco,
-empresa.cidade
-);
-
-
-if(!coordenadas){
-
-alert(
-
-"Não foi possível localizar:\n\n"+
-empresa.nome+
-"\n"+
-empresa.endereco+
-"\n\n"+
-"Verifique o endereço e tente novamente."
-
-);
-
-return false;
-
-}
-
-
-await updateDoc(
-
-doc(
-db,
-"empresas",
-empresa.id
-),
-
-{
-
-latitude:
-coordenadas.latitude,
-
-longitude:
-coordenadas.longitude
-
-}
-
-);
-
-
-empresa.latitude=
-coordenadas.latitude;
-
-empresa.longitude=
-coordenadas.longitude;
-
-
-}catch(error){
-
-console.error(
-"Erro ao localizar empresa:",
-empresa.nome,
-error
-);
-
-alert(
-
-"Não foi possível localizar:\n\n"+
-empresa.nome+
-"\n\n"+
-"Verifique o endereço e tente novamente."
-
-);
-
-return false;
+  return new Promise(
+    resolve =>
+      setTimeout(
+        resolve,
+        ms
+      )
+  );
 
 }
 
 
 /*
-Uma pequena pausa entre consultas.
+  Localiza o endereço da empresa.
+
+  Faz três tentativas diferentes para aumentar
+  a chance de encontrar endereços que o Nominatim
+  não reconheça na primeira consulta.
 */
 
-if(
-i<
-semCoordenadas.length-1
+async function obterCoordenadas(
+  endereco,
+  cidadeNome
 ){
 
-await esperar(1100);
+  const consultas = [
+
+    endereco +
+      ", " +
+      cidadeNome +
+      ", São Paulo, Brasil",
+
+    endereco +
+      ", " +
+      cidadeNome +
+      ", Brasil",
+
+    endereco.replace(/\s*-\s*.*$/, "") +
+      ", " +
+      cidadeNome +
+      ", São Paulo, Brasil"
+
+  ];
+
+
+  for(
+    const consultaTexto of consultas
+  ){
+
+    try{
+
+      const consulta =
+        encodeURIComponent(
+          consultaTexto
+        );
+
+
+      const url =
+        "https://nominatim.openstreetmap.org/search" +
+        "?format=jsonv2" +
+        "&limit=1" +
+        "&countrycodes=br" +
+        "&q=" +
+        consulta;
+
+
+      const resposta =
+        await fetch(url);
+
+
+      if(!resposta.ok){
+
+        continue;
+
+      }
+
+
+      const dados =
+        await resposta.json();
+
+
+      if(dados.length){
+
+        return {
+
+          latitude:
+            Number(
+              dados[0].lat
+            ),
+
+          longitude:
+            Number(
+              dados[0].lon
+            )
+
+        };
+
+      }
+
+    }catch(error){
+
+      console.error(
+        "Tentativa de localização falhou:",
+        consultaTexto,
+        error
+      );
+
+    }
+
+  }
+
+
+  return null;
 
 }
 
+
+/*
+  Obtém a localização atual do aparelho.
+
+  maximumAge:0
+  obriga o navegador a tentar obter
+  uma localização atual.
+
+  enableHighAccuracy:true
+  solicita a maior precisão disponível.
+*/
+
+function obterMinhaLocalizacao(){
+
+  return new Promise(
+    (resolve,reject)=>{
+
+      if(!navigator.geolocation){
+
+        reject(
+          new Error(
+            "Seu navegador não possui localização."
+          )
+        );
+
+        return;
+
+      }
+
+
+      navigator.geolocation.getCurrentPosition(
+
+        posicao=>{
+
+          resolve({
+
+            latitude:
+              posicao.coords.latitude,
+
+            longitude:
+              posicao.coords.longitude
+
+          });
+
+        },
+
+
+        erro=>{
+
+          let mensagemErro =
+            "Não foi possível obter sua localização.";
+
+
+          if(
+            erro.code === 1
+          ){
+
+            mensagemErro =
+              "Permissão de localização negada. Ative a localização do navegador.";
+
+          }
+
+
+          if(
+            erro.code === 2
+          ){
+
+            mensagemErro =
+              "Não foi possível determinar sua localização.";
+
+          }
+
+
+          if(
+            erro.code === 3
+          ){
+
+            mensagemErro =
+              "O GPS demorou demais para responder.";
+
+          }
+
+
+          reject(
+            new Error(
+              mensagemErro
+            )
+          );
+
+        },
+
+
+        {
+
+          enableHighAccuracy:true,
+
+          timeout:30000,
+
+          maximumAge:0
+
+        }
+
+      );
+
+    }
+  );
+
 }
 
 
-return true;
+/*
+  Calcula a distância em linha reta
+  entre dois pontos usando a fórmula
+  de Haversine.
+*/
+
+function calcularDistanciaKm(
+  lat1,
+  lon1,
+  lat2,
+  lon2
+){
+
+  const raioTerra =
+    6371;
+
+
+  const dLat =
+    (lat2-lat1) *
+    Math.PI /
+    180;
+
+
+  const dLon =
+    (lon2-lon1) *
+    Math.PI /
+    180;
+
+
+  const a =
+    Math.sin(dLat/2) *
+    Math.sin(dLat/2)
+
+    +
+
+    Math.cos(
+      lat1 *
+      Math.PI /
+      180
+    )
+
+    *
+
+    Math.cos(
+      lat2 *
+      Math.PI /
+      180
+    )
+
+    *
+
+    Math.sin(dLon/2) *
+    Math.sin(dLon/2);
+
+
+  const c =
+    2 *
+    Math.atan2(
+      Math.sqrt(a),
+      Math.sqrt(1-a)
+    );
+
+
+  return raioTerra * c;
+
+}
+
+
+/*
+  Garante que todas as empresas pendentes
+  possuam latitude e longitude.
+
+  Se uma empresa não possuir coordenadas,
+  o aplicativo tenta localizá-la novamente.
+*/
+
+async function garantirCoordenadas(
+  empresas
+){
+
+  const semCoordenadas =
+    empresas.filter(
+      empresa =>
+        typeof empresa.latitude !== "number"
+        ||
+        typeof empresa.longitude !== "number"
+    );
+
+
+  if(
+    semCoordenadas.length === 0
+  ){
+
+    return true;
+
+  }
+
+
+  lista.innerHTML = `
+
+    <div class="progressoRota">
+
+      📍 Localizando empresas...
+
+      <br><br>
+
+      Aguarde, não feche o aplicativo.
+
+    </div>
+
+  `;
+
+
+  for(
+    let i = 0;
+    i < semCoordenadas.length;
+    i++
+  ){
+
+    const empresa =
+      semCoordenadas[i];
+
+
+    lista.innerHTML = `
+
+      <div class="progressoRota">
+
+        📍 Localizando empresas...
+
+        <br><br>
+
+        ${i+1} de ${semCoordenadas.length}
+
+        <br><br>
+
+        🏢 ${empresa.nome}
+
+      </div>
+
+    `;
+
+
+    try{
+
+      const coordenadas =
+        await obterCoordenadas(
+          empresa.endereco,
+          empresa.cidade
+        );
+
+
+      if(
+        !coordenadas
+      ){
+
+        alert(
+
+          "Não foi possível localizar:\n\n" +
+
+          empresa.nome +
+
+          "\n" +
+
+          empresa.endereco +
+
+          "\n\n" +
+
+          "Verifique o endereço e tente novamente."
+
+        );
+
+
+        return false;
+
+      }
+
+
+      await updateDoc(
+
+        doc(
+          db,
+          "empresas",
+          empresa.id
+        ),
+
+        {
+
+          latitude:
+            coordenadas.latitude,
+
+          longitude:
+            coordenadas.longitude
+
+        }
+
+      );
+
+
+      empresa.latitude =
+        coordenadas.latitude;
+
+
+      empresa.longitude =
+        coordenadas.longitude;
+
+
+    }catch(error){
+
+      console.error(
+        "Erro ao localizar empresa:",
+        empresa.nome,
+        error
+      );
+
+
+      alert(
+
+        "Não foi possível localizar:\n\n" +
+
+        empresa.nome +
+
+        "\n\n" +
+
+        "Verifique o endereço e tente novamente."
+
+      );
+
+
+      return false;
+
+    }
+
+
+    if(
+      i <
+      semCoordenadas.length - 1
+    ){
+
+      await esperar(1100);
+
+    }
+
+  }
+
+
+  return true;
 
 }
 
@@ -1910,215 +2121,246 @@ return true;
 
 
 adicionar.addEventListener(
-"click",
-async()=>{
+  "click",
+  async()=>{
 
-if(!usuarioAtual){
+    if(!usuarioAtual){
 
-alert(
-"Você precisa entrar primeiro."
+      alert(
+        "Você precisa entrar primeiro."
+      );
+
+      return;
+
+    }
+
+
+    const nome =
+      prompt(
+        "Nome da empresa:"
+      );
+
+
+    if(!nome)return;
+
+
+    const endereco =
+      prompt(
+        "Digite o endereço completo da empresa:"
+      );
+
+
+    if(!endereco)return;
+
+
+    const funcionariosTexto =
+      prompt(
+        "Quantos funcionários a empresa possui?"
+      );
+
+
+    if(
+      funcionariosTexto === null
+    ){
+
+      return;
+
+    }
+
+
+    const funcionarios =
+      Number(
+        funcionariosTexto.trim()
+      );
+
+
+    if(
+      !Number.isInteger(funcionarios)
+      ||
+      funcionarios < 1
+    ){
+
+      alert(
+        "Digite uma quantidade válida de funcionários."
+      );
+
+      return;
+
+    }
+
+
+    const jornaisTexto =
+      prompt(
+        "Quantos jornais esta empresa recebe?"
+      );
+
+
+    if(
+      jornaisTexto === null
+    ){
+
+      return;
+
+    }
+
+
+    const jornais =
+      Number(
+        jornaisTexto.trim()
+      );
+
+
+    if(
+      !Number.isInteger(jornais)
+      ||
+      jornais < 1
+    ){
+
+      alert(
+        "Digite uma quantidade válida de jornais."
+      );
+
+      return;
+
+    }
+
+
+    let coordenadas = null;
+
+
+    try{
+
+      lista.innerHTML = `
+
+        <div class="progressoRota">
+
+          📍 Localizando endereço da empresa...
+
+          <br><br>
+
+          Aguarde...
+
+        </div>
+
+      `;
+
+
+      coordenadas =
+        await obterCoordenadas(
+          endereco.trim(),
+          cidade.value
+        );
+
+
+    }catch(error){
+
+      console.error(
+        "Erro ao localizar endereço:",
+        error
+      );
+
+    }
+
+
+    try{
+
+      const dadosEmpresa = {
+
+        nome:
+          nome.trim(),
+
+        endereco:
+          endereco.trim(),
+
+        cidade:
+          cidade.value,
+
+        funcionarios:
+          funcionarios,
+
+        jornais:
+          jornais,
+
+        entregue:
+          false,
+
+        obsoleta:
+          false,
+
+        uid:
+          usuarioAtual.uid,
+
+        criadoEm:
+          serverTimestamp()
+
+      };
+
+
+      if(
+        coordenadas
+      ){
+
+        dadosEmpresa.latitude =
+          coordenadas.latitude;
+
+        dadosEmpresa.longitude =
+          coordenadas.longitude;
+
+      }
+
+
+      await addDoc(
+        collection(
+          db,
+          "empresas"
+        ),
+        dadosEmpresa
+      );
+
+
+      filtroAtual =
+        "pendentes";
+
+
+      atualizarBotoesFiltro();
+
+
+      await mostrarEmpresas();
+
+
+      if(
+        !coordenadas
+      ){
+
+        alert(
+
+          "Empresa cadastrada.\n\n" +
+
+          "⚠️ O endereço não pôde ser localizado agora.\n\n" +
+
+          "A rota poderá tentar localizar esse endereço novamente."
+
+        );
+
+      }
+
+
+    }catch(error){
+
+      console.error(
+        "Erro ao cadastrar:",
+        error
+      );
+
+
+      alert(
+        "Erro ao salvar a empresa no Firebase."
+      );
+
+    }
+
+  }
 );
-
-return;
-
-}
-
-
-const nome=
-prompt(
-"Nome da empresa:"
-);
-
-if(!nome)return;
-
-
-const endereco=
-prompt(
-"Digite o endereço completo da empresa:"
-);
-
-if(!endereco)return;
-
-
-const funcionariosTexto=
-prompt(
-"Quantos funcionários a empresa possui?"
-);
-
-if(funcionariosTexto===null)
-return;
-
-
-const funcionarios=
-Number(
-funcionariosTexto.trim()
-);
-
-
-if(
-!Number.isInteger(funcionarios)
-||
-funcionarios<1
-){
-
-alert(
-"Digite uma quantidade válida de funcionários."
-);
-
-return;
-
-}
-
-
-const jornaisTexto=
-prompt(
-"Quantos jornais esta empresa recebe?"
-);
-
-if(jornaisTexto===null)
-return;
-
-
-const jornais=
-Number(
-jornaisTexto.trim()
-);
-
-
-if(
-!Number.isInteger(jornais)
-||
-jornais<1
-){
-
-alert(
-"Digite uma quantidade válida de jornais."
-);
-
-return;
-
-}
-
-
-let coordenadas=null;
-
-
-try{
-
-lista.innerHTML=`
-
-<div class="progressoRota">
-
-📍 Localizando endereço da empresa...
-
-<br><br>
-
-Aguarde...
-
-</div>
-
-`;
-
-
-coordenadas=
-await obterCoordenadas(
-endereco.trim(),
-cidade.value
-);
-
-
-}catch(error){
-
-console.error(
-"Erro ao localizar endereço:",
-error
-);
-
-}
-
-
-try{
-
-const dadosEmpresa={
-
-nome:
-nome.trim(),
-
-endereco:
-endereco.trim(),
-
-cidade:
-cidade.value,
-
-funcionarios:
-funcionarios,
-
-jornais:
-jornais,
-
-entregue:false,
-
-obsoleta:false,
-
-uid:
-usuarioAtual.uid,
-
-criadoEm:
-serverTimestamp()
-
-};
-
-
-if(coordenadas){
-
-dadosEmpresa.latitude=
-coordenadas.latitude;
-
-dadosEmpresa.longitude=
-coordenadas.longitude;
-
-}
-
-
-await addDoc(
-collection(db,"empresas"),
-dadosEmpresa
-);
-
-
-filtroAtual="pendentes";
-
-atualizarBotoesFiltro();
-
-await mostrarEmpresas();
-
-
-if(!coordenadas){
-
-alert(
-
-"Empresa cadastrada.\n\n"+
-"⚠️ O endereço não pôde ser localizado agora.\n\n"+
-"A rota poderá tentar localizar esse endereço novamente."
-
-);
-
-}
-
-}catch(error){
-
-console.error(
-"Erro ao cadastrar:",
-error
-);
-
-alert(
-"Erro ao salvar a empresa no Firebase."
-);
-
-}
-
-});
 
 
 /* =========================================================
@@ -2127,42 +2369,45 @@ alert(
 
 
 async function alterarEntrega(
-id,
-novoStatus
+  id,
+  novoStatus
 ){
 
-try{
+  try{
 
-const empresaRef=
-doc(
-db,
-"empresas",
-id
-);
-
-
-await updateDoc(
-empresaRef,
-{
-entregue:novoStatus
-}
-);
+    const empresaRef =
+      doc(
+        db,
+        "empresas",
+        id
+      );
 
 
-await mostrarEmpresas();
+    await updateDoc(
+      empresaRef,
+      {
+        entregue:
+          novoStatus
+      }
+    );
 
-}catch(error){
 
-console.error(
-"Erro ao atualizar entrega:",
-error
-);
+    await mostrarEmpresas();
 
-alert(
-"Não foi possível atualizar a entrega."
-);
 
-}
+  }catch(error){
+
+    console.error(
+      "Erro ao atualizar entrega:",
+      error
+    );
+
+
+    alert(
+      "Não foi possível atualizar a entrega."
+    );
+
+  }
 
 }
 
@@ -2173,318 +2418,370 @@ alert(
 
 
 async function editarEmpresa(
-empresa
+  empresa
 ){
 
-const nome=
-prompt(
-"Nome da empresa:",
-empresa.nome
-);
-
-if(nome===null)return;
+  const nome =
+    prompt(
+      "Nome da empresa:",
+      empresa.nome
+    );
 
 
-if(!nome.trim()){
+  if(
+    nome === null
+  ){
 
-alert(
-"Digite o nome da empresa."
-);
+    return;
 
-return;
+  }
+
+
+  if(
+    !nome.trim()
+  ){
+
+    alert(
+      "Digite o nome da empresa."
+    );
+
+    return;
+
+  }
+
+
+  const endereco =
+    prompt(
+      "Endereço:",
+      empresa.endereco
+    );
+
+
+  if(
+    endereco === null
+  ){
+
+    return;
+
+  }
+
+
+  if(
+    !endereco.trim()
+  ){
+
+    alert(
+      "Digite o endereço."
+    );
+
+    return;
+
+  }
+
+
+  const funcionariosTexto =
+    prompt(
+      "Quantidade de funcionários:",
+      empresa.funcionarios
+    );
+
+
+  if(
+    funcionariosTexto === null
+  ){
+
+    return;
+
+  }
+
+
+  const funcionarios =
+    Number(
+      funcionariosTexto
+    );
+
+
+  if(
+    !Number.isInteger(funcionarios)
+    ||
+    funcionarios < 1
+  ){
+
+    alert(
+      "Digite uma quantidade válida de funcionários."
+    );
+
+    return;
+
+  }
+
+
+  const jornaisTexto =
+    prompt(
+      "Quantidade de jornais:",
+      empresa.jornais
+    );
+
+
+  if(
+    jornaisTexto === null
+  ){
+
+    return;
+
+  }
+
+
+  const jornais =
+    Number(
+      jornaisTexto
+    );
+
+
+  if(
+    !Number.isInteger(jornais)
+    ||
+    jornais < 1
+  ){
+
+    alert(
+      "Digite uma quantidade válida de jornais."
+    );
+
+    return;
+
+  }
+
+
+  const cidadeTexto =
+    prompt(
+      "Cidade:",
+      empresa.cidade
+    );
+
+
+  if(
+    cidadeTexto === null
+  ){
+
+    return;
+
+  }
+
+
+  if(
+    !cidadeTexto.trim()
+  ){
+
+    alert(
+      "Digite a cidade."
+    );
+
+    return;
+
+  }
+
+
+  if(
+    !confirm(
+      "Deseja salvar as alterações?"
+    )
+  ){
+
+    return;
+
+  }
+
+
+  let coordenadas = {
+
+    latitude:
+      empresa.latitude,
+
+    longitude:
+      empresa.longitude
+
+  };
+
+
+  const enderecoMudou =
+    endereco.trim() !==
+    empresa.endereco;
+
+
+  const cidadeMudou =
+    cidadeTexto.trim() !==
+    empresa.cidade;
+
+
+  if(
+    enderecoMudou ||
+    cidadeMudou
+  ){
+
+    try{
+
+      coordenadas =
+        await obterCoordenadas(
+          endereco.trim(),
+          cidadeTexto.trim()
+        );
+
+
+    }catch(error){
+
+      console.error(
+        "Erro ao localizar novo endereço:",
+        error
+      );
+
+
+      coordenadas =
+        null;
+
+    }
+
+  }
+
+
+  try{
+
+    const empresaRef =
+      doc(
+        db,
+        "empresas",
+        empresa.id
+      );
+
+
+    const atualizacao = {
+
+      nome:
+        nome.trim(),
+
+      endereco:
+        endereco.trim(),
+
+      funcionarios:
+        funcionarios,
+
+      jornais:
+        jornais,
+
+      cidade:
+        cidadeTexto.trim(),
+
+      latitude:
+        coordenadas
+        ?
+        coordenadas.latitude
+        :
+        null,
+
+      longitude:
+        coordenadas
+        ?
+        coordenadas.longitude
+        :
+        null
+
+    };
+
+
+    await updateDoc(
+      empresaRef,
+      atualizacao
+    );
+
+
+    alert(
+      "Empresa atualizada com sucesso!"
+    );
+
+
+    await mostrarEmpresas();
+
+
+  }catch(error){
+
+    console.error(
+      "Erro ao editar empresa:",
+      error
+    );
+
+
+    alert(
+      "Erro ao atualizar a empresa."
+    );
+
+  }
 
 }
-
-
-const endereco=
-prompt(
-"Endereço:",
-empresa.endereco
-);
-
-if(endereco===null)return;
-
-
-if(!endereco.trim()){
-
-alert(
-"Digite o endereço."
-);
-
-return;
-
-}
-
-
-const funcionariosTexto=
-prompt(
-"Quantidade de funcionários:",
-empresa.funcionarios
-);
-
-if(funcionariosTexto===null)
-return;
-
-
-const funcionarios=
-Number(
-funcionariosTexto
-);
-
-
-if(
-!Number.isInteger(funcionarios)
-||
-funcionarios<1
-){
-
-alert(
-"Digite uma quantidade válida de funcionários."
-);
-
-return;
-
-}
-
-
-const jornaisTexto=
-prompt(
-"Quantidade de jornais:",
-empresa.jornais
-);
-
-if(jornaisTexto===null)
-return;
-
-
-const jornais=
-Number(
-jornaisTexto
-);
-
-
-if(
-!Number.isInteger(jornais)
-||
-jornais<1
-){
-
-alert(
-"Digite uma quantidade válida de jornais."
-);
-
-return;
-
-}
-
-
-const cidadeTexto=
-prompt(
-"Cidade:",
-empresa.cidade
-);
-
-if(cidadeTexto===null)
-return;
-
-
-if(!cidadeTexto.trim()){
-
-alert(
-"Digite a cidade."
-);
-
-return;
-
-}
-
-
-if(
-!confirm(
-"Deseja salvar as alterações?"
-)
-){
-
-return;
-
-}
-
-
-let coordenadas={
-latitude:empresa.latitude,
-longitude:empresa.longitude
-};
-
-
-const enderecoMudou=
-endereco.trim()!==empresa.endereco;
-
-const cidadeMudou=
-cidadeTexto.trim()!==empresa.cidade;
-
-
-if(
-enderecoMudou||
-cidadeMudou
-){
-
-try{
-
-coordenadas=
-await obterCoordenadas(
-endereco.trim(),
-cidadeTexto.trim()
-);
-
-}catch(error){
-
-console.error(
-"Erro ao localizar novo endereço:",
-error
-);
-
-coordenadas=null;
-
-}
-
-}
-
-
-try{
-
-const empresaRef=
-doc(
-db,
-"empresas",
-empresa.id
-);
-
-
-const atualizacao={
-
-nome:
-nome.trim(),
-
-endereco:
-endereco.trim(),
-
-funcionarios:
-funcionarios,
-
-jornais:
-jornais,
-
-cidade:
-cidadeTexto.trim(),
-
-latitude:
-coordenadas
-?
-coordenadas.latitude
-:
-null,
-
-longitude:
-coordenadas
-?
-coordenadas.longitude
-:
-null
-
-};
-
-
-await updateDoc(
-empresaRef,
-atualizacao
-);
-
-
-alert(
-"Empresa atualizada com sucesso!"
-);
-
-
-await mostrarEmpresas();
-
-}catch(error){
-
-console.error(
-"Erro ao editar empresa:",
-error
-);
-
-alert(
-"Erro ao atualizar a empresa."
-);
-
-}
-
-}
-
-
 /* =========================================================
    OBSOLETAR
    ========================================================= */
 
 
 async function obsoletarEmpresa(
-id
+  id
 ){
 
-const confirmar=
-confirm(
+  const confirmar =
+    confirm(
 
-"Tem certeza que deseja obsoletar esta empresa?\n\n"+
-"Ela ficará guardada e poderá ser restaurada futuramente."
+      "Tem certeza que deseja obsoletar esta empresa?\n\n" +
 
-);
+      "Ela ficará guardada e poderá ser restaurada futuramente."
 
-
-if(!confirmar)return;
+    );
 
 
-try{
-
-const empresaRef=
-doc(
-db,
-"empresas",
-id
-);
+  if(!confirmar)return;
 
 
-await updateDoc(
-empresaRef,
-{
+  try{
 
-obsoleta:true,
-
-entregue:false
-
-}
-);
+    const empresaRef =
+      doc(
+        db,
+        "empresas",
+        id
+      );
 
 
-alert(
-"Empresa obsoletada com sucesso!"
-);
+    await updateDoc(
+      empresaRef,
+      {
+
+        obsoleta:true,
+
+        entregue:false
+
+      }
+    );
 
 
-await mostrarEmpresas();
+    alert(
+      "Empresa obsoletada com sucesso!"
+    );
 
-}catch(error){
 
-console.error(
-"Erro ao obsoletar empresa:",
-error
-);
+    await mostrarEmpresas();
 
-alert(
-"Erro ao obsoletar a empresa."
-);
 
-}
+  }catch(error){
+
+    console.error(
+      "Erro ao obsoletar empresa:",
+      error
+    );
+
+
+    alert(
+      "Erro ao obsoletar a empresa."
+    );
+
+  }
 
 }
 
@@ -2496,274 +2793,387 @@ alert(
 
 async function mostrarEmpresasObsoletas(){
 
-if(!usuarioAtual)return;
+  if(!usuarioAtual)return;
 
 
-document
-.querySelectorAll(".fundoObsoletas")
-.forEach(
-elemento=>elemento.remove()
-);
+  document
+    .querySelectorAll(
+      ".fundoObsoletas"
+    )
+    .forEach(
+      elemento =>
+        elemento.remove()
+    );
 
 
-try{
+  try{
 
-const consulta=
-query(
-collection(db,"empresas"),
-where(
-"uid",
-"==",
-usuarioAtual.uid
-)
-);
+    const consulta =
+      query(
+        collection(
+          db,
+          "empresas"
+        ),
+        where(
+          "uid",
+          "==",
+          usuarioAtual.uid
+        )
+      );
 
 
-const resultado=
-await getDocs(consulta);
+    const resultado =
+      await getDocs(
+        consulta
+      );
 
 
-const obsoletas=[];
+    const obsoletas = [];
 
 
-resultado.forEach(
-documento=>{
+    resultado.forEach(
+      documento=>{
 
-const dados=
-documento.data();
+        const dados =
+          documento.data();
 
 
-if(
-dados.obsoleta===true
-&&
-dados.cidade===cidade.value
-){
+        if(
+          dados.obsoleta === true
+          &&
+          dados.cidade === cidade.value
+        ){
 
-obsoletas.push({
+          obsoletas.push({
 
-id:
-documento.id,
+            id:
+              documento.id,
 
-...dados,
+            ...dados,
 
-funcionarios:
-Number(dados.funcionarios)||0,
+            funcionarios:
+              Number(
+                dados.funcionarios
+              ) || 0,
 
-jornais:
-Number(dados.jornais)||0
+            jornais:
+              Number(
+                dados.jornais
+              ) || 0
 
-});
+          });
 
-}
+        }
 
-});
+      }
+    );
 
 
-const fundo=
-document.createElement("div");
+    const fundo =
+      document.createElement(
+        "div"
+      );
 
-fundo.className=
-"fundoObsoletas";
 
+    fundo.className =
+      "fundoObsoletas";
 
-const caixa=
-document.createElement("div");
 
-caixa.className=
-"caixaObsoletas";
+    const caixa =
+      document.createElement(
+        "div"
+      );
 
 
-const titulo=
-document.createElement("h2");
+    caixa.className =
+      "caixaObsoletas";
 
-titulo.textContent=
-"🚫 Empresas obsoletas - "+
-cidade.value;
 
+    const titulo =
+      document.createElement(
+        "h2"
+      );
 
-caixa.appendChild(titulo);
 
+    titulo.textContent =
+      "🚫 Empresas obsoletas - " +
+      cidade.value;
 
-const botaoFechar=
-document.createElement("button");
 
-botaoFechar.className=
-"fecharObsoletas";
+    caixa.appendChild(
+      titulo
+    );
 
-botaoFechar.textContent=
-"✖ Fechar";
 
+    const botaoFechar =
+      document.createElement(
+        "button"
+      );
 
-botaoFechar.addEventListener(
-"click",
-()=>fundo.remove()
-);
 
+    botaoFechar.className =
+      "fecharObsoletas";
 
-caixa.appendChild(
-botaoFechar
-);
 
+    botaoFechar.textContent =
+      "✖ Fechar";
 
-if(obsoletas.length===0){
 
-const vazio=
-document.createElement("div");
+    botaoFechar.addEventListener(
+      "click",
+      () =>
+        fundo.remove()
+    );
 
-vazio.className="vazio";
 
-vazio.textContent=
-"📭 Nenhuma empresa obsoleta nesta cidade.";
+    caixa.appendChild(
+      botaoFechar
+    );
 
-caixa.appendChild(vazio);
 
-}
+    if(
+      obsoletas.length === 0
+    ){
 
+      const vazio =
+        document.createElement(
+          "div"
+        );
 
-obsoletas.forEach(
-empresa=>{
 
-const card=
-document.createElement("div");
+      vazio.className =
+        "vazio";
 
-card.className=
-"cardObsoleta";
 
+      vazio.textContent =
+        "📭 Nenhuma empresa obsoleta nesta cidade.";
 
-const nome=
-document.createElement("h3");
 
-nome.textContent=
-"🏢 "+
-(empresa.nome||"");
+      caixa.appendChild(
+        vazio
+      );
 
+    }
 
-const endereco=
-document.createElement("div");
 
-endereco.textContent=
-"📍 "+
-(empresa.endereco||"");
+    obsoletas.forEach(
+      empresa=>{
 
+        const card =
+          document.createElement(
+            "div"
+          );
 
-const cidadeTexto=
-document.createElement("div");
 
-cidadeTexto.textContent=
-"🏙️ "+
-(empresa.cidade||"");
+        card.className =
+          "cardObsoleta";
 
 
-const funcionarios=
-document.createElement("div");
+        const nome =
+          document.createElement(
+            "h3"
+          );
 
-funcionarios.textContent=
-"👥 "+
-(empresa.funcionarios||0)+
-" funcionários";
 
+        nome.textContent =
+          "🏢 " +
+          (
+            empresa.nome ||
+            ""
+          );
 
-const jornais=
-document.createElement("div");
 
-jornais.textContent=
-"📰 "+
-(empresa.jornais||0)+
-" jornais";
+        const endereco =
+          document.createElement(
+            "div"
+          );
 
 
-card.appendChild(nome);
+        endereco.textContent =
+          "📍 " +
+          (
+            empresa.endereco ||
+            ""
+          );
 
-card.appendChild(endereco);
 
-card.appendChild(cidadeTexto);
+        const cidadeTexto =
+          document.createElement(
+            "div"
+          );
 
-card.appendChild(funcionarios);
 
-card.appendChild(jornais);
+        cidadeTexto.textContent =
+          "🏙️ " +
+          (
+            empresa.cidade ||
+            ""
+          );
 
 
-const botoes=
-document.createElement("div");
+        const funcionarios =
+          document.createElement(
+            "div"
+          );
 
-botoes.className=
-"botoesObsoleta";
 
+        funcionarios.textContent =
+          "👥 " +
+          (
+            empresa.funcionarios ||
+            0
+          ) +
+          " funcionários";
 
-const botaoRestaurar=
-document.createElement("button");
 
-botaoRestaurar.className=
-"restaurar";
+        const jornais =
+          document.createElement(
+            "div"
+          );
 
-botaoRestaurar.textContent=
-"♻️ Restaurar";
 
+        jornais.textContent =
+          "📰 " +
+          (
+            empresa.jornais ||
+            0
+          ) +
+          " jornais";
 
-botaoRestaurar.addEventListener(
-"click",
-async()=>{
 
-await restaurarEmpresa(
-empresa.id
-);
+        card.appendChild(
+          nome
+        );
 
-});
 
+        card.appendChild(
+          endereco
+        );
 
-const botaoExcluir=
-document.createElement("button");
 
-botaoExcluir.className=
-"excluirDefinitivo";
+        card.appendChild(
+          cidadeTexto
+        );
 
-botaoExcluir.textContent=
-"🗑️ Excluir definitivamente";
 
+        card.appendChild(
+          funcionarios
+        );
 
-botaoExcluir.addEventListener(
-"click",
-async()=>{
 
-await excluirEmpresaDefinitivamente(
-empresa.id
-);
+        card.appendChild(
+          jornais
+        );
 
-});
 
+        const botoes =
+          document.createElement(
+            "div"
+          );
 
-botoes.appendChild(
-botaoRestaurar
-);
 
-botoes.appendChild(
-botaoExcluir
-);
+        botoes.className =
+          "botoesObsoleta";
 
 
-card.appendChild(botoes);
+        const botaoRestaurar =
+          document.createElement(
+            "button"
+          );
 
-caixa.appendChild(card);
 
-});
+        botaoRestaurar.className =
+          "restaurar";
 
 
-fundo.appendChild(caixa);
+        botaoRestaurar.textContent =
+          "♻️ Restaurar";
 
-document.body.appendChild(fundo);
 
-}catch(error){
+        botaoRestaurar.addEventListener(
+          "click",
+          async()=>{
 
-console.error(
-"Erro ao buscar empresas obsoletas:",
-error
-);
+            await restaurarEmpresa(
+              empresa.id
+            );
 
-alert(
-"Erro ao buscar empresas obsoletas."
-);
+          }
+        );
 
-}
+
+        const botaoExcluir =
+          document.createElement(
+            "button"
+          );
+
+
+        botaoExcluir.className =
+          "excluirDefinitivo";
+
+
+        botaoExcluir.textContent =
+          "🗑️ Excluir definitivamente";
+
+
+        botaoExcluir.addEventListener(
+          "click",
+          async()=>{
+
+            await excluirEmpresaDefinitivamente(
+              empresa.id
+            );
+
+          }
+        );
+
+
+        botoes.appendChild(
+          botaoRestaurar
+        );
+
+
+        botoes.appendChild(
+          botaoExcluir
+        );
+
+
+        card.appendChild(
+          botoes
+        );
+
+
+        caixa.appendChild(
+          card
+        );
+
+      }
+    );
+
+
+    fundo.appendChild(
+      caixa
+    );
+
+
+    document.body.appendChild(
+      fundo
+    );
+
+
+  }catch(error){
+
+    console.error(
+      "Erro ao buscar empresas obsoletas:",
+      error
+    );
+
+
+    alert(
+      "Erro ao buscar empresas obsoletas."
+    );
+
+  }
 
 }
 
@@ -2774,71 +3184,75 @@ alert(
 
 
 async function restaurarEmpresa(
-id
+  id
 ){
 
-const confirmar=
-confirm(
+  const confirmar =
+    confirm(
 
-"Deseja restaurar esta empresa?\n\n"+
-"Ela voltará para a lista normal como Pendente."
+      "Deseja restaurar esta empresa?\n\n" +
 
-);
+      "Ela voltará para a lista normal como Pendente."
 
-
-if(!confirmar)return;
+    );
 
 
-try{
-
-const empresaRef=
-doc(
-db,
-"empresas",
-id
-);
+  if(!confirmar)return;
 
 
-await updateDoc(
-empresaRef,
-{
+  try{
 
-obsoleta:false,
-
-entregue:false
-
-}
-);
+    const empresaRef =
+      doc(
+        db,
+        "empresas",
+        id
+      );
 
 
-alert(
-"Empresa restaurada com sucesso!"
-);
+    await updateDoc(
+      empresaRef,
+      {
+
+        obsoleta:false,
+
+        entregue:false
+
+      }
+    );
 
 
-document
-.querySelectorAll(
-".fundoObsoletas"
-)
-.forEach(
-elemento=>elemento.remove()
-);
+    alert(
+      "Empresa restaurada com sucesso!"
+    );
 
 
-await mostrarEmpresas();
+    document
+      .querySelectorAll(
+        ".fundoObsoletas"
+      )
+      .forEach(
+        elemento =>
+          elemento.remove()
+      );
 
-}catch(error){
 
-console.error(
-"Erro ao restaurar empresa:",
-error
-);
+    await mostrarEmpresas();
 
-alert(
-"Erro ao restaurar a empresa."
-);
 
-}
+  }catch(error){
+
+    console.error(
+      "Erro ao restaurar empresa:",
+      error
+    );
+
+
+    alert(
+      "Erro ao restaurar a empresa."
+    );
+
+  }
 
 }
 
@@ -2849,57 +3263,62 @@ alert(
 
 
 async function excluirEmpresaDefinitivamente(
-id
+  id
 ){
 
-const confirmar=
-confirm(
+  const confirmar =
+    confirm(
 
-"⚠️ ATENÇÃO!\n\n"+
-"Esta empresa será excluída definitivamente do sistema.\n\n"+
-"Depois disso ela não poderá ser restaurada.\n\n"+
-"Deseja continuar?"
+      "⚠️ ATENÇÃO!\n\n" +
 
-);
+      "Esta empresa será excluída definitivamente do sistema.\n\n" +
 
+      "Depois disso ela não poderá ser restaurada.\n\n" +
 
-if(!confirmar)return;
+      "Deseja continuar?"
 
-
-try{
-
-const empresaRef=
-doc(
-db,
-"empresas",
-id
-);
+    );
 
 
-await deleteDoc(
-empresaRef
-);
+  if(!confirmar)return;
 
 
-alert(
-"Empresa excluída definitivamente!"
-);
+  try{
+
+    const empresaRef =
+      doc(
+        db,
+        "empresas",
+        id
+      );
 
 
-await mostrarEmpresasObsoletas();
+    await deleteDoc(
+      empresaRef
+    );
 
-}catch(error){
 
-console.error(
-"Erro ao excluir empresa definitivamente:",
-error
-);
+    alert(
+      "Empresa excluída definitivamente!"
+    );
 
-alert(
-"Erro ao excluir a empresa."
-);
 
-}
+    await mostrarEmpresasObsoletas();
+
+
+  }catch(error){
+
+    console.error(
+      "Erro ao excluir empresa definitivamente:",
+      error
+    );
+
+
+    alert(
+      "Erro ao excluir a empresa."
+    );
+
+  }
 
 }
 
@@ -2911,56 +3330,67 @@ alert(
 
 function atualizarBotoesFiltro(){
 
-if(filtroAtual==="pendentes"){
+  if(
+    filtroAtual === "pendentes"
+  ){
 
-btnPendentes.classList.add(
-"ativo"
-);
+    btnPendentes.classList.add(
+      "ativo"
+    );
 
-btnEntregues.classList.remove(
-"ativo"
-);
 
-}else{
+    btnEntregues.classList.remove(
+      "ativo"
+    );
 
-btnEntregues.classList.add(
-"ativo"
-);
 
-btnPendentes.classList.remove(
-"ativo"
-);
+  }else{
 
-}
+    btnEntregues.classList.add(
+      "ativo"
+    );
+
+
+    btnPendentes.classList.remove(
+      "ativo"
+    );
+
+  }
 
 }
 
 
 btnPendentes.addEventListener(
-"click",
-async()=>{
+  "click",
+  async()=>{
 
-filtroAtual="pendentes";
+    filtroAtual =
+      "pendentes";
 
-atualizarBotoesFiltro();
 
-await mostrarEmpresas();
+    atualizarBotoesFiltro();
 
-}
+
+    await mostrarEmpresas();
+
+  }
 );
 
 
 btnEntregues.addEventListener(
-"click",
-async()=>{
+  "click",
+  async()=>{
 
-filtroAtual="entregues";
+    filtroAtual =
+      "entregues";
 
-atualizarBotoesFiltro();
 
-await mostrarEmpresas();
+    atualizarBotoesFiltro();
 
-}
+
+    await mostrarEmpresas();
+
+  }
 );
 
 
@@ -2970,98 +3400,112 @@ await mostrarEmpresas();
 
 
 novaEntrega.addEventListener(
-"click",
-async()=>{
+  "click",
+  async()=>{
 
-const confirmar=
-confirm(
+    const confirmar =
+      confirm(
 
-"⚠️ Iniciar nova entrega?\n\n"+
-"Todas as empresas voltarão para PENDENTE."
+        "⚠️ Iniciar nova entrega?\n\n" +
 
+        "Todas as empresas voltarão para PENDENTE."
+
+      );
+
+
+    if(!confirmar)return;
+
+
+    try{
+
+      const consulta =
+        query(
+          collection(
+            db,
+            "empresas"
+          ),
+          where(
+            "uid",
+            "==",
+            usuarioAtual.uid
+          )
+        );
+
+
+      const resultado =
+        await getDocs(
+          consulta
+        );
+
+
+      for(
+        const empresa
+        of resultado.docs
+      ){
+
+        const dados =
+          empresa.data();
+
+
+        if(
+          dados.obsoleta !== true
+        ){
+
+          await updateDoc(
+
+            doc(
+              db,
+              "empresas",
+              empresa.id
+            ),
+
+            {
+
+              entregue:false
+
+            }
+
+          );
+
+        }
+
+      }
+
+
+      filtroAtual =
+        "pendentes";
+
+
+      atualizarBotoesFiltro();
+
+
+      await mostrarEmpresas();
+
+
+      alert(
+
+        "🔄 Nova entrega iniciada!\n\n" +
+
+        "Todas as empresas estão pendentes."
+
+      );
+
+
+    }catch(error){
+
+      console.error(
+        error
+      );
+
+
+      alert(
+        "Erro ao iniciar uma nova entrega."
+      );
+
+    }
+
+  }
 );
-
-
-if(!confirmar)return;
-
-
-try{
-
-const consulta=
-query(
-collection(db,"empresas"),
-where(
-"uid",
-"==",
-usuarioAtual.uid
-)
-);
-
-
-const resultado=
-await getDocs(consulta);
-
-
-for(
-const empresa
-of resultado.docs
-){
-
-const dados=
-empresa.data();
-
-
-if(
-dados.obsoleta!==true
-){
-
-await updateDoc(
-
-doc(
-db,
-"empresas",
-empresa.id
-),
-
-{
-
-entregue:false
-
-}
-
-);
-
-}
-
-}
-
-
-filtroAtual="pendentes";
-
-atualizarBotoesFiltro();
-
-await mostrarEmpresas();
-
-
-alert(
-
-"🔄 Nova entrega iniciada!\n\n"+
-"Todas as empresas estão pendentes."
-
-);
-
-
-}catch(error){
-
-console.error(error);
-
-alert(
-"Erro ao iniciar uma nova entrega."
-);
-
-}
-
-});
 
 
 /* =========================================================
@@ -3070,247 +3514,383 @@ alert(
 
 
 btnProximaEntrega.addEventListener(
-"click",
-async()=>{
+  "click",
+  async()=>{
+
+    if(!usuarioAtual){
+
+      alert(
+        "Você precisa entrar primeiro."
+      );
+
+      return;
+
+    }
 
 
-if(!usuarioAtual){
+    if(!cidade.value){
 
-alert(
-"Você precisa entrar primeiro."
-);
+      alert(
+        "Selecione uma cidade primeiro."
+      );
 
-return;
+      return;
+
+    }
+
+
+    try{
+
+      const empresas =
+        await buscarEmpresas();
+
+
+      const pendentes =
+        empresas.filter(
+          empresa =>
+            empresa.entregue !== true
+        );
+
+
+      if(
+        pendentes.length === 0
+      ){
+
+        alert(
+          "✅ Não há empresas pendentes nesta cidade."
+        );
+
+        return;
+
+      }
+
+
+      /*
+        Obtém a localização atual.
+      */
+
+      lista.innerHTML = `
+
+        <div class="progressoRota">
+
+          📍 Obtendo sua localização...
+
+          <br><br>
+
+          Permita o acesso à localização quando o navegador pedir.
+
+        </div>
+
+      `;
+
+
+      const minhaLocalizacao =
+        await obterMinhaLocalizacao();
+
+
+      /*
+        Garante que todas as empresas
+        tenham coordenadas.
+      */
+
+      const coordenadasOK =
+        await garantirCoordenadas(
+          pendentes
+        );
+
+
+      if(
+        !coordenadasOK
+      ){
+
+        await mostrarEmpresas();
+
+        return;
+
+      }
+
+
+      /*
+        Calcula a distância de cada empresa.
+      */
+
+      /*
+  Calcula a distância REAL pelas ruas
+  entre sua localização e cada empresa.
+*/
+
+const empresasComDistancia = [];
+
+const tamanhoLote = 50;
+
+for(
+  let inicio = 0;
+  inicio < pendentes.length;
+  inicio += tamanhoLote
+){
+
+  const lote =
+    pendentes.slice(
+      inicio,
+      inicio + tamanhoLote
+    );
+
+
+  const coordenadas =
+    [
+
+      minhaLocalizacao.longitude +
+      "," +
+      minhaLocalizacao.latitude
+
+    ].concat(
+
+      lote.map(
+        empresa =>
+          empresa.longitude +
+          "," +
+          empresa.latitude
+      )
+
+    );
+
+
+  const url =
+    "https://router.project-osrm.org/table/v1/driving/" +
+    coordenadas.join(";") +
+    "?sources=0&annotations=distance";
+
+
+  const resposta =
+    await fetch(url);
+
+
+  if(!resposta.ok){
+
+    throw new Error(
+      "Não foi possível calcular as distâncias pelas ruas."
+    );
+
+  }
+
+
+  const dados =
+    await resposta.json();
+
+
+  if(
+    !dados.distances ||
+    !dados.distances[0]
+  ){
+
+    throw new Error(
+      "O serviço de rotas não retornou as distâncias."
+    );
+
+  }
+
+
+  const distancias =
+    dados.distances[0];
+
+
+  lote.forEach(
+    (empresa,index)=>{
+
+      const distanciaMetros =
+        distancias[index + 1];
+
+
+      if(
+        typeof distanciaMetros === "number"
+      ){
+
+        empresasComDistancia.push({
+
+          ...empresa,
+
+          distanciaKm:
+            distanciaMetros / 1000
+
+        });
+
+      }
+
+    }
+  );
+
+
+  /*
+    Pequena pausa entre os lotes.
+  */
+
+  if(
+    inicio + tamanhoLote <
+    pendentes.length
+  ){
+
+    await esperar(500);
+
+  }
 
 }
 
 
-if(!cidade.value){
-
-alert(
-"Selecione uma cidade primeiro."
-);
-
-return;
-
-}
-
-
 /*
-Abrimos uma janela imediatamente para evitar
-bloqueio do navegador depois das consultas.
-*/
-
-const janela=
-window.open(
-"about:blank",
-"_blank"
-);
-
-
-try{
-
-
-const empresas=
-await buscarEmpresas();
-
-
-const pendentes=
-empresas.filter(
-empresa=>
-empresa.entregue!==true
-);
-
-
-if(pendentes.length===0){
-
-if(janela)
-janela.close();
-
-
-alert(
-"✅ Não há empresas pendentes nesta cidade."
-);
-
-return;
-
-}
-
-
-/*
-Obtém a localização atual.
-*/
-
-lista.innerHTML=`
-
-<div class="progressoRota">
-
-📍 Obtendo sua localização...
-
-<br><br>
-
-Permita o acesso à localização quando o navegador pedir.
-
-</div>
-
-`;
-
-
-const minhaLocalizacao=
-await obterMinhaLocalizacao();
-
-
-/*
-Garante que todas as empresas
-tenham coordenadas.
-*/
-
-const coordenadasOK=
-await garantirCoordenadas(
-pendentes
-);
-
-
-if(!coordenadasOK){
-
-if(janela)
-janela.close();
-
-await mostrarEmpresas();
-
-return;
-
-}
-
-
-/*
-Calcula a distância de cada empresa.
-*/
-
-const empresasComDistancia=
-pendentes.map(
-empresa=>({
-
-...empresa,
-
-distanciaKm:
-calcularDistanciaKm(
-
-minhaLocalizacao.latitude,
-
-minhaLocalizacao.longitude,
-
-empresa.latitude,
-
-empresa.longitude
-
-)
-
-})
-);
-
-
-/*
-Ordena da mais próxima
-para a mais distante.
+  Ordena pela distância REAL
+  pelas ruas.
 */
 
 empresasComDistancia.sort(
-(a,b)=>
-a.distanciaKm-b.distanciaKm
+  (a,b) =>
+    a.distanciaKm -
+    b.distanciaKm
 );
 
 
-const proxima=
-empresasComDistancia[0];
+const proxima =
+  empresasComDistancia[0];
 
 
-const distancia=
-proxima.distanciaKm
-.toFixed(2);
+if(!proxima){
 
-
-const destino=
-encodeURIComponent(
-
-proxima.endereco+
-", "+
-proxima.cidade
-
-);
-
-
-const url=
-
-"https://www.google.com/maps/dir/?api=1"+
-"&destination="+
-destino+
-"&travelmode=driving";
-
-
-if(janela){
-
-janela.location.href=url;
-
-}else{
-
-window.location.href=url;
+  throw new Error(
+    "Não foi possível determinar a próxima empresa."
+  );
 
 }
 
 
-lista.innerHTML=`
-
-<div class="progressoRota">
-
-📍 Próxima entrega encontrada
-
-<br><br>
-
-<strong>
-🏢 ${proxima.nome}
-</strong>
-
-<br><br>
-
-📏 Aproximadamente
-<strong>
-${distancia} km
-</strong>
-de distância.
-
-<br><br>
-
-🗺️ Abrindo Google Maps...
-
-</div>
-
-`;
+const distancia =
+  proxima.distanciaKm
+    .toFixed(2);
 
 
-}catch(error){
+      /*
+        Mostra primeiro qual empresa foi escolhida.
+      */
 
-console.error(
-"Erro na rota:",
-error
+      lista.innerHTML = `
+
+        <div class="progressoRota">
+
+          📍 Próxima entrega encontrada
+
+          <br><br>
+
+          <strong>
+            🏢 ${proxima.nome}
+          </strong>
+
+          <br><br>
+
+          📏 Aproximadamente
+
+          <strong>
+            ${distancia} km
+          </strong>
+
+          de distância.
+
+          <br><br>
+
+          <span class="distanciaRota">
+            📍 Distância calculada a partir da sua localização atual.
+          </span>
+
+        </div>
+
+      `;
+
+
+      await esperar(300);
+
+
+      const destino =
+        encodeURIComponent(
+
+          proxima.endereco +
+          ", " +
+          proxima.cidade
+
+        );
+
+
+      const url =
+
+        "https://www.google.com/maps/dir/?api=1" +
+
+        "&destination=" +
+
+        destino +
+
+        "&travelmode=driving";
+
+
+      lista.innerHTML += `
+
+        <br>
+
+        <button
+          id="abrirGoogleMaps"
+          style="
+            background:#0d6efd;
+            color:white;
+            border:none;
+            padding:14px 20px;
+            border-radius:10px;
+            font-size:17px;
+            font-weight:bold;
+            cursor:pointer;
+          "
+        >
+
+          🗺️ Abrir rota no Google Maps
+
+        </button>
+
+      `;
+
+
+      const botaoMapa =
+        document.getElementById(
+          "abrirGoogleMaps"
+        );
+
+
+      botaoMapa.addEventListener(
+        "click",
+        ()=>{
+
+          window.open(
+            url,
+            "_blank"
+          );
+
+        }
+      );
+
+
+    }catch(error){
+
+      console.error(
+        "Erro na rota:",
+        error
+      );
+
+
+      alert(
+        error.message ||
+        "Não foi possível calcular a próxima entrega."
+      );
+
+
+      await mostrarEmpresas();
+
+    }
+
+  }
 );
-
-
-if(janela)
-janela.close();
-
-
-alert(
-error.message||
-"Não foi possível calcular a próxima entrega."
-);
-
-
-await mostrarEmpresas();
-
-}
-
-});
 
 
 /* =========================================================
@@ -3319,18 +3899,22 @@ await mostrarEmpresas();
 
 
 cidade.addEventListener(
-"change",
-async()=>{
+  "change",
+  async()=>{
 
-filtroAtual="pendentes";
+    filtroAtual =
+      "pendentes";
 
-atualizarBotoesFiltro();
 
-atualizarTitulo();
+    atualizarBotoesFiltro();
 
-await mostrarEmpresas();
 
-}
+    atualizarTitulo();
+
+
+    await mostrarEmpresas();
+
+  }
 );
 
 
@@ -3340,12 +3924,12 @@ await mostrarEmpresas();
 
 
 btnObsoletas.addEventListener(
-"click",
-async()=>{
+  "click",
+  async()=>{
 
-await mostrarEmpresasObsoletas();
+    await mostrarEmpresasObsoletas();
 
-}
+  }
 );
 
 
@@ -3355,44 +3939,48 @@ await mostrarEmpresasObsoletas();
 
 
 onAuthStateChanged(
-auth,
-async function(usuario){
+  auth,
+  async function(usuario){
 
-if(usuario){
+    if(usuario){
 
-usuarioAtual=usuario;
-
-
-loginTela.style.display=
-"none";
-
-appTela.style.display=
-"block";
+      usuarioAtual =
+        usuario;
 
 
-usuarioEmail.textContent=
-"👤 "+
-usuario.email;
+      loginTela.style.display =
+        "none";
 
 
-await carregarCidades();
-
-}else{
-
-usuarioAtual=null;
+      appTela.style.display =
+        "block";
 
 
-appTela.style.display=
-"none";
+      usuarioEmail.textContent =
+        "👤 " +
+        usuario.email;
 
-loginTela.style.display=
-"flex";
 
-}
+      await carregarCidades();
 
-}
+
+    }else{
+
+      usuarioAtual =
+        null;
+
+
+      appTela.style.display =
+        "none";
+
+
+      loginTela.style.display =
+        "flex";
+
+    }
+
+  }
 );
-
 
 </script>
 
