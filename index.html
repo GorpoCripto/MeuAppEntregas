@@ -625,8 +625,11 @@ button:disabled{
 
 <script type="module">
 
+console.error("MODULO INICIOU");
+
 import {
   initializeApp
+
 }
 from
 "https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js";
@@ -812,6 +815,7 @@ function mostrarMensagem(texto){
 
 }
 
+console.error("LOGIN BLOCO EXECUTOU");
 
 entrarGoogle.addEventListener(
   "click",
@@ -1130,17 +1134,10 @@ async function buscarEmpresas(){
   if(!usuarioAtual)return[];
 
 
-  const consulta =
-    query(
-      collection(
-        db,
-        "empresas"
-      ),
-      where(
-        "uid",
-        "==",
-        usuarioAtual.uid
-      )
+    const consulta =
+    collection(
+      db,
+      "empresas"
     );
 
 
@@ -2809,17 +2806,10 @@ async function mostrarEmpresasObsoletas(){
   try{
 
     const consulta =
-      query(
-        collection(
-          db,
-          "empresas"
-        ),
-        where(
-          "uid",
-          "==",
-          usuarioAtual.uid
-        )
-      );
+  collection(
+    db,
+    "empresas"
+  );
 
 
     const resultado =
@@ -3419,17 +3409,10 @@ novaEntrega.addEventListener(
     try{
 
       const consulta =
-        query(
-          collection(
-            db,
-            "empresas"
-          ),
-          where(
-            "uid",
-            "==",
-            usuarioAtual.uid
-          )
-        );
+  collection(
+    db,
+    "empresas"
+  );
 
 
       const resultado =
