@@ -489,6 +489,11 @@ button:disabled{
     </button>
 
 
+    <button id="importarLista" class="soAdmin" style="background:#7c3aed;margin-top:10px;">
+      📥 Importar lista do sindicato
+    </button>
+
+
     <div class="resumo">
 
       <strong id="tituloRota">
@@ -752,6 +757,10 @@ const adicionar =
   document.getElementById("adicionar");
 
 
+const importarLista =
+  document.getElementById("importarLista");
+
+
 const adicionarCidade =
   document.getElementById("adicionarCidade");
 
@@ -811,6 +820,447 @@ const cidadesIniciais = [
   "Salto",
   "Itu",
   "Indaiatuba"
+];
+
+
+const empresasParaImportar = [
+  {nome:"Realpet Industria de Embalagens Plasticas LTDA",endereco:"R Julio Di Giovani, 339, Distrito Industrial",cidade:"Elias Fausto",funcionarios:0,jornais:10},
+  {nome:"Cri Geo Biogas S/A",endereco:"Rod do Acucar SP 308 S/N KM 117, Funil",cidade:"Elias Fausto",funcionarios:0,jornais:10},
+  {nome:"Ata-Obi Ind. e Com. LTDA",endereco:"R. Artur A. de Moraes, 1000, Centro",cidade:"Elias Fausto",funcionarios:30,jornais:10},
+  {nome:"Ecomark Ind. e Com. Comp. Organico LTDA",endereco:"Rodovia do Açucar - SP 308 - S/N, Atuau",cidade:"Elias Fausto",funcionarios:25,jornais:10},
+  {nome:"Eduart Laminados LTDA",endereco:"Rodovia Prefeito Thomé Ruffolo - KM 4,5, Mandacaru",cidade:"Elias Fausto",funcionarios:40,jornais:10},
+  {nome:"Elias Fausto Ind. de Piscinas LTDA ME",endereco:"Rodovia do Açucar - Km124 - S/N, Cochoeirinha",cidade:"Elias Fausto",funcionarios:26,jornais:10},
+  {nome:"Fenapack Ind. e Com. Plasticos LTDA",endereco:"R. Coronel Domingos Ferreira, 979 Térreo, Centro",cidade:"Elias Fausto",funcionarios:20,jornais:10},
+  {nome:"Igaratiba Ind e Comercio LTDA - Matriz",endereco:"Rodovia João Henrique Schutz KM 1.7, Rosario",cidade:"Elias Fausto",funcionarios:35,jornais:10},
+  {nome:"Inbra Industrias Quimicas LTDA",endereco:"Rodovia Antônio Rossi - KM 0,8 - S/N, Sítio Rio Acima",cidade:"Elias Fausto",funcionarios:53,jornais:10},
+  {nome:"Vetaplas Injecao Plastica LTDA ME",endereco:"Estrada Municipal Elias Fausto Á Salto - KM 03 S/N, Saltinho",cidade:"Elias Fausto",funcionarios:18,jornais:10},
+  {nome:"Wellenplast LTDA ME",endereco:"R. Mario Baptista, 145, Chacara Bela Vista",cidade:"Elias Fausto",funcionarios:15,jornais:10},
+  {nome:"Nj Montagens Plasticas LTDA ME",endereco:"R Herminio Batistuzzi, 99, Vila Camatari",cidade:"Elias Fausto",funcionarios:0,jornais:10},
+  {nome:"Galaxy Ind Plast Import e Export LTDA EPP",endereco:"Rod Antonio Rossi 560 KM 6, Parque Balneario Ca",cidade:"Elias Fausto",funcionarios:0,jornais:10},
+  {nome:"Moderna Ind e Com de Cosmeticos LTDA ME",endereco:"R Amadeu Patelli 37 A, Pq Balneario Carima",cidade:"Elias Fausto",funcionarios:0,jornais:10},
+  {nome:"Nova Elias Fausto Piscinas LTDA",endereco:"Rodovia do Acucar KM 116, Benfica",cidade:"Elias Fausto",funcionarios:0,jornais:10},
+  {nome:"Tcp Compositos Industria e Comercio LTDA",endereco:"Rod Pref Thome Ruffolo 4500 Galpao 1 4 e 5, Mandacaru",cidade:"Elias Fausto",funcionarios:18,jornais:10},
+  {nome:"Ecofarm Ind e Com de Fertilizantes LTDA",endereco:"Rua Coronel Domingos Ferreira 979, Centro",cidade:"Elias Fausto",funcionarios:4,jornais:10},
+  {nome:"Carreira Ind e Com de Piscinas LTDA",endereco:"Sit Belvedere Sn, Samambaia",cidade:"Elias Fausto",funcionarios:20,jornais:10},
+  {nome:"Vitae Servicos Empresariais EIRELI",endereco:"R Padre Bento Pacheco 1729, Vl Vitoria",cidade:"Indaiatuba",funcionarios:0,jornais:10},
+  {nome:"Sb Industria Comercio e Servicos de Rotomoldagem EIRELI",endereco:"Rod Lix da Cunha 475, Jardim Imperial",cidade:"Indaiatuba",funcionarios:0,jornais:10},
+  {nome:"Ing Industria e Comercio EIRELI",endereco:"R Ouro, 180, Rec Camp Joia",cidade:"Indaiatuba",funcionarios:0,jornais:10},
+  {nome:"Lp Branco Eirelli",endereco:"R Platina, 374, Recreio Campestre J",cidade:"Indaiatuba",funcionarios:0,jornais:10},
+  {nome:"Wbv Plasticos Ind. e Com. LTDA ME",endereco:"Av. Juscelino Kubtchek de Oliveira, 587 - Sala II, R. Campestre Jóia",cidade:"Indaiatuba",funcionarios:10,jornais:10},
+  {nome:"Polychem Produtos Quimicos LTDA",endereco:"Rua Pedro Goncalves 1400 Conj 81, Centro",cidade:"Indaiatuba",funcionarios:0,jornais:10},
+  {nome:"M&g Fibras e Resinas LTDA",endereco:"R. Humaitá, 965, Centro",cidade:"Indaiatuba",funcionarios:15,jornais:10},
+  {nome:"Basf S/A",endereco:"Rod. SP 73 N.5756 - Cx. Postal, Caldeira",cidade:"Indaiatuba",funcionarios:92,jornais:10},
+  {nome:"Basf Catalisadores LTDA",endereco:"Rod. SP 73 N.5756 - Cx. Postal, Caldeira",cidade:"Indaiatuba",funcionarios:0,jornais:10},
+  {nome:"Icl America do Sul",endereco:"Avenida Presidente Kennedy 1386, Cidade Nova I",cidade:"Indaiatuba",funcionarios:94,jornais:10},
+  {nome:"Fsn Fieiras e Sinterizados Nacionais LTDA",endereco:"Av. Almirante Tamandaré 697, Cidade Nova",cidade:"Indaiatuba",funcionarios:28,jornais:10},
+  {nome:"Emusa do Brasil Ind. e Com. LTDA",endereco:"Estrada Municipal 200, Chacara Alvorada",cidade:"Indaiatuba",funcionarios:117,jornais:10},
+  {nome:"Indafarma Ind. e Com. de Produtos Químicos",endereco:"Rodovia Eng. Ermênio Oliveira, 57, Tombadouro",cidade:"Indaiatuba",funcionarios:5,jornais:10},
+  {nome:"Plastek do Brasil Ind. e Comercio LTDA",endereco:"Rod. Eng. Ermênio Oliv. Penteado S/N - KM 58,2, Helvétia",cidade:"Indaiatuba",funcionarios:348,jornais:10},
+  {nome:"Polinizi Industria e Comercio LTDA",endereco:"Rod. Eng. Ermênio Oliv. Penteado S/N - KM 57, Tombadouro",cidade:"Indaiatuba",funcionarios:35,jornais:10},
+  {nome:"Smartpop Ind e Com LTDA EPP",endereco:"Rodovia Engenheiro Ermenio de Oliveira Penteado, ( Helvetia",cidade:"Indaiatuba",funcionarios:0,jornais:10},
+  {nome:"Chemaster Polímeros LTDA",endereco:"R. Dois, 294, D.i. Nova Era",cidade:"Indaiatuba",funcionarios:35,jornais:10},
+  {nome:"Flex3d Pro Industria e Tecnologia LTDA",endereco:"Rua Umberto Pucci, 245, Lot Comercial Monte",cidade:"Indaiatuba",funcionarios:0,jornais:10},
+  {nome:"Melissa Sabbadini ME",endereco:"Rod. Lix da Cunha, 475, Tombadouro",cidade:"Indaiatuba",funcionarios:25,jornais:10},
+  {nome:"Greendiesel Locacoes de Tanques e Servicos Logisticos Eir",endereco:"Rodovia Lix da Cunha 475, Jardim Imperial",cidade:"Indaiatuba",funcionarios:0,jornais:10},
+  {nome:"Ultradent do Brasil Prod. Odont. LTDA",endereco:"R. Alameda Ezequiel Mantoanelli, 2121, Itaici",cidade:"Indaiatuba",funcionarios:67,jornais:10},
+  {nome:"Transamerican Industrial LTDA",endereco:"Rod. Engenheiro Ermenio O. Penteado S/N, Itaici",cidade:"Indaiatuba",funcionarios:25,jornais:10},
+  {nome:"5 Estrelas Industria e Comercio EIRELI",endereco:"Rua Doutor Djalma Jurado 274, Jardim Eldorado",cidade:"Indaiatuba",funcionarios:0,jornais:10},
+  {nome:"Mounton Plastic Ind. e Com. de P. LTDA ME",endereco:"R. Melvin Jones, 256, Jd. Califórnia",cidade:"Indaiatuba",funcionarios:25,jornais:10},
+  {nome:"Suibra Embalagens Plasticas LTDA",endereco:"Rua dos Indaias 1710, Recreio Campestre J",cidade:"Indaiatuba",funcionarios:25,jornais:10},
+  {nome:"Dom Plast Industria e Comercio LTDA",endereco:"Av.juscelino Kubitschek de Oliveira, 587, Recreio Campestre J",cidade:"Indaiatuba",funcionarios:0,jornais:10},
+  {nome:"Albatroz Tintas LTDA",endereco:"R Genaro Franca 198, Jd Morada do Sol",cidade:"Indaiatuba",funcionarios:0,jornais:10},
+  {nome:"Polimig Industria de Artefatos LTDA",endereco:"Avenida Juscelino Kubitschek de Oliveira, 722, Recreio Campestre J",cidade:"Indaiatuba",funcionarios:0,jornais:10},
+  {nome:"Barauto Ind e Com de Pecas Aut EIRELI EPP",endereco:"Avenida Juscelino Kubitschek de Oliveira 841, Recreio Campestre J",cidade:"Indaiatuba",funcionarios:0,jornais:10},
+  {nome:"Camp Plast Fabricacao de Artigos Plasticos LTDA",endereco:"Rua Soldado Antonio Lopes Pereira, 192, Recreio Campestre J",cidade:"Indaiatuba",funcionarios:0,jornais:10},
+  {nome:"Hi Com e Serv Ind LTDA EPP",endereco:"Rua Fortunato Jose Deltreggia , 469, Recreio Campestre J",cidade:"Indaiatuba",funcionarios:0,jornais:10},
+  {nome:"Starpar Industria e Comercio de Pecas Automotivas LTDA",endereco:"Rua Soldado Antonio Lopes Pereira, Recreio Campestre J",cidade:"Indaiatuba",funcionarios:0,jornais:10},
+  {nome:"Corindon Abrasivos Especiais LTDA",endereco:"R. Topázio, 240, R. Campestre Jóia",cidade:"Indaiatuba",funcionarios:25,jornais:10},
+  {nome:"Plastic Ambiental Ind. de M. Plasticos LTDA",endereco:"R. Ouro, 310, R. Campestre Jóia",cidade:"Indaiatuba",funcionarios:5,jornais:10},
+  {nome:"Gow Indústria e Comércio de Plásticos LTDA",endereco:"R. Turmalina, 720, R. Campestre Jóia",cidade:"Indaiatuba",funcionarios:15,jornais:10},
+  {nome:"Hemmelrath do Brasil Tintas e Vernizes LTDA",endereco:"R. Prata, 511, Dist. Industrial",cidade:"Indaiatuba",funcionarios:5,jornais:10},
+  {nome:"Mpt Data Cable Ind e Com Cond LTDA",endereco:"Rua Prata, 733, Recreio Campestre J",cidade:"Indaiatuba",funcionarios:0,jornais:10},
+  {nome:"Basecor Industria de Termoplasticos LTDA",endereco:"Rua Prata 93, Recreio Campestre J",cidade:"Indaiatuba",funcionarios:6,jornais:10},
+  {nome:"Mcolor Polimeros LTDA",endereco:"Rua Prata 93, Recreio Campestre J",cidade:"Indaiatuba",funcionarios:0,jornais:10},
+  {nome:"Martin & Herbeth Automotivel LTDA EPP",endereco:"R. José Carlos Geiss, 340, Rec. Camp. Joia",cidade:"Indaiatuba",funcionarios:5,jornais:10},
+  {nome:"Mix Cores Pintura Tecnica LTDA",endereco:"R. José Carlos Geiss, 360, R. Campestre Jóia",cidade:"Indaiatuba",funcionarios:40,jornais:10},
+  {nome:"Plastifixo Baquelite do Brasil LTDA",endereco:"R. José Carlos Geiss, 519, R. Campestre Jóia",cidade:"Indaiatuba",funcionarios:20,jornais:10},
+  {nome:"Pkw Prototipos e Injecoes Plasticas LTDA",endereco:"Rua Jose Carlos Geiss, 479, Recreio Campestre J",cidade:"Indaiatuba",funcionarios:39,jornais:10},
+  {nome:"Dct Plast Industrial EIRELI",endereco:"Rua Jose Carlos Geiss, 360 - Barracao A, Recreio Campestre J",cidade:"Indaiatuba",funcionarios:0,jornais:10},
+  {nome:"Bracatec Ind. Abras. Tecnicos LTDA",endereco:"R. Valdir Roberto de Camargo, 213, R. Campestre Jóia",cidade:"Indaiatuba",funcionarios:25,jornais:10},
+  {nome:"Plascon Ind. e Com. de Plasticos LTDA EPP",endereco:"R. Valdir Roberto de Camargo, 659, R. Campestre Jóia",cidade:"Indaiatuba",funcionarios:35,jornais:10},
+  {nome:"Renplast Ind. e Com. Art. Plast. LTDA EPP",endereco:"R.valdir Roberto de Camargo, 659, R. Campestre Jóia",cidade:"Indaiatuba",funcionarios:40,jornais:10},
+  {nome:"Wolf Lub Lubrificantes Ind. LTDA",endereco:"R. Valdir R. de Camargo, 559, R. Campestre Jóia",cidade:"Indaiatuba",funcionarios:25,jornais:10},
+  {nome:"Vinew Ind e Com EIRELI EPP",endereco:"Rua Valdir Roberto de Camargo 188, Recreio Campestre J",cidade:"Indaiatuba",funcionarios:0,jornais:10},
+  {nome:"Vialux Produtos Para Sinalizacao e Seguranca Viaria EIRELI e",endereco:"Rua Valdir Roberto de Camargo 101, Recreio Campestre J",cidade:"Indaiatuba",funcionarios:0,jornais:10},
+  {nome:"Ve Plasticos LTDA",endereco:"Rua Valdir Roberto de Camargo 579, Recreio Campestre J",cidade:"Indaiatuba",funcionarios:0,jornais:10},
+  {nome:"Inova Plasticos LTDA",endereco:"Rua Valdir Roberto de Camargo, 218, Recreio Campestre J",cidade:"Indaiatuba",funcionarios:0,jornais:10},
+  {nome:"Copasil Quimica Industrial LTDA",endereco:"Rua Roque Medaldo Frias 1660, Recreio Campestre J",cidade:"Indaiatuba",funcionarios:0,jornais:10},
+  {nome:"Dma Produtos Decorativos LTDA",endereco:"Rua Turmalina, 720, Recreio Campestre J",cidade:"Indaiatuba",funcionarios:0,jornais:10},
+  {nome:"Makingplast Com. Recup. Mat. Plasticos LTDA",endereco:"R. Turmalina, 139, R. Campestre Jóia",cidade:"Indaiatuba",funcionarios:25,jornais:10},
+  {nome:"Marco Ind. de Poliuretanos LTDA ME",endereco:"R. Turmalina, 650, R. Campestre Jóia",cidade:"Indaiatuba",funcionarios:35,jornais:10},
+  {nome:"Union Plastic Plasticos Laminados LTDA",endereco:"R. Turmalina, 630, R. Campestre Jóia",cidade:"Indaiatuba",funcionarios:15,jornais:10},
+  {nome:"Hv Ind. e Com. de Emb. Plast. LTDA ME",endereco:"Rua Turmalina 663, Recreio Campestre J",cidade:"Indaiatuba",funcionarios:40,jornais:10},
+  {nome:"Ecomechanics Mecanica LTDA",endereco:"Rua Turmalina, 136, Recreio Campestre J",cidade:"Indaiatuba",funcionarios:0,jornais:10},
+  {nome:"Metalflow do Brasil Lub Solucoes LTDA",endereco:"Rua Turmalina, 693, Recreio Campestre J",cidade:"Indaiatuba",funcionarios:0,jornais:10},
+  {nome:"Oxford Comercio e Recup de Mat Plast LTDA",endereco:"Rua Turmalina, 139, Recreio Campestre J",cidade:"Indaiatuba",funcionarios:0,jornais:10},
+  {nome:"Indaiaplast Embalagens LTDA",endereco:"Rua Turmalina 630 Sala 1, Recreio Campestre J",cidade:"Indaiatuba",funcionarios:0,jornais:10},
+  {nome:"Estaticon Ind. Com. de Prod. Antiestaticos LTDA",endereco:"R. Platina, 99, R. Campestre Jóia",cidade:"Indaiatuba",funcionarios:35,jornais:10},
+  {nome:"Formpack Plasticos Industrial LTDA",endereco:"R. Platina, 610, R. Campestre Jóia",cidade:"Indaiatuba",funcionarios:40,jornais:10},
+  {nome:"Gazplast Ind. de Plásticos LTDA ME",endereco:"R.platina, 279, R. Campestre Jóia",cidade:"Indaiatuba",funcionarios:25,jornais:10},
+  {nome:"Megplast Ind. e Com. de Recicl. LTDA EPP",endereco:"R. Platina, 635, R. Campestre Jóia",cidade:"Indaiatuba",funcionarios:20,jornais:10},
+  {nome:"L P Branco EIRELI",endereco:"Rua Platina 374, Recreio Campestre J",cidade:"Indaiatuba",funcionarios:0,jornais:10},
+  {nome:"Summerplast Industria e Comercio de Embalagens Plasticas L",endereco:"Rua Crisolita 20, Recreio Campestre J",cidade:"Indaiatuba",funcionarios:0,jornais:10},
+  {nome:"Tpowder Industria de Tintas e Vernizes LTDA",endereco:"R. Crisólita, 40, R. Campestre Jóia",cidade:"Indaiatuba",funcionarios:20,jornais:10},
+  {nome:"Dinamica Quimica Contemporanea LTDA",endereco:"Rua Crisolita, 145, Recreio Campestre J",cidade:"Indaiatuba",funcionarios:0,jornais:10},
+  {nome:"Sigplastic Fab. de Art. de Material Plasti. Para Uso Ind. LTDA",endereco:"Rua Crisolita 257 Galpao 2, Recreio Campestre J",cidade:"Indaiatuba",funcionarios:0,jornais:10},
+  {nome:"Aj da Cunha Tintas ME",endereco:"R. Opala, 118, R. Campestre Jóia",cidade:"Indaiatuba",funcionarios:5,jornais:10},
+  {nome:"Total Finishing e. e Abrasivos LTDA EPP",endereco:"R. Ouro Branco, 580, R. Campestre Jóia",cidade:"Indaiatuba",funcionarios:5,jornais:10},
+  {nome:"Suiflex Embalagens Flexiveis LTDA",endereco:"Rua Ouro Branco, 520, Recreio Campestre J",cidade:"Indaiatuba",funcionarios:0,jornais:10},
+  {nome:"Giselle Lage Melo EPP",endereco:"R Perola 783, R. Campestre Jóia",cidade:"Indaiatuba",funcionarios:40,jornais:10},
+  {nome:"Thera Quimica Industria e Comercio LTDA",endereco:"Rua Diamante Negro, 69 - Galpao 2, Recreio Campestre J",cidade:"Indaiatuba",funcionarios:0,jornais:10},
+  {nome:"Guilherme Augustus Rodrigues 43203172895",endereco:"Rua Perola, 531, Recreio Campestre J",cidade:"Indaiatuba",funcionarios:0,jornais:10},
+  {nome:"Free Land Ind. e Comercio LTDA ME",endereco:"R. Pérola, 350, R. Campestre Jóia",cidade:"Indaiatuba",funcionarios:5,jornais:10},
+  {nome:"Plasticos e Ferramentaria Ariginel Ind. e Com. LTDA",endereco:"R Perola 783 Galpao 4, R. Campestre Jóia",cidade:"Indaiatuba",funcionarios:10,jornais:10},
+  {nome:"Unipet Revalorizacao de Produtos LTDA",endereco:"R. Pérola, 299, R. Campestre Jóia",cidade:"Indaiatuba",funcionarios:20,jornais:10},
+  {nome:"Sf Ind e Comercio de Perfis EIRELI EPP",endereco:"Rua Perola 103, Recreio Campestre J",cidade:"Indaiatuba",funcionarios:0,jornais:10},
+  {nome:"Antico Plast e Aliment LTDA EPP",endereco:"Rua Perola 708, Recreio Campestre J",cidade:"Indaiatuba",funcionarios:0,jornais:10},
+  {nome:"Inacom Ind e Com de Abrasivos LTDA ME",endereco:"Rua Perola 783, Recreio Campestre J",cidade:"Indaiatuba",funcionarios:0,jornais:10},
+  {nome:"Richdel Plastic Materiais Plasticos LTDA",endereco:"Rua Perola, 531, Recreio Campestre J",cidade:"Indaiatuba",funcionarios:0,jornais:10},
+  {nome:"Hf Extratos Naturais LTDA",endereco:"Rua Quartzo, 89, Recreio Campestre J",cidade:"Indaiatuba",funcionarios:0,jornais:10},
+  {nome:"Atocolor Ind. e Com. LTDA",endereco:"R. Jade, 541, R. Campestre Jóia",cidade:"Indaiatuba",funcionarios:40,jornais:10},
+  {nome:"Regipol Ind. e Com. de Móveis LTDA",endereco:"R. Jade, 51 A, R. Campestre Jóia",cidade:"Indaiatuba",funcionarios:30,jornais:10},
+  {nome:"Conex Pack Industria e Comercio de Embalagens LTDA",endereco:"Rua Jade, 248, Recreio Campestre J",cidade:"Indaiatuba",funcionarios:0,jornais:10},
+  {nome:"Alfa Trend Ind. e Comercio LTDA",endereco:"R. Macassita, 555, R. Campestre Jóia",cidade:"Indaiatuba",funcionarios:35,jornais:10},
+  {nome:"Brilho Ind. e Com. de Embalagens LTDA",endereco:"R. Macassita, 628, R. Campestre Joia",cidade:"Indaiatuba",funcionarios:30,jornais:10},
+  {nome:"Moldepol Ind. de Perfis LTDA ME",endereco:"R. Macassita, 75, R. Campestre Jóia",cidade:"Indaiatuba",funcionarios:10,jornais:10},
+  {nome:"Indaluz - Industria e Comercio de Materiais Eletricos LTDA - M",endereco:"Rua Macassit, 40, Recreio Campestre J",cidade:"Indaiatuba",funcionarios:0,jornais:10},
+  {nome:"Itaici Plast LTDA",endereco:"Rua Macassit, 481, Recreio Campestre J",cidade:"Indaiatuba",funcionarios:0,jornais:10},
+  {nome:"Tech Cosmeticos LTDA",endereco:"Rua Macassit, 321, Recreio Campestre J",cidade:"Indaiatuba",funcionarios:0,jornais:10},
+  {nome:"Hi Tec Ind. e Com. de Produtos Quimicos LTDA",endereco:"R. Alameda C. Santoro Mirone, 937, R. Campestre Jóia",cidade:"Indaiatuba",funcionarios:15,jornais:10},
+  {nome:"Jireh Industria e Comercio LTDA EPP",endereco:"R. Al. Com. Dr. Santono Mirone, 850, R. Campestre Jóia",cidade:"Indaiatuba",funcionarios:40,jornais:10},
+  {nome:"L. A. Imp. Exp. Prod. Quimicos LTDA",endereco:"R. Al. Com. Dr. Santono Mirone, 160, D.i. João Narezzi",cidade:"Indaiatuba",funcionarios:20,jornais:10},
+  {nome:"Industria e Com. de Viseiras Eirelli",endereco:"R. Comendador Dr. Santoro Mirone, 970, R. Campestre Jóia",cidade:"Indaiatuba",funcionarios:40,jornais:10},
+  {nome:"Race Abrasivos Ind. e Comercio LTDA",endereco:"R. Alameda Dr. Com. Santoro Mirone, 711, R. Campestre Jóia",cidade:"Indaiatuba",funcionarios:20,jornais:10},
+  {nome:"G&a Solucoes Importacao Exportacao e Representacao Ltd",endereco:"Alameda Comendador Doutor Santoro Mirone 540, Recreio Campestre J",cidade:"Indaiatuba",funcionarios:0,jornais:10},
+  {nome:"Bunker Industria Farmaceutica LTDA",endereco:"Estrada do Capovilla, 129, R. Campestre Jóia",cidade:"Indaiatuba",funcionarios:40,jornais:10},
+  {nome:"Cleomar Quimica Ind. e Comercio LTDA",endereco:"Estrada do Capovilla, 650, Pimenta",cidade:"Indaiatuba",funcionarios:10,jornais:10},
+  {nome:"Cellera Farmaceutica S/A",endereco:"Estrada do Capovilla, 129, R. Campestre Jóia",cidade:"Indaiatuba",funcionarios:410,jornais:10},
+  {nome:"Valeant Farmaceutica do Brasil LTDA",endereco:"Estrada do Capovilla, 109, R. Campestre Jóia",cidade:"Indaiatuba",funcionarios:30,jornais:10},
+  {nome:"Bl Industria Otica LTDA - Valeant",endereco:"Alameda Capovilla, 109, Recreio Campestre J",cidade:"Indaiatuba",funcionarios:299,jornais:10},
+  {nome:"Sharon Labs Brasil LTDA",endereco:"R. Eduardo Borsari,, 1679, D.i. Domingos Giomi",cidade:"Indaiatuba",funcionarios:15,jornais:10},
+  {nome:"Cyg Biotech Quimica & Farmaceutica LTDA",endereco:"R. Hermínio de Mello, 311, Dist. Industrial",cidade:"Indaiatuba",funcionarios:30,jornais:10},
+  {nome:"Plasticos Itaquiti LTDA",endereco:"R. Hermínio de Mello, 1051, D.i. Domingos Giomi",cidade:"Indaiatuba",funcionarios:15,jornais:10},
+  {nome:"Labogem Quimica Fina e Biotecnologia",endereco:"Rua Frederico Magnusson 247, Distrito Industrial",cidade:"Indaiatuba",funcionarios:5,jornais:10},
+  {nome:"Pecval Industria LTDA",endereco:"R. Antônio Barnabé, 990, D.i. Domingos Giomi",cidade:"Indaiatuba",funcionarios:190,jornais:10},
+  {nome:"Scott Plasticos LTDA",endereco:"R. Dalísio S. Barros, 359, D.i. Domingos Giomi",cidade:"Indaiatuba",funcionarios:40,jornais:10},
+  {nome:"Irritec do Brasil Ind. Com. Quip. Irrig. LTDA",endereco:"R. José Vieira, 289, D.i. Domingos Giomi",cidade:"Indaiatuba",funcionarios:15,jornais:10},
+  {nome:"Grow Quimica e Farmaceutica LTDA",endereco:"Av Vitoria Rossi Martini 648, Vitoria Martini",cidade:"Indaiatuba",funcionarios:40,jornais:10},
+  {nome:"Catalent Brasil LTDA",endereco:"Av. José Vieira, 446, D.i. Domingos Giomi",cidade:"Indaiatuba",funcionarios:35,jornais:10},
+  {nome:"Stardur Tintas Especiais LTDA",endereco:"Av. José Vieira, 201, Dist. Industrial",cidade:"Indaiatuba",funcionarios:20,jornais:10},
+  {nome:"Tigre Materiais e Solucoes Para Construcao LTDA",endereco:"R. Francisco Lanzi Tancler, 133, Dist. Industrial",cidade:"Indaiatuba",funcionarios:40,jornais:10},
+  {nome:"Gerresheimer Sist. Plast. Med. Sao Paulo LTDA",endereco:"R. Victório Emmanuel Soliani, 190, D.i. Domingos Giomi",cidade:"Indaiatuba",funcionarios:30,jornais:10},
+  {nome:"Indupack Embalagens LTDA",endereco:"Rodovia Sp73, 4509 - G8, Dist. Industrial",cidade:"Indaiatuba",funcionarios:10,jornais:10},
+  {nome:"Rcse Industria de Tintas LTDA ME",endereco:"Rod. SP 73 N.3001, D.i. Domingos Giomi",cidade:"Indaiatuba",funcionarios:15,jornais:10},
+  {nome:"Termotecnica LTDA",endereco:"Rodovia Sp73, 6265 - Galpão II, 0",cidade:"Indaiatuba",funcionarios:30,jornais:10},
+  {nome:"Irmold Ferramentaria LTDA ME",endereco:"R. Hum, 372, Dist. Industrial",cidade:"Indaiatuba",funcionarios:10,jornais:10},
+  {nome:"Redil Moldes Plásticos LTDA ME",endereco:"R. Alberto Guizzo, 372, Dist. Industrial",cidade:"Indaiatuba",funcionarios:25,jornais:10},
+  {nome:"Bomplastico Ind. e Com. LTDA EPP",endereco:"R. Ettore Soliane, 268, D.i. Nova Era",cidade:"Indaiatuba",funcionarios:20,jornais:10},
+  {nome:"British Industria e Comercio LTDA",endereco:"R Ettore Soliane 32, D.i. Nova Era",cidade:"Indaiatuba",funcionarios:99,jornais:10},
+  {nome:"Kemin do Brasil LTDA",endereco:"R. Ettori Soliane, 471, Dist. Industrial",cidade:"Indaiatuba",funcionarios:108,jornais:10},
+  {nome:"Oxido Tintas e Vernizes LTDA EPP",endereco:"R. Ettori Soliane, 280, D.i. Nova Era",cidade:"Indaiatuba",funcionarios:15,jornais:10},
+  {nome:"Aksell Nutrition LTDA",endereco:"R Andre Adolfo Ferrari, 488, Distrito Industrial N",cidade:"Indaiatuba",funcionarios:30,jornais:10},
+  {nome:"Oxido & Metal Quimica LTDA",endereco:"R. Alameda Júpter, 208, Dist. Industrial",cidade:"Indaiatuba",funcionarios:10,jornais:10},
+  {nome:"Cromox Polimento e Tratamento de Superficie LTDA - EPP",endereco:"Alameda Jupiter 989, Distrito Industrial N",cidade:"Indaiatuba",funcionarios:0,jornais:10},
+  {nome:"Yd New Top Industria de Raquetes Eirelli EPP",endereco:"Rua Raul Narezzi 58, Distrito Industrial N",cidade:"Indaiatuba",funcionarios:0,jornais:10},
+  {nome:"Biovax Quimica LTDA",endereco:"Rua Alberto Guizo 190, Distrito Industrial J",cidade:"Indaiatuba",funcionarios:0,jornais:10},
+  {nome:"Advance Tintas e Vernizes LTDA",endereco:"R. Alberto Guizo, 489, D.i. João Narezzi",cidade:"Indaiatuba",funcionarios:25,jornais:10},
+  {nome:"Atomplast Ind. e Com. de Plasticos LTDA EPP",endereco:"R. Alberto Guizo, 829, D.i. João Narezzi",cidade:"Indaiatuba",funcionarios:63,jornais:10},
+  {nome:"Intralox Brasil LTDA",endereco:"R. Alberto Guizo, 61, D.i. João Narezzi",cidade:"Indaiatuba",funcionarios:40,jornais:10},
+  {nome:"Athosfarma Ind. e Com. de Emb. LTDA EPP",endereco:"Rua Alberto Guizo, 919, Distrito Industrial J",cidade:"Indaiatuba",funcionarios:59,jornais:10},
+  {nome:"Solutio Ind Quim Eirelli EPP",endereco:"Rua Alberto Guizo 372, Distrito Industrial J",cidade:"Indaiatuba",funcionarios:0,jornais:10},
+  {nome:"Atomplast Ind. e Com. de Plasticos Eirelli",endereco:"Rua Alberto Guizo 720 A 740, Distrito Industrial J",cidade:"Indaiatuba",funcionarios:40,jornais:10},
+  {nome:"Floty Equipamentos Aquáticos LTDA EPP",endereco:"R. Dois, 900, D.i. João Narezzi",cidade:"Indaiatuba",funcionarios:35,jornais:10},
+  {nome:"Z3 Masterbatches e Compostos LTDA",endereco:"R. Perola, 591, Rec. Camp. Joao",cidade:"Indaiatuba",funcionarios:35,jornais:10},
+  {nome:"Modulor Ind. Com. Imp. Exp. Rotomold. LTDA",endereco:"R. Antônia Martins Luiz, 328, D.i. João Narezzi",cidade:"Indaiatuba",funcionarios:15,jornais:10},
+  {nome:"Natalia Bertipaglia ME",endereco:"R. Antônia Martins Luiz, 499, D.i. João Narezzi",cidade:"Indaiatuba",funcionarios:35,jornais:10},
+  {nome:"SA & Cia Artigos Esportivos LTDA EPP",endereco:"R. Dois, 896, D.i. João Narezzi",cidade:"Indaiatuba",funcionarios:20,jornais:10},
+  {nome:"Florus Brasil Ind e Com de Cosm LTDA",endereco:"Alameda Comendador Doutor Santoro Mirone 570, Distrito Industrial J",cidade:"Indaiatuba",funcionarios:0,jornais:10},
+  {nome:"Warwick International do Brasil LTDA",endereco:"R. Três, 399, D.i. João Narezzi",cidade:"Indaiatuba",funcionarios:5,jornais:10},
+  {nome:"All Devices Industrial LTDA",endereco:"R Akio Umeda 468 Galpao 1, Centro Empresarial D13347-432",cidade:"Indaiatuba",funcionarios:0,jornais:10},
+  {nome:"Atlantis Ind e Com de Art Plast LTDA - EPP",endereco:"Rua Tres 99, Centro Emp de Indai",cidade:"Indaiatuba",funcionarios:0,jornais:10},
+  {nome:"Valoren Rec de Res LTDA EPP",endereco:"R Cinco 107 Galpao, Empresarial",cidade:"Indaiatuba",funcionarios:0,jornais:10},
+  {nome:"Bonel Industria e Comercio LTDA",endereco:"Rua Joaquim Pupo, 444, Centro Empresarial",cidade:"Indaiatuba",funcionarios:0,jornais:10},
+  {nome:"Tordin Ind. e Com. de P. Quimicos LTDA ME",endereco:"R. Dois S/N - Quadra I - Lote 18, D.i. João Narezzi",cidade:"Indaiatuba",funcionarios:40,jornais:10},
+  {nome:"Gardim Industrial Eirelli LTDA",endereco:"Rua: Sergio Ueda, 1027, Park Comercial de I",cidade:"Indaiatuba",funcionarios:20,jornais:10},
+  {nome:"Bcp Cores Injecao e Pintura Em Pecas Termoplasticas - EIRELI",endereco:"R Sergio Ueda, 586, Park Comercial de",cidade:"Indaiatuba",funcionarios:0,jornais:10},
+  {nome:"Evolution Park Embalagens LTDA EPP",endereco:"Rua Augusto Poltronieri, 203, Pq Industrial",cidade:"Indaiatuba",funcionarios:0,jornais:10},
+  {nome:"Hexis Cientifica LTDA",endereco:"R. Crisolita, 130, R. Campestre Jóia",cidade:"Indaiatuba",funcionarios:10,jornais:10},
+  {nome:"Dva Brasil Produtos Agricolas LTDA",endereco:"Estestrada General Motors, 852 Galpao 13, Caldeira",cidade:"Indaiatuba",funcionarios:0,jornais:10},
+  {nome:"Tecnopecas Pecas Tecn. e Fitas Adesivas LTDA",endereco:"Estrada General Motos S/N, Cruz Alta",cidade:"Indaiatuba",funcionarios:15,jornais:10},
+  {nome:"Aff Brasil Comercio de Aromatizantes LTDA",endereco:"Rua Moises Valezin, 201, Caldeira",cidade:"Indaiatuba",funcionarios:0,jornais:10},
+  {nome:"Norquima Prod. Quimicos LTDA",endereco:"R. Moisés Valezin, 341, Caldeira",cidade:"Indaiatuba",funcionarios:88,jornais:10},
+  {nome:"Ebf Ind. e Com. de Artefatos de Plasticos LTDA",endereco:"Rod. Eng. Ermênio Oliv. Penteado S/N - KM 54,5, Itaici",cidade:"Indaiatuba",funcionarios:20,jornais:10},
+  {nome:"Mhl Injecao Plastica LTDA",endereco:"Rua Mafalda Barnabe Soliane, 334, Comercial Vitoria Ma",cidade:"Indaiatuba",funcionarios:0,jornais:10},
+  {nome:"Sca Servicos e Tratamentos de Efluentes LTDA",endereco:"R Mafalda Barnabe Soliane S/N Lote 19 Quadra e, Comercial Vitoria Ma",cidade:"Indaiatuba",funcionarios:35,jornais:10},
+  {nome:"Samont Solucoes Industriais LTDA EPP",endereco:"Rua Mafalda Barnabe Soliane 124 - Galpao 01, Comercial Vitoria Ma",cidade:"Indaiatuba",funcionarios:0,jornais:10},
+  {nome:"Agrotechnica Ind e Com de Fertilizantes LTDA EPP",endereco:"Rua Mafalda Barnabe Soliane 414, Comercial Vitoria Ma",cidade:"Indaiatuba",funcionarios:0,jornais:10},
+  {nome:"Poly Resins Ind Com e Dist de Res e Fibras Sinteticas LTDA",endereco:"Rua Mafalda Barnabe Soliane, 313, Comercial Vitoria Ma",cidade:"Indaiatuba",funcionarios:0,jornais:10},
+  {nome:"Kation Raiden do Brasil LTDA",endereco:"Rua Mafalda Barnabe Soliane , 267, Comercial Vitoria Ma",cidade:"Indaiatuba",funcionarios:0,jornais:10},
+  {nome:"Dioxide Industria Quimica LTDA",endereco:"Av. Vitória Rossi Martini, 641, D.i. Vitória Martini",cidade:"Indaiatuba",funcionarios:5,jornais:10},
+  {nome:"Flexbox Ind. e Com. de Embalagens LTDA",endereco:"Av. Vitória Rossi Martini, 1055, D.i. Vitória Martini",cidade:"Indaiatuba",funcionarios:30,jornais:10},
+  {nome:"Hwa Ind. e Com. de Insumos Contr. Civil LTDA",endereco:"Av. Vitória Rossi Martini, 100, D.i. Vitória Martini",cidade:"Indaiatuba",funcionarios:20,jornais:10},
+  {nome:"Metalcoat Ind. e Com. Prod. Quimicos LTDA ME",endereco:"Av. Vitória Rossi Martini, 839, D. I. Vitória Martini",cidade:"Indaiatuba",funcionarios:35,jornais:10},
+  {nome:"Policomp Industria e Comercio LTDA",endereco:"Av. Vitória Rossi Martini, 270, Lot. Com. Vitória Mart13347-613",cidade:"Indaiatuba",funcionarios:30,jornais:10},
+  {nome:"Serquimico LTDA",endereco:"R. Vitória Rossi Martini, 365, D. I. Vitória Martini",cidade:"Indaiatuba",funcionarios:5,jornais:10},
+  {nome:"Luxe Primmer LTDA - EPP",endereco:"Av.vitoria Rossi Martini, 1155, Distrito Comercial V",cidade:"Indaiatuba",funcionarios:0,jornais:10},
+  {nome:"R&s Residuos e Solucoes EIRELI EPP",endereco:"Avenida Vitoria Rossi Martini 1123, Comercial Vitoria Ma",cidade:"Indaiatuba",funcionarios:0,jornais:10},
+  {nome:"Plastnova Industria e Comercio de Plasticos EIRELI",endereco:"Avenida Vitoria Rossi Martini 1103, Comercial Vitoria Ma",cidade:"Indaiatuba",funcionarios:0,jornais:10},
+  {nome:"Overcoming Ink Technology Industria de Tintas e Vernizes L",endereco:"Avenida Vitoria Rossi Martini 1203, Comercial Vitoria Ma",cidade:"Indaiatuba",funcionarios:0,jornais:10},
+  {nome:"Fertili Industria e Comercio de Produtos Para Construcao C",endereco:"Avenida Vitoria Rossi Martini 140, Comercial Vitoria Ma",cidade:"Indaiatuba",funcionarios:0,jornais:10},
+  {nome:"Mix Plast Inj. e Pint. Pecas Term. LTDA ME",endereco:"R. Vicente Martini, 80, Com. Vitória Martini",cidade:"Indaiatuba",funcionarios:5,jornais:10},
+  {nome:"Kesther Injecao e Pinturas Especiais EIRELI EPP",endereco:"Rua Vicente Martini, 80 - Salao 2, Comercial Vitoria Ma",cidade:"Indaiatuba",funcionarios:0,jornais:10},
+  {nome:"Karbio Industria de Solucoes Quimicas LTDA - ME",endereco:"Rua Frederico Magnusson 238, Comercial Vitoria Ma",cidade:"Indaiatuba",funcionarios:0,jornais:10},
+  {nome:"Maxi Chem Ind de Prod Quim EIRELI EPP",endereco:"Rua Frederico Magnusson 118, Comercial Vitoria Ma",cidade:"Indaiatuba",funcionarios:0,jornais:10},
+  {nome:"Elemento W Ind. e Com. Prod. Gig. Pessoal LTDA EPP",endereco:"R. Alameda Júpter, 439, Com. Vitória Martini",cidade:"Indaiatuba",funcionarios:5,jornais:10},
+  {nome:"Bio Controle Met. de Cont. de Pragas LTDA",endereco:"R. Emma Gazzi Magnusson, 405, D.i. Vitória Martini",cidade:"Indaiatuba",funcionarios:15,jornais:10},
+  {nome:"Rmw Bem. Ind. Com. Imp. e Exp. LTDA",endereco:"R. Ema Gazzi Magnusson, 285, Vitória Martini",cidade:"Indaiatuba",funcionarios:10,jornais:10},
+  {nome:"Prom do Brasil LTDA",endereco:"Rua Ema Gazzi Magnusson, 174, Comercial Vitoria Ma",cidade:"Indaiatuba",funcionarios:0,jornais:10},
+  {nome:"Colorcon do Brasil LTDA",endereco:"Rua Ema Gazzi Magnusson 205, Comercial Vitoria Ma",cidade:"Indaiatuba",funcionarios:0,jornais:10},
+  {nome:"Makerplast Com.de Plasticos e Servicos Industriais LTDA",endereco:"Rua Ema Gazzi Magnusson, Comercial Vitoria Ma",cidade:"Indaiatuba",funcionarios:0,jornais:10},
+  {nome:"Polo Ind. e Com. de Tintas LTDA ME",endereco:"R. Alberto Magnusson, 322, Com. Vitória Martini",cidade:"Indaiatuba",funcionarios:5,jornais:10},
+  {nome:"Targetplast Ind. e Com. de Plást. Injet. LTDA",endereco:"R. Alberto Magnusson, 34, Com. Vitória Martini",cidade:"Indaiatuba",funcionarios:10,jornais:10},
+  {nome:"Cronus Brasil LTDA EPP",endereco:"Rua Alberto Magnusson, 137, Comercial Vitoria Ma",cidade:"Indaiatuba",funcionarios:0,jornais:10},
+  {nome:"Sigtech Ind e Com de Elet LTDA EPP",endereco:"Rua Alberto Magnusson 142, Comercial Vitoria Ma",cidade:"Indaiatuba",funcionarios:0,jornais:10},
+  {nome:"Tmc Industria de Tintas Graficas LTDA",endereco:"R. Esmeralda Martini Paula, 404, Com. Vitória Martini",cidade:"Indaiatuba",funcionarios:35,jornais:10},
+  {nome:"Solentus do Brasil Ind. Com. Imp. Exp. LTDA",endereco:"Rua Esmeralda Martini Paula 189, Comercial Vitoria Ma",cidade:"Indaiatuba",funcionarios:0,jornais:10},
+  {nome:"Cfs do Brasil Ind. Com. Imp. e Exp. de Adit. Aliment. LTDA",endereco:"Rua Esmeralda Martini Paula 189, Comercial Vitoria Ma",cidade:"Indaiatuba",funcionarios:25,jornais:10},
+  {nome:"Esplendor Tratamento de Superficie LTDA",endereco:"Av. Vitória Rossi Martini, 1611, American Park Indus",cidade:"Indaiatuba",funcionarios:30,jornais:10},
+  {nome:"Lubrotec Quimica LTDA",endereco:"Av. Vitória Rossi Martini, 1451, American Park Indus",cidade:"Indaiatuba",funcionarios:35,jornais:10},
+  {nome:"Zanini Industria de Autopecas LTDA",endereco:"Av. Vitória Rossi Martini, 1587, American Park Indus",cidade:"Indaiatuba",funcionarios:35,jornais:10},
+  {nome:"Projetar Injecao e Cromacao Em Pecas LTDA",endereco:"Avenida Vitoria Rossi Martini, 1611, American Park Empre",cidade:"Indaiatuba",funcionarios:0,jornais:10},
+  {nome:"Green Palm Quimica LTDA",endereco:"R. Alameda Júpter, 409, American Park Indus",cidade:"Indaiatuba",funcionarios:20,jornais:10},
+  {nome:"Alltech do Brasil Agroindustrial LTDA",endereco:"Alameda Jupiter 750, American Park Empre",cidade:"Indaiatuba",funcionarios:0,jornais:10},
+  {nome:"Massen Produtos Biologicos LTDA.",endereco:"Alameda Jupiter, 542, American Park Empre",cidade:"Indaiatuba",funcionarios:0,jornais:10},
+  {nome:"Agroplace Industria e Comercio LTDA",endereco:"Alameda Jupiter, 653, American Park Empre",cidade:"Indaiatuba",funcionarios:0,jornais:10},
+  {nome:"Agl Industria de Produtos Agricolas LTDA",endereco:"Alameda Jupiter,543, American Park Empre",cidade:"Indaiatuba",funcionarios:0,jornais:10},
+  {nome:"Erviegas Quim Fina e Plasticos EIRELI",endereco:"Alameda Plutao 593, American Park Empre",cidade:"Indaiatuba",funcionarios:0,jornais:10},
+  {nome:"Ja Chemical Fluids LTDA",endereco:"Alameda Plutao, 650, American Park Empre",cidade:"Indaiatuba",funcionarios:0,jornais:10},
+  {nome:"Glass Color do Brasil Ind. Com. LTDA EPP",endereco:"R. Alameda Vênus, 250, American Park Indus",cidade:"Indaiatuba",funcionarios:20,jornais:10},
+  {nome:"Sifraest Produtos Plasticos LTDA EPP",endereco:"R. Alameda Vênus, 380 (fundos), American Park Indus",cidade:"Indaiatuba",funcionarios:25,jornais:10},
+  {nome:"Innovak Industria de Materiais Plasticos e Embalagens LTDA",endereco:"Alameda Vnus, 373, Amerikan Park Empre",cidade:"Indaiatuba",funcionarios:0,jornais:10},
+  {nome:"Micaram Industria e Comercio de Produtos Quimicos LTDA",endereco:"Alameda Venus 300, American Park Empre",cidade:"Indaiatuba",funcionarios:0,jornais:10},
+  {nome:"Total Med Ind e Com de Prod Med LTDA EPP",endereco:"Alameda Mercurio 120, American Park Empre",cidade:"Indaiatuba",funcionarios:29,jornais:10},
+  {nome:"Honma Comesticos Industria Comercio Importacao e Exporta",endereco:"Al Mercurio 98, American Park Empre",cidade:"Indaiatuba",funcionarios:0,jornais:10},
+  {nome:"Ipa Injecao Pintura Automobilistica LTDA",endereco:"Alameda Mercurio 55 Galpão 2, American Park Empre",cidade:"Indaiatuba",funcionarios:0,jornais:10},
+  {nome:"Modernaplast Ind e Com de Prod Plast EIRELI ME",endereco:"R. Senai, 825, Pimenta",cidade:"Indaiatuba",funcionarios:15,jornais:10},
+  {nome:"Farma Generica Ind. Med. Faria Lima LTDA ME",endereco:"R. Dr. Sérgio Mario de Almeida, 36, Jd. Morada do Sol",cidade:"Indaiatuba",funcionarios:10,jornais:10},
+  {nome:"Tecnofitas Industria de Pecas Tecnicas Auto Adesivas LTDA",endereco:"R Carlos Roberto Jacober, 71, Europark Comercial",cidade:"Indaiatuba",funcionarios:0,jornais:10},
+  {nome:"Forpacking Industria e Com de Embalagens Especiais LTDA",endereco:"Rua: Fausto Sidinei Pansonato, 469, Europak Comercial",cidade:"Indaiatuba",funcionarios:0,jornais:10},
+  {nome:"Acquila Ind. e Com. de Vernizes LTDA",endereco:"Av. Horst Frederico João Heer, 2065, Europark Comercial",cidade:"Indaiatuba",funcionarios:91,jornais:10},
+  {nome:"Ultrafine Techn. Ind. e Com. LTDA",endereco:"R. Bonifácio Rosso Ros, 260, D. I. João Narezzi",cidade:"Indaiatuba",funcionarios:10,jornais:10},
+  {nome:"Ultrafine Techn. Ind. e Com. de Prod. Quimicos LTDA",endereco:"R Bonifacio Rosso Ros, 260, Cruz Alta",cidade:"Indaiatuba",funcionarios:0,jornais:10},
+  {nome:"Kubix Agroindustrial LTDA",endereco:"Bonifcacio Rosso Ros, 260, Cruz Alta",cidade:"Indaiatuba",funcionarios:0,jornais:10},
+  {nome:"Syngenta Protecao de Cultivos LTDA",endereco:"R Bonifacio Rosso Ros - 260 - Sala 1, Cruz Alta",cidade:"Indaiatuba",funcionarios:0,jornais:10},
+  {nome:"Lmac Manutencao de Maq Equipamentos LTDA",endereco:"Rua Emilia Lazarini Beccari, 136, Residencial Monte V",cidade:"Indaiatuba",funcionarios:0,jornais:10},
+  {nome:"Socer Rb Ind e Com LTDA - Itapetininga",endereco:"Estm Olavo Egydio de Souza Aranha Setubal, 251 Bl, Ponte Alta",cidade:"Itapetininga",funcionarios:0,jornais:10},
+  {nome:"Mascote Injecao Plastica LTDA",endereco:"Av. Caetano Ruggieri, 2858, Pq. Nossa Sra. Candel0",cidade:"Itu",funcionarios:10,jornais:10},
+  {nome:"Mambra do Brasil EIRELI - ME",endereco:"R Ignacio Rodrigues D'avila, 490, Vila Padre Bento",cidade:"Itu",funcionarios:0,jornais:10},
+  {nome:"Drako Quimica LTDA",endereco:"Av. Noel Rosa S/N, Putribu de Cima",cidade:"Itu",funcionarios:10,jornais:10},
+  {nome:"Trevi Derivados de C. Ind. e Com. LTDA EPP",endereco:"Marginal Emicol, 550, Taperinha",cidade:"Itu",funcionarios:35,jornais:10},
+  {nome:"Vecchi Lubrificantes LTDA",endereco:"Estrada Para O Bairro Canjica, 3000, Bairro Canjica",cidade:"Itu",funcionarios:30,jornais:10},
+  {nome:"Rodolfo Barizon Rosa 38593138861",endereco:"Rua Joaquim Bernardes Borges, 603, Centro",cidade:"Itu",funcionarios:0,jornais:10},
+  {nome:"Continental Produtos Biologicos LTDA",endereco:"R. Santana, 305, Centro",cidade:"Itu",funcionarios:15,jornais:10},
+  {nome:"Jm Farma Comercial LTDA",endereco:"R. Sorocaba, 1515, Pq. das Rosas",cidade:"Itu",funcionarios:5,jornais:10},
+  {nome:"Julio Vaz de Lima Itu ME",endereco:"Praça Gaspar Ricardo, 50 - Box 1, Centro",cidade:"Itu",funcionarios:25,jornais:10},
+  {nome:"Publicenter Industria e Comercio LTDA",endereco:"R. Dom Manuel da Silveira D`elboux, 375, Jd. Novo Itu",cidade:"Itu",funcionarios:30,jornais:10},
+  {nome:"Ituplastico Ind e Com Atacadista de Embalagens LTDA",endereco:"Rua Dom Manuel da Silveira D'elboux 408, Jardim Novo Itu",cidade:"Itu",funcionarios:0,jornais:10},
+  {nome:"Agrozootec Ind e Com de P. A. LTDA",endereco:"Rua Tenente Jose Gregorio do Nascimento, 50, Jardim Novo Itu",cidade:"Itu",funcionarios:0,jornais:10},
+  {nome:"Cricoplast Ind de Artigos Plasticos LTDA ME",endereco:"R. Maestro Gentil de Oliveira, 80, Jd. Padre Bento",cidade:"Itu",funcionarios:0,jornais:10},
+  {nome:"Americo Gomes da Costa Junior Itu ME",endereco:"R. Maria Inês Pasti Pedroso, 75, São Luiz",cidade:"Itu",funcionarios:40,jornais:10},
+  {nome:"Falub Ind. e Com. de Lubrificantes LTDA",endereco:"R. Dom Gabriel Paulino Bueno Couto - KM 94, Pedregulho",cidade:"Itu",funcionarios:40,jornais:10},
+  {nome:"Luiz Fernando Lorenzani ME",endereco:"Av. Senador Teotônio Vilela, 86, Jd. Aeroporto",cidade:"Itu",funcionarios:5,jornais:10},
+  {nome:"Idealplast Ind. e Com. Plast. LTDA ME",endereco:"Av. das Monções, 1011, Rancho Grande",cidade:"Itu",funcionarios:30,jornais:10},
+  {nome:"Gerson Goncalves Embalagens",endereco:"Rua Benevenuto Vieira, 82/88, Rancho Grande",cidade:"Itu",funcionarios:0,jornais:10},
+  {nome:"Femachi Ind e Com de Embalagens Medicas LTDA",endereco:"Avenida Laroy S. Starrett, 841, Rancho Grande",cidade:"Itu",funcionarios:0,jornais:10},
+  {nome:"Trioplast Ind. e Com. de Materiais Plasticos",endereco:"Av. Laroy S. Starret, 870, Rancho Grande",cidade:"Itu",funcionarios:40,jornais:10},
+  {nome:"Femachi Ind e Com de Embalagens LTDA",endereco:"Avenida Laroy S. Starrett, 841, Rancho Grande",cidade:"Itu",funcionarios:0,jornais:10},
+  {nome:"Sbrissa & Cia LTDA",endereco:"Av. José Carlos Massoco, 38, Pinheirinho",cidade:"Itu",funcionarios:33,jornais:10},
+  {nome:"Kanaflex S/A Industria de Plasticos",endereco:"Rod. Waldomiro Corrêa de Camargo, 16.300 Km60,5, Vila Martins",cidade:"Itu",funcionarios:0,jornais:10},
+  {nome:"Artex Industria de Tintas LTDA",endereco:"Rod. Estadual SP 79 KM 63, Vila Martins",cidade:"Itu",funcionarios:25,jornais:10},
+  {nome:"Canarias Fertil LTDA EPP",endereco:"Rod. Waldomiro Corrêa de Camargo S/N - KM 59, American Park Indus",cidade:"Itu",funcionarios:10,jornais:10},
+  {nome:"Fan Technology Resources Tecnologia Em Sistemas de Venti",endereco:"Rod. Waldomiro Corrêa de Camargo, Sn - KM 53,7, Cruz das Almas",cidade:"Itu",funcionarios:5,jornais:10},
+  {nome:"Fustiplast Embalagens Plasticas do Brasil S/A",endereco:"Rod. Waldomiro Corrêa de Camargo S/N - KM 59, American Park Indus",cidade:"Itu",funcionarios:15,jornais:10},
+  {nome:"Inpet Brasil Embalagens Plasticas S/A",endereco:"Rod. Waldomiro Corrêa de Camargo S/N - KM 64, Vila Martins",cidade:"Itu",funcionarios:30,jornais:10},
+  {nome:"Mondicap Cabides LTDA",endereco:"Rod. Waldomiro Corrêa de Camargo - Km63 S/N, 0",cidade:"Itu",funcionarios:20,jornais:10},
+  {nome:"Tecsis Tecnologia e Sistemas Avancados S/A",endereco:"Rod. Waldomiro Corrêa Camargo S/N KM 60,5, Pirapitingui",cidade:"Itu",funcionarios:20,jornais:10},
+  {nome:"Jacuzzi do Brasil Ind. e Comercio LTDA",endereco:"Rod. Waldomiro Corrêa de Camargo - Km53,5 - Sp79, Cruz das Almas",cidade:"Itu",funcionarios:132,jornais:10},
+  {nome:"Vitae Servicos Empresariais EIRELI",endereco:"Rua Capitao Silvio Fleming, 446, Vila Nova",cidade:"Itu",funcionarios:0,jornais:10},
+  {nome:"Delta Lubrificantes LTDA ME",endereco:"R. José Gonçalves Galeão, 142, Jd. Avelino",cidade:"Itu",funcionarios:40,jornais:10},
+  {nome:"Keese & Albertini LTDA ME",endereco:"Av. Prudente de Moraes, 964, Rancho Grande",cidade:"Itu",funcionarios:35,jornais:10},
+  {nome:"Contemar Ambiental Com. de Conteiner LTDA",endereco:"Avenida Tiradentes, 1350, Parque Industrial",cidade:"Itu",funcionarios:0,jornais:10},
+  {nome:"Isopwall Industria LTDA",endereco:"Avenida Tiradentes ,2700, Parque Industrial",cidade:"Itu",funcionarios:0,jornais:10},
+  {nome:"Mold Tech Automotive LTDA",endereco:"Avenida Caetano Ruggieri - 5361, Parque das Industri",cidade:"Itu",funcionarios:0,jornais:10},
+  {nome:"Caio Afonso Goncalves ME",endereco:"Av. Caetano Ruggieri, 5201, Cruz das Almas",cidade:"Itu",funcionarios:5,jornais:10},
+  {nome:"Inova Tubos Industria e Comercio LTDA EPP",endereco:"Av. Caetano Ruggieri, 5361, Pq. das Indústrias",cidade:"Itu",funcionarios:25,jornais:10},
+  {nome:"Jc Ind. e Com. Souza & Campos ME",endereco:"Av. Caetano Ruggieri, 5311, Pq. Industrial",cidade:"Itu",funcionarios:35,jornais:10},
+  {nome:"Nero Injecao Plastica LTDA EPP",endereco:"R. Suely Aparecida Costa, 28, Pq. Nossa Sra. Candel13310-200",cidade:"Itu",funcionarios:40,jornais:10},
+  {nome:"R. da Silva Goncalves ME",endereco:"R. Olívio Prejante, 13, Altos de São José",cidade:"Itu",funcionarios:5,jornais:10},
+  {nome:"Primax Com. de Perfis e Acessorios LTDA ME",endereco:"R. São Joaquim, 155, Vila São Francisco",cidade:"Itu",funcionarios:25,jornais:10},
+  {nome:"Advagen Biotech LTDA",endereco:"Rua Gabriel Leite de Carvalho 508, Nossa Senhora Apar",cidade:"Itu",funcionarios:0,jornais:10},
+  {nome:"Fersil Ferram. e Injecao Plastica LTDA ME",endereco:"R. Jorge Simeira, 118/128, Nossa Sra. Aparecid",cidade:"Itu",funcionarios:25,jornais:10},
+  {nome:"Mendes & Lemos Ind. e Com. de Artigos Plast. LTDA",endereco:"R. Jorge Simeira, 404, Nossa Sra. Aparecid",cidade:"Itu",funcionarios:30,jornais:10},
+  {nome:"Soproplast Ind e Com de Emb Plast EIRELI EPP",endereco:"Avenida Caetano Ruggieri 1870, Parque Residencial M",cidade:"Itu",funcionarios:0,jornais:10},
+  {nome:"Lws Pereira Junior LTDA",endereco:"Avenida Caetano Ruggieri 1564, Parque Residencial M",cidade:"Itu",funcionarios:0,jornais:10},
+  {nome:"Priante Ind. e Com. de Ins. Ind. e Prod. Quim. LTDA",endereco:"Av. Augusto Francischinelli, 3150, Itaim",cidade:"Itu",funcionarios:20,jornais:10},
+  {nome:"Luna Injecao Plastica LTDA ME",endereco:"R Luisa Camargo Carneiro 50c, Nulceo Ind Jardim Po",cidade:"Itu",funcionarios:10,jornais:10},
+  {nome:"Ebraz Solucoes Em Tecidos LTDA - EPP",endereco:"R. Dois, 60, Jd. Porto Seguro",cidade:"Itu",funcionarios:15,jornais:10},
+  {nome:"Andre Luis Camilotti ME",endereco:"R Dois S/N, Nuc Ind Jd Porto Seg",cidade:"Itu",funcionarios:0,jornais:10},
+  {nome:"Delker Plasticos Tecnicos LTDA",endereco:"Rod. do Açucar - KM 29,7 - Cx. Postal 131, 0",cidade:"Itu",funcionarios:35,jornais:10},
+  {nome:"Uniron Industria e Comercio LTDA",endereco:"Rodovia do Açucar KM 17,8 S/N - Casa I, Taperá Grande",cidade:"Itu",funcionarios:25,jornais:10},
+  {nome:"Sakura Tech Brasil Ferr. e Mol. Plast. LTDA",endereco:"Rua 2 Esquina Com 4 S/N - Lote 9,10,11,12,13,14, Jd. Emicol",cidade:"Itu",funcionarios:56,jornais:10},
+  {nome:"Imperium Comercio de Pecas e Lubrificantes LTDA",endereco:"Estrada do Taperinha Est Augusto Zanoni, 240 Anex, Jardim Emicol",cidade:"Itu",funcionarios:0,jornais:10},
+  {nome:"Zortech Industria de Termoplasticos LTDA",endereco:"Rua Leon Ramires Nicolau,11, Progresso",cidade:"Itu",funcionarios:0,jornais:10},
+  {nome:"Ecos Solucoes Sustentaveis LTDA EPP",endereco:"Rua Luiz Pionte, 150, Progresso",cidade:"Itu",funcionarios:0,jornais:10},
+  {nome:"Guacu Torneiras Ind. e Comercio LTDA",endereco:"R Domingos Piunti 251, Vila Progresso",cidade:"Itu",funcionarios:25,jornais:10},
+  {nome:"Jofi Injecao de Plasticos LTDA EPP",endereco:"Av. Caetano Ruggieri, 1860, Jd. Mayara",cidade:"Itu",funcionarios:10,jornais:10},
+  {nome:"Central Belem Ind. e Com. de Plast. LTDA EPP",endereco:"Estrada do Jurumirim, 400, Canjica",cidade:"Itu",funcionarios:0,jornais:10},
+  {nome:"Adesicol Industria de Adesivos LTDA",endereco:"R. Anita Garibaldi, 246, Galpao Inferior",cidade:"Porto Feliz",funcionarios:20,jornais:10},
+  {nome:"Ap Pharma Systems Atom. e Disp. LTDA",endereco:"Av. Florent Deleu, 640, Cangueira",cidade:"Porto Feliz",funcionarios:10,jornais:10},
+  {nome:"Ati Industria e Comercio LTDA",endereco:"Rod. Marechal Rondon KM 140/123 Mb - Cx Postal 101, Itanhaem",cidade:"Porto Feliz",funcionarios:35,jornais:10},
+  {nome:"Carobi Ind. e Com. de Prod. Quimicos LTDA",endereco:"R. Silvio Brand Corrêa, 1023, Da Ponte",cidade:"Porto Feliz",funcionarios:15,jornais:10},
+  {nome:"Ceratec Industria e Comercio LTDA",endereco:"Rod. Marechal Rondon S/N SP 300 - KM 134,5, Cangueira",cidade:"Porto Feliz",funcionarios:30,jornais:10},
+  {nome:"Claudir Naia Ind. e Com. de Plasticos LTDA",endereco:"Rod. Marechal Rondon KM 134,5, Campo Largo",cidade:"Porto Feliz",funcionarios:5,jornais:10},
+  {nome:"Emphasys Imp. Export. Dist. de Bem. LTDA",endereco:"Av. Florent Deleu, 640 - Galpão I e II, Cangueira",cidade:"Porto Feliz",funcionarios:25,jornais:10},
+  {nome:"Industria e Comercio Manluplast LTDA",endereco:"Av. das Monções, 320, Itaqui",cidade:"Porto Feliz",funcionarios:20,jornais:10},
+  {nome:"Ipet Industria e Comercio LTDA",endereco:"Estrada da Glória S/N - KM 05, Glória",cidade:"Porto Feliz",funcionarios:5,jornais:10},
+  {nome:"Kubika Plasticos LTDA",endereco:"R. Anita Garibaldi, 289, Cangueira",cidade:"Porto Feliz",funcionarios:15,jornais:10},
+  {nome:"Lanxess Ind. de Prod. Quimicos e Plasticos LTDA",endereco:"Rod. Marechal Rondon KM 139, Campo Largo",cidade:"Porto Feliz",funcionarios:353,jornais:10},
+  {nome:"Mb Quimica LTDA",endereco:"R. Altino Arantes, 335, Centro",cidade:"Porto Feliz",funcionarios:15,jornais:10},
+  {nome:"Panda Ind. Tuvos e Perfis de Pvc LTDA EPP",endereco:"Rod. Marechal Rondon S/N SP 300 - KM 134,5, Campo Largo",cidade:"Porto Feliz",funcionarios:15,jornais:10},
+  {nome:"Plastshivas Industria e Comercio LTDA EPP",endereco:"Rod. Antônio Pires de Almeida, S/N KM 23,5 Fundos, Piquira",cidade:"Porto Feliz",funcionarios:25,jornais:10},
+  {nome:"Titana Tec. Com. e Ind. Polimeros LTDA",endereco:"Av. Araritaguaba, 210, Distrito Industrial",cidade:"Porto Feliz",funcionarios:35,jornais:10},
+  {nome:"Vn Plast Ind. e Com. de Plasticos LTDA ME",endereco:"Av. Dr. Antônio Pires de Almeida, 1985, Bambu",cidade:"Porto Feliz",funcionarios:40,jornais:10},
+  {nome:"Winner Horse Industria e Comercio LTDA",endereco:"Av. Coronel Horácio Bósson, 95 - Cx Postal 28, Colônia Rodrigo & S",cidade:"Porto Feliz",funcionarios:20,jornais:10},
+  {nome:"Colabrasil Comercial e Distribuidora LTDA",endereco:"Av Coronel Horacio Borson 395, Colonia Rodrigo Sil",cidade:"Porto Feliz",funcionarios:0,jornais:10},
+  {nome:"Evercol Industria e Comercio LTDA - EPP",endereco:"Rod Marechal Rondom KM 135, Canguera",cidade:"Porto Feliz",funcionarios:0,jornais:10},
+  {nome:"Portotex Ind e Com Eirelli EPP",endereco:"R Joao Menegon 140, Cidade Jardim",cidade:"Porto Feliz",funcionarios:0,jornais:10},
+  {nome:"Aurora Pack Embalagens LTDA - ME",endereco:"Av Monsenhor Seckler 1241, Vila America",cidade:"Porto Feliz",funcionarios:0,jornais:10},
+  {nome:"Odin Industria Termoplastica EIRELI ME",endereco:"Rod Antonio Pires de Almeida S/N KM 17, Itaqui",cidade:"Porto Feliz",funcionarios:0,jornais:10},
+  {nome:"Megh Industria e Comercio LTDA",endereco:"Av dos Trabalhadores, 940, Canguera",cidade:"Porto Feliz",funcionarios:0,jornais:10},
+  {nome:"Sarstedt LTDA",endereco:"Rod Marechal Rondon S/N KM 126, Soamim",cidade:"Porto Feliz",funcionarios:0,jornais:10},
+  {nome:"Sp&e Valorizacao de Residuos LTDA",endereco:"Estrada da Gloria, Km4,5, Bairro da Gloria",cidade:"Porto Feliz",funcionarios:0,jornais:10},
+  {nome:"Cosmica Pet Industria e Comercio EIRELI",endereco:"Rod Antonio Pires de Almeida S/N KM 23,5, Piquira",cidade:"Porto Feliz",funcionarios:0,jornais:10},
+  {nome:"Biobalance Farma LTDA",endereco:"Av Florent Deleu, 640 - Galpao 3, Cangueira",cidade:"Porto Feliz",funcionarios:0,jornais:10},
+  {nome:"Healing Essenciais Florais Comercial, Importadora, Exportad",endereco:"Av Doutor Antonio Pires de Almeida, 290, Centro",cidade:"Porto Feliz",funcionarios:0,jornais:10},
+  {nome:"Envalior Industria de Materiais de Performance LTDA",endereco:"Rod Marechal Rondon S/N KM 139, Canguera",cidade:"Porto Feliz",funcionarios:0,jornais:10},
+  {nome:"Ube Latin America LTDA",endereco:"Rod.marechal Rondon S/N, KM 139 Quadra Pfz 50",cidade:"Porto Feliz",funcionarios:0,jornais:10},
+  {nome:"Terraplan Fertilizantes Organicos LTDA",endereco:"Rod.marechal Rondon, S/N, Caicatinga",cidade:"Porto Feliz",funcionarios:0,jornais:10},
+  {nome:"Max Dk Ingredientes LTDA ME",endereco:"Rua Palermo, 57, Jd. Europa",cidade:"Salto",funcionarios:0,jornais:10},
+  {nome:"Conterlub Comercio e Serv de Embalagens Plast EIRELI EPP",endereco:"Rua Jornal O Trabalhador, 112, Julio Ustrito",cidade:"Salto",funcionarios:0,jornais:10},
+  {nome:"Bambu Brasil Industria e Comercio de Cosmeticos LTDA",endereco:"Rua Argentina 1294, Guarau",cidade:"Salto",funcionarios:0,jornais:10},
+  {nome:"Agrivalle Brasil Ind Com Prod Agricolas LTDA",endereco:"Av. Tranquilo Gianini, 1090, Distrito Industrial",cidade:"Salto",funcionarios:25,jornais:10},
+  {nome:"Pirosol Produtos Quimicos LTDA",endereco:"Estrada Velha Salto/indaiatuba, 2120, Olaria",cidade:"Salto",funcionarios:30,jornais:10},
+  {nome:"Pyrozzar Industria Quimica e Comercio LTDA",endereco:"Estrada Velha Salto/indaiatuba, 2120, Olaria",cidade:"Salto",funcionarios:35,jornais:10},
+  {nome:"Talgo Ind. e Com. LTDA (deloy Chemical Ltda)",endereco:"Rodovia SP 75 - KM 42,2, Lageado",cidade:"Salto",funcionarios:40,jornais:10},
+  {nome:"Sas do Brasil Solucoes Agro Sustentaveis e Comercio LTDA.",endereco:"Rua Batalha do Riachuelo 7500 - Barracao 3, Olaria",cidade:"Salto",funcionarios:0,jornais:10},
+  {nome:"Brako Form. Ind. Com. Cont. Pec. Roto. LTDA",endereco:"Rua Vinte e Tres de Maio 224, Centro",cidade:"Salto",funcionarios:0,jornais:10},
+  {nome:"Brako Form Ind e Com de Cont e Pec Rot LTDA EPP",endereco:"Rua Vinte e Tres de Maio 224, Centro",cidade:"Salto",funcionarios:0,jornais:10},
+  {nome:"Andreia Almeida Cerqueira EPP",endereco:"R. José Galvão, 57, Centro",cidade:"Salto",funcionarios:5,jornais:10},
+  {nome:"Lucas Henrique Vincenzi",endereco:"Rua Maria Vicenzo, 14, Vila Teixeira",cidade:"Salto",funcionarios:0,jornais:10},
+  {nome:"Oraide Aparecida Pavani ME",endereco:"Rua Antonio Vendramini 105, Vila Teixeira",cidade:"Salto",funcionarios:0,jornais:10},
+  {nome:"Embatech Plasticos LTDA",endereco:"R. Batalha do Tuiuti, 1275, Olaria",cidade:"Salto",funcionarios:20,jornais:10},
+  {nome:"Luana Silva Santos Artigos Plasticos ME",endereco:"R. Vicente de Carvalho, 151, Vila Progresso",cidade:"Salto",funcionarios:30,jornais:10},
+  {nome:"Biosphera Ind Farmaceutica LTDA ME",endereco:"Rua John Kennedy, 872, Bela Vista",cidade:"Salto",funcionarios:0,jornais:10},
+  {nome:"Sobrol Sociedade B. de Oleos LTDA ME",endereco:"R. das Bromélias, 256 - Cx. Postal 108, Jd. Porto Seguro",cidade:"Salto",funcionarios:5,jornais:10},
+  {nome:"Tplast Ind. e Com. de Plasticos LTDA EPP",endereco:"R. Japão, 730, Jd. Planalto",cidade:"Salto",funcionarios:15,jornais:10},
+  {nome:"Marcelo de Oliveira Cardoso LTDA",endereco:"Rua Marrocos 207, Jardim das Nacoes",cidade:"Salto",funcionarios:0,jornais:10},
+  {nome:"Jose Reinaldo Vidal EPP",endereco:"R. Egito, 145, Jd. das Nações",cidade:"Salto",funcionarios:20,jornais:10},
+  {nome:"Guilherme Makoto Yashiro ME",endereco:"Av. Remígio Dalla Vechia, 42, Jd. Nair Maria",cidade:"Salto",funcionarios:30,jornais:10},
+  {nome:"Oleicos da Amazonia LTDA",endereco:"Avenida Remigio Dalla Vecchia 359 Quadra 03;lote 07, Jardim Nair Maria",cidade:"Salto",funcionarios:0,jornais:10},
+  {nome:"Oleicos da Amazonia LTDA",endereco:"Avenida Remigio Dalla Vecchia 359 Quadra 03 Lote 7, Jardim Nair Maria",cidade:"Salto",funcionarios:0,jornais:10},
+  {nome:"Athe Plasticos LTDA",endereco:"Rua Fortaleza, 01, Jardim Panorama",cidade:"Salto",funcionarios:0,jornais:10},
+  {nome:"Eps Industria e Comercio de Plasticos LTDA",endereco:"Av. dos Trabalhadores, 248, Jd. Marilia",cidade:"Salto",funcionarios:10,jornais:10},
+  {nome:"Kw Conforto Indústria e Comercio LTDA",endereco:"Avenida dos Trabalhadores 1555, Jardim Marilia",cidade:"Salto",funcionarios:0,jornais:10},
+  {nome:"Socer Rb Industria e Comercio LTDA",endereco:"Estrada do Guarujá, 3150 - Bloco 01, Jd. Marília",cidade:"Salto",funcionarios:10,jornais:10},
+  {nome:"Sivat Abrasivos Especiais LTDA",endereco:"R. Ribeirão Preto, 1121, Jd. Marília",cidade:"Salto",funcionarios:35,jornais:10},
+  {nome:"Multicolor Int Com Ind Imp e Exp de Pig LTDA",endereco:"Avenida Marilia, 611 Complemento B, Jardim Marilia",cidade:"Salto",funcionarios:0,jornais:10},
+  {nome:"Revest Complementos LTDA ME",endereco:"R. Capivari, 20, Jd. Cidade II",cidade:"Salto",funcionarios:5,jornais:10},
+  {nome:"Plast Santos Sociedade Empresarial LTDA",endereco:"Rua Cabreuva, 52, Jardim da Cidade II",cidade:"Salto",funcionarios:0,jornais:10},
+  {nome:"Polyplastic do Brasil Tubos e Polím. LTDA ME",endereco:"R. Cabreúva, 23, Jd. Cidade II",cidade:"Salto",funcionarios:10,jornais:10},
+  {nome:"Janine Rita Bressan ME",endereco:"R. Jundiaí, 1243, Jd. Cidade",cidade:"Salto",funcionarios:25,jornais:10},
+  {nome:"Soldplast Ind. Com. LTDA ME",endereco:"R. Marechal Rondon, 968, Res. Santo Estéfano",cidade:"Salto",funcionarios:15,jornais:10},
+  {nome:"Imerys Fused Minerals Salto LTDA.",endereco:"R. Marechal Rondon, 107, Bairro Estação",cidade:"Salto",funcionarios:129,jornais:10},
+  {nome:"Dragao Injetora de Plasticos LTDA. EPP",endereco:"R. Itália Manfredine, 186, Núcleo Industrial Al",cidade:"Salto",funcionarios:15,jornais:10},
+  {nome:"Mazurchi Quimica LTDA - EPP (lucanema)",endereco:"R. Caraibas, 89, Jd. Itaguaçu",cidade:"Salto",funcionarios:40,jornais:10},
+  {nome:"Ks Laser Ind e Com de Remanufaturados LTDA EPP",endereco:"R. Caiapós, 102, Jd. Itaguaçu",cidade:"Salto",funcionarios:30,jornais:10},
+  {nome:"Botanica Tintas e Revestimentos LTDA ME",endereco:"Avenida Aimores, 176, Estacao",cidade:"Salto",funcionarios:0,jornais:10},
+  {nome:"Infinity Tons Tintas e Revestimentos LTDA",endereco:"Rua Particular , 176, Estação",cidade:"Salto",funcionarios:0,jornais:10},
+  {nome:"Koberlack Ind. e Com. Tintas e Vernizes LTDA",endereco:"R. João Baptista da Cruz, 222, Pq. Res. Rondon",cidade:"Salto",funcionarios:5,jornais:10},
+  {nome:"Nalcon Com. Resid. Plast. e Serv. LTDA ME",endereco:"R. Roque Lazzazera, 166, Jd. N. Sra. Monte Serra13323-300",cidade:"Salto",funcionarios:30,jornais:10},
+  {nome:"Neoquima Ind. e Com. LTDA EPP",endereco:"Rua Roque Lazzazera, 88, Nossa Senhora do M",cidade:"Salto",funcionarios:15,jornais:10},
+  {nome:"Leati Produtos Quimicos LTDA",endereco:"Rua Roque Lazzazera 228, Nossa Senhora do M",cidade:"Salto",funcionarios:0,jornais:10},
+  {nome:"Dorman Brasil Com de Equip de Sin e Seg LTDA - ME",endereco:"Rua Roque Lazzazzera 100, Nossa Senhora do M",cidade:"Salto",funcionarios:0,jornais:10},
+  {nome:"Kuality Produtos Quimicos LTDA EPP",endereco:"R. Jornal O Saltense, 87, Pq. Julio Ustrito",cidade:"Salto",funcionarios:10,jornais:10},
+  {nome:"Jmr Embalagens Plasticas LTDA",endereco:"Rua Jornal O Saltense 147, Julio Ustrito",cidade:"Salto",funcionarios:0,jornais:10},
+  {nome:"Sj Solucoes Quimicas LTDA",endereco:"Rua Jornal O Saltense, 147, Julio Ustrito",cidade:"Salto",funcionarios:0,jornais:10},
+  {nome:"Eco Sinal Ind. e Com. de Plast. LTDA ME",endereco:"R Jornal O Povo 127 L12 Qb, Julio Ustrito",cidade:"Salto",funcionarios:30,jornais:10},
+  {nome:"Eco Conteiner Industria e Comercio de Plasticos LTDA - EPP",endereco:"Rua Jornal O Povo 93, Julio Ustrito",cidade:"Salto",funcionarios:0,jornais:10},
+  {nome:"Milium Comercio de Embalagens EIRELI",endereco:"Rua Jornal O Povo 42, Julio Ustrito",cidade:"Salto",funcionarios:0,jornais:10},
+  {nome:"Eucatex Industria e Comercio LTDA",endereco:"Estrada do Guarujá, 3150, Jd. Marília",cidade:"Salto",funcionarios:258,jornais:10},
+  {nome:"Jf Industria e Comercio LTDA",endereco:"Rua Argentina, 1300, Porto Goes",cidade:"Salto",funcionarios:0,jornais:10},
+  {nome:"Tegplast Injecao de Termoplasticos LTDA ME",endereco:"Estrada Jurumirim, 400, Canjica",cidade:"Salto",funcionarios:25,jornais:10},
+  {nome:"Jm Termoplastic LTDA",endereco:"Estrada do Jurumirim, 290, Canjica",cidade:"Salto",funcionarios:0,jornais:10},
+  {nome:"Art Injet Ind. e Comercio LTDA",endereco:"Estrada Municipal Jurumirim, 250, Conti",cidade:"Salto",funcionarios:20,jornais:10},
+  {nome:"Skylack Tintas e Vernizes LTDA",endereco:"Estrada Jurumirim, 570, Canjica",cidade:"Salto",funcionarios:94,jornais:10},
+  {nome:"Ap Penha EPP",endereco:"Estrada Velha Salto-Itu KM 40 S/N, Canjica",cidade:"Salto",funcionarios:0,jornais:10},
+  {nome:"Verta Eco Solucoes Em Recipientes Plasticos LTDA",endereco:"Rua Argentina , 1488, Guarau",cidade:"Salto",funcionarios:0,jornais:10},
+  {nome:"Fdb Ferramentas e Brunidores Diamantados LTDA",endereco:"R. Estados Unidos, 950, Guaraú",cidade:"Salto",funcionarios:15,jornais:10},
+  {nome:"Cordex Industria e Comercio de Extrusao Plastica LTDA",endereco:"Rua 14 Bis, 250, Quadrac Lote 09",cidade:"Salto",funcionarios:0,jornais:10},
+  {nome:"Cordcom Industria e Comercio de Extrusao Plastica LTDA",endereco:"Rua 14 Bis, 276, Lot.ind.comercial Co",cidade:"Salto",funcionarios:0,jornais:10},
+  {nome:"Flex Ambiental Reciclagem LTDA",endereco:"Rod. Rocha Moutonnee, 4350, Jd. Guarau",cidade:"Salto",funcionarios:0,jornais:10},
+  {nome:"Jads Ind. e Com. de Comesticos LTDA - ME",endereco:"Rua Estado da Bahia 343, S. Pedro S. Paulo",cidade:"Salto",funcionarios:30,jornais:10},
+  {nome:"Gaplast Industria e Comercio LTDA",endereco:"Rua Escocia,180, Jardim Elizabeth",cidade:"Salto",funcionarios:0,jornais:10},
+  {nome:"Guioforming Plásticos LTDA EPP",endereco:"R. América, 1012, Jd. Celani",cidade:"Salto",funcionarios:35,jornais:10},
+  {nome:"Green Fields Industria e Comercio de Materias Plasticos Ltd",endereco:"Rua Inglaterra, 1.111, Jardim Celani",cidade:"Salto",funcionarios:0,jornais:10},
+  {nome:"Luxzen Fab de Art de Plas e Inst de Domos LTDA EPP",endereco:"Rua Inglaterra 31, Distrito Industrial D",cidade:"Salto",funcionarios:10,jornais:10},
+  {nome:"Synthetic Lubrificantes Especiais LTDA EPP",endereco:"Rua Islandia, 63, Jd. Bandeirantes",cidade:"Salto",funcionarios:0,jornais:10},
+  {nome:"Itapack Ind de Emb EIRELI - ME",endereco:"Rua Pais de Gales 116, Distrito Industrial D",cidade:"Salto",funcionarios:0,jornais:10},
+  {nome:"Coopervigue Coop. Ind. Trab. Art. Plast. de Salto",endereco:"R. Padre Bento, 464, Pq. do Lago",cidade:"Salto",funcionarios:20,jornais:10},
+  {nome:"R.a.n. do Espírito Santo Rec. de Res. EPP",endereco:"R. Padre Bento, 694, Pq. do Lago",cidade:"Salto",funcionarios:10,jornais:10},
+  {nome:"Toyobo do Brasil LTDA",endereco:"R. Padre Bento, 858 - Galpão B, Distrito Industrial",cidade:"Salto",funcionarios:10,jornais:10},
+  {nome:"Industria de Capacetes Italia e Plasticos LTDA",endereco:"R. Carmem Prudente, 130, Pq. do Lago",cidade:"Salto",funcionarios:15,jornais:10},
+  {nome:"Portal Plasticos Ind. e Comercio LTDA",endereco:"Rua Carmem Prudente, 130, Distrito Industrial II",cidade:"Salto",funcionarios:0,jornais:10},
+  {nome:"Dynaplast Industrial LTDA",endereco:"Av. Brasília, 461, Jd. Icaraí",cidade:"Salto",funcionarios:15,jornais:10},
+  {nome:"Tansan Liquid Mineral`s Ind. Química LTDA",endereco:"Av. Brasília, 1850 - Galpão I, Jd. Buru",cidade:"Salto",funcionarios:5,jornais:10},
+  {nome:"Helena Maria Vendramini V & Cia LTDA ME",endereco:"R. Astúrias, 642, Jd. Icaraí",cidade:"Salto",funcionarios:40,jornais:10},
+  {nome:"Flerr Industria e Comercio de Produtos Quimicos LTDA",endereco:"Avenida Joao Jabour 601, Jardim Saltense",cidade:"Salto",funcionarios:0,jornais:10},
+  {nome:"Casa Bella Ind. de Tintas LTDA ME",endereco:"R Helio Steffen 486, Vila Romai",cidade:"Salto",funcionarios:20,jornais:10},
+  {nome:"Isotec Pre-Moldados Ltda-Me",endereco:"Rua Apia 18, Jardim Saltense",cidade:"Salto",funcionarios:0,jornais:10},
+  {nome:"Joao Mateus Dias EPP",endereco:"Avenida Jose Maria Marques de Oliveira, 1333, Vila Norma",cidade:"Salto",funcionarios:0,jornais:10},
+  {nome:"Arcanjo Tintas e Revestimentos LTDA",endereco:"Av Padroeira, 81, Jd Sao Gabriel",cidade:"Salto",funcionarios:0,jornais:10},
+  {nome:"Kelvin Cesario dos Santos Lopes",endereco:"Av.da Padroeira, 81, Jd.são Gabriel",cidade:"Salto",funcionarios:0,jornais:10},
+  {nome:"Eckolimp Industria e Comercio de Produtos de Limpeza LTDA",endereco:"Av Padroeira, 272, Jardim Sao Gabriel II",cidade:"Salto",funcionarios:0,jornais:10},
+  {nome:"Arch Quimica Brasil LTDA",endereco:"Av. Brasília, 1500, Buru",cidade:"Salto",funcionarios:15,jornais:10},
+  {nome:"Arxada do Brasil Especialidades Quimicas LTDA",endereco:"Av. Brasilia, 1500, Buru",cidade:"Salto",funcionarios:0,jornais:10},
+  {nome:"Jc Embalagens Oz LTDA",endereco:"Rua das Nacoes Unidas, 1164, Olaria",cidade:"Salto",funcionarios:0,jornais:10},
+  {nome:"Jc Campos Industria e Comercio LTDA",endereco:"R das Nacoes Unidas, 1158, Olaria",cidade:"Salto",funcionarios:0,jornais:10},
+  {nome:"Cie Autometal Salto Ind e Com LTDA",endereco:"Rua Batalha do Riachuelo, 150, Lageado",cidade:"Salto",funcionarios:25,jornais:10},
+  {nome:"Gaplast Injecao de Termoplasticos EIRELI EPP",endereco:"R. Batalha do Riachuelo, 760, Olaria",cidade:"Salto",funcionarios:40,jornais:10},
+  {nome:"Leadforming Plasticos - EIRELI",endereco:"Rua Batalha do Riachuelo, 7500, Lageado",cidade:"Salto",funcionarios:0,jornais:10},
+  {nome:"Decor Colors Tintas LTDA",endereco:"Rua Batalha do Riachuelo, 7500, Olaria",cidade:"Salto",funcionarios:0,jornais:10},
+  {nome:"Luis Antonio Mendes Sbrissa",endereco:"Rua Batalha do Riachuelo 7500 Galpão 01, Olaria",cidade:"Salto",funcionarios:0,jornais:10},
+  {nome:"Sulbras Moldes Plasticos LTDA",endereco:"Rod. Eng. Ermênio O. Penteado (sp75), 2000, Olaria",cidade:"Salto",funcionarios:154,jornais:10},
+  {nome:"Tecnokits Ind e Com de Sistemas Hid LTDA ME",endereco:"Rodovia Engenheiro Ermenio de Oliveira Penteado, 2joana Leite",cidade:"Salto",funcionarios:0,jornais:10},
+  {nome:"Pbc Ind. Quim. LTDA",endereco:"Rua Batalha do Tuiuti 1730, Distrito Industrial D",cidade:"Salto",funcionarios:20,jornais:10},
+  {nome:"Amtech Plasticos Industrial LTDA EPP",endereco:"Rua Batalha do Tuiuti, 1275 KM SP 75, Distrito Industrial D",cidade:"Salto",funcionarios:0,jornais:10},
+  {nome:"Tebras Tensoativos do Brasil LTDA",endereco:"Rua Batalha do Tuiuti 1730 Bloco I, Distrito Industrial D",cidade:"Salto",funcionarios:0,jornais:10},
+  {nome:"Stepan Quimica LTDA",endereco:"Rua Batalha do Tuiuti 1730 Bloco II, Distrito Industrial D",cidade:"Salto",funcionarios:0,jornais:10},
+  {nome:"Maxfol Agroindustrial Limitada",endereco:"R Batalha de Itaparica 75, Lageado",cidade:"Salto",funcionarios:0,jornais:10},
+  {nome:"Setex Ind. Com. e Servicos Em Mat Plasticos LTDA EPP",endereco:"Rua Batalha de Itororo, 295, Distrito Industrial D",cidade:"Salto",funcionarios:10,jornais:10},
+  {nome:"Maila Cosmeticos S/A",endereco:"Av. Tranquilo Giannini, 1004, Distrito Industrial",cidade:"Salto",funcionarios:40,jornais:10},
+  {nome:"Real Plast Processos Industriais LTDA EPP",endereco:"Rua da Soja, 01, Chacara Halter",cidade:"Salto",funcionarios:0,jornais:10},
+  {nome:"Igaratiba Ind e Comercio LTDA - Filial",endereco:"Rua Olivia Guedes Penteado 1.271 Sala A, Socorro",cidade:"São Paulo",funcionarios:0,jornais:10},
+  {nome:"Aps do Brasil Participacoes LTDA",endereco:"Avenida Magalhaes de Castro 4800 Andar 23, Cidade Jardim",cidade:"São Paulo",funcionarios:0,jornais:10}
 ];
 
 
@@ -2198,6 +2648,296 @@ async function garantirCoordenadas(
   return true;
 
 }
+
+
+/* =========================================================
+   IMPORTAR LISTA DO SINDICATO
+   ========================================================= */
+
+
+importarLista.addEventListener(
+  "click",
+  async()=>{
+
+    if(!usuarioAtual || !ehAdmin){
+
+      alert(
+        "Somente o administrador pode importar a lista."
+      );
+
+      return;
+
+    }
+
+
+    try{
+
+      const flagRef =
+        doc(
+          db,
+          "configuracao",
+          "importacoes"
+        );
+
+
+      const flagResultado =
+        await getDoc(flagRef);
+
+
+      const jaImportou =
+        flagResultado.exists()
+        &&
+        flagResultado.data().sindicatoSetembro2026 === true;
+
+
+      const confirmar =
+        confirm(
+
+          (
+            jaImportou
+            ?
+            "⚠️ Esta lista já foi importada antes.\n\n" +
+            "Importar de novo vai duplicar as empresas.\n\n"
+            :
+            ""
+          ) +
+
+          "Importar " +
+          empresasParaImportar.length +
+          " empresas do sindicato?\n\n" +
+
+          "Isso vai cadastrar todas elas como pendentes, compartilhadas entre todos os usuários."
+
+        );
+
+
+      if(!confirmar)return;
+
+
+      /*
+        Garante que todas as cidades da lista
+        existam na lista compartilhada.
+      */
+
+      const cidadesRef =
+        doc(
+          db,
+          "configuracao",
+          "cidades"
+        );
+
+
+      const cidadesResultado =
+        await getDoc(cidadesRef);
+
+
+      let cidadesAtuais =
+        [...cidadesIniciais];
+
+
+      if(cidadesResultado.exists()){
+
+        const dadosCidades =
+          cidadesResultado.data();
+
+
+        if(
+          Array.isArray(dadosCidades.lista)
+          &&
+          dadosCidades.lista.length > 0
+        ){
+
+          cidadesAtuais =
+            [...dadosCidades.lista];
+
+        }
+
+      }
+
+
+      const cidadesNovas =
+        [
+          ...new Set(
+            empresasParaImportar.map(
+              empresa =>
+                empresa.cidade
+            )
+          )
+        ].filter(
+          nomeCidade =>
+            !cidadesAtuais.some(
+              existente =>
+                existente.toLowerCase()
+                ===
+                nomeCidade.toLowerCase()
+            )
+        );
+
+
+      if(cidadesNovas.length > 0){
+
+        cidadesAtuais =
+          [...cidadesAtuais, ...cidadesNovas];
+
+
+        await setDoc(
+          cidadesRef,
+          {
+            lista:cidadesAtuais
+          }
+        );
+
+      }
+
+
+      /*
+        Cadastra cada empresa da lista.
+      */
+
+      let importadas = 0;
+
+      let comErro = 0;
+
+
+      for(
+        let i = 0;
+        i < empresasParaImportar.length;
+        i++
+      ){
+
+        const empresa =
+          empresasParaImportar[i];
+
+
+        lista.innerHTML = `
+
+          <div class="progressoRota">
+
+            📥 Importando empresas...
+
+            <br><br>
+
+            ${i+1} de ${empresasParaImportar.length}
+
+            <br><br>
+
+            🏢 ${empresa.nome}
+
+          </div>
+
+        `;
+
+
+        try{
+
+          await addDoc(
+            collection(
+              db,
+              "empresas"
+            ),
+            {
+
+              nome:
+                empresa.nome,
+
+              endereco:
+                empresa.endereco,
+
+              cidade:
+                empresa.cidade,
+
+              funcionarios:
+                empresa.funcionarios,
+
+              jornais:
+                empresa.jornais,
+
+              entregue:
+                false,
+
+              obsoleta:
+                false,
+
+              uid:
+                usuarioAtual.uid,
+
+              criadoEm:
+                serverTimestamp()
+
+            }
+          );
+
+
+          importadas++;
+
+
+        }catch(erroEmpresa){
+
+          console.error(
+            "Erro ao importar empresa:",
+            empresa.nome,
+            erroEmpresa
+          );
+
+
+          comErro++;
+
+        }
+
+      }
+
+
+      await setDoc(
+        flagRef,
+        {
+          sindicatoSetembro2026:true
+        },
+        {
+          merge:true
+        }
+      );
+
+
+      await carregarCidades();
+
+
+      alert(
+
+        "📥 Importação concluída!\n\n" +
+
+        importadas +
+        " empresas cadastradas." +
+
+        (
+          comErro > 0
+          ?
+          "\n\n⚠️ " + comErro + " não puderam ser salvas."
+          :
+          ""
+        )
+
+      );
+
+
+    }catch(error){
+
+      console.error(
+        "Erro ao importar lista:",
+        error
+      );
+
+
+      alert(
+        "Erro ao importar a lista de empresas."
+      );
+
+
+      await mostrarEmpresas();
+
+    }
+
+  }
+);
 
 
 /* =========================================================
