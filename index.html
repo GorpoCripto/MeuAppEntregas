@@ -2180,6 +2180,35 @@ async function obterCoordenadas(
   cidadeNome
 ){
 
+  const partesEndereco =
+    endereco
+      .split(",")
+      .map(parte => parte.trim())
+      .filter(parte => parte.length > 0);
+
+
+  const enderecoSemNumero =
+    partesEndereco
+      .filter(
+        parte =>
+          !/^n?[ºo°.]?\s*\d+[\w\-\/]*$/i.test(parte)
+      )
+      .map(
+        parte =>
+          parte
+            .replace(/\s+n?[ºo°.]?\s*\d+[\w\-\/]*$/i, "")
+            .trim()
+      )
+      .filter(parte => parte.length > 0)
+      .join(", ");
+
+
+  const ultimaParte =
+    partesEndereco.length > 1
+      ? partesEndereco[partesEndereco.length - 1]
+      : "";
+
+
   const consultas = [
 
     endereco +
@@ -2198,6 +2227,49 @@ async function obterCoordenadas(
       ", São Paulo, Brasil"
 
   ];
+
+
+  /*
+    Buscas mais "soltas" para quando o endereço
+    exato não está no OpenStreetMap: sem o número,
+    só o bairro/distrito, e por último só a cidade
+    (isso garante uma posição aproximada em vez de
+    deixar a empresa sem nenhuma coordenada).
+  */
+
+  if(
+    enderecoSemNumero &&
+    enderecoSemNumero !== endereco
+  ){
+
+    consultas.push(
+      enderecoSemNumero +
+        ", " +
+        cidadeNome +
+        ", São Paulo, Brasil"
+    );
+
+  }
+
+
+  if(
+    ultimaParte
+  ){
+
+    consultas.push(
+      ultimaParte +
+        ", " +
+        cidadeNome +
+        ", São Paulo, Brasil"
+    );
+
+  }
+
+
+  consultas.push(
+    cidadeNome +
+      ", São Paulo, Brasil"
+  );
 
 
   for(
@@ -2263,6 +2335,9 @@ async function obterCoordenadas(
       );
 
     }
+
+
+    await esperar(350);
 
   }
 
@@ -2494,6 +2569,9 @@ async function garantirCoordenadas(
   `;
 
 
+  const semSucesso = [];
+
+
   for(
     let i = 0;
     i < semCoordenadas.length;
@@ -2536,24 +2614,19 @@ async function garantirCoordenadas(
         !coordenadas
       ){
 
-        alert(
-
-          "Não foi possível localizar:\n\n" +
-
-          empresa.nome +
-
-          "\n" +
-
-          empresa.endereco +
-
-          "\n\n" +
-
-          "Verifique o endereço e tente novamente."
-
+        console.warn(
+          "Endereço não localizado (pulando por enquanto):",
+          empresa.nome,
+          empresa.endereco
         );
 
 
-        return false;
+        semSucesso.push(
+          empresa
+        );
+
+
+        continue;
 
       }
 
@@ -2615,20 +2688,9 @@ async function garantirCoordenadas(
       );
 
 
-      alert(
-
-        "Não foi possível localizar:\n\n" +
-
-        empresa.nome +
-
-        "\n\n" +
-
-        "Verifique o endereço e tente novamente."
-
+      semSucesso.push(
+        empresa
       );
-
-
-      return false;
 
     }
 
@@ -2641,6 +2703,60 @@ async function garantirCoordenadas(
       await esperar(1100);
 
     }
+
+  }
+
+
+  /*
+    Remove da lista original as empresas que não
+    puderam ser localizadas, para não travar o
+    cálculo da próxima entrega. Elas continuam
+    salvas normalmente, só ficam de fora do
+    cálculo de rota até o endereço ser corrigido.
+  */
+
+  if(
+    semSucesso.length > 0
+  ){
+
+    for(
+      let j = empresas.length - 1;
+      j >= 0;
+      j--
+    ){
+
+      if(
+        semSucesso.includes(
+          empresas[j]
+        )
+      ){
+
+        empresas.splice(
+          j,
+          1
+        );
+
+      }
+
+    }
+
+
+    alert(
+
+      "⚠️ " +
+      semSucesso.length +
+      " empresa(s) não puderam ser localizadas e foram puladas por enquanto:\n\n" +
+
+      semSucesso
+        .map(
+          empresa =>
+            "• " + empresa.nome
+        )
+        .join("\n") +
+
+      "\n\nVocê pode corrigir o endereço delas editando cada uma (Editar). Enquanto isso, elas não entram no cálculo de 'Próxima entrega'."
+
+    );
 
   }
 
@@ -4413,6 +4529,21 @@ btnProximaEntrega.addEventListener(
       if(
         !coordenadasOK
       ){
+
+        await mostrarEmpresas();
+
+        return;
+
+      }
+
+
+      if(
+        pendentes.length === 0
+      ){
+
+        alert(
+          "Nenhuma das empresas pendentes desta cidade pôde ser localizada no mapa. Corrija os endereços (Editar) e tente novamente."
+        );
 
         await mostrarEmpresas();
 
