@@ -4784,10 +4784,31 @@ const distancia =
             font-size:17px;
             font-weight:bold;
             cursor:pointer;
+            width:100%;
+            margin-bottom:10px;
           "
         >
 
           🗺️ Abrir rota no Google Maps
+
+        </button>
+
+        <button
+          id="marcarEntregueProxima"
+          style="
+            background:#16a34a;
+            color:white;
+            border:none;
+            padding:14px 20px;
+            border-radius:10px;
+            font-size:17px;
+            font-weight:bold;
+            cursor:pointer;
+            width:100%;
+          "
+        >
+
+          ✅ Marcar como entregue
 
         </button>
 
@@ -4807,6 +4828,33 @@ const distancia =
           window.open(
             url,
             "_blank"
+          );
+
+        }
+      );
+
+
+      const botaoEntregueProxima =
+        document.getElementById(
+          "marcarEntregueProxima"
+        );
+
+
+      botaoEntregueProxima.addEventListener(
+        "click",
+        async()=>{
+
+          botaoEntregueProxima.disabled =
+            true;
+
+
+          botaoEntregueProxima.textContent =
+            "Registrando...";
+
+
+          await alterarEntrega(
+            proxima.id,
+            true
           );
 
         }
