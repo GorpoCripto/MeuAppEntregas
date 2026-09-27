@@ -479,6 +479,10 @@ button:disabled{
           + Cidade
         </button>
 
+        <button id="excluirCidade" class="soAdmin" style="background:#dc2626;">
+          🗑️ Excluir
+        </button>
+
       </div>
 
     </div>
@@ -763,6 +767,10 @@ const importarLista =
 
 const adicionarCidade =
   document.getElementById("adicionarCidade");
+
+
+const excluirCidade =
+  document.getElementById("excluirCidade");
 
 
 const btnPendentes =
@@ -1640,6 +1648,207 @@ adicionarCidade.addEventListener(
 
       alert(
         "Não foi possível salvar a nova cidade."
+      );
+
+    }
+
+  }
+);
+
+
+/* =========================================================
+   EXCLUIR CIDADE
+   ========================================================= */
+
+
+excluirCidade.addEventListener(
+  "click",
+  async()=>{
+
+    if(!usuarioAtual){
+
+      alert(
+        "Você precisa entrar primeiro."
+      );
+
+      return;
+
+    }
+
+
+    if(!ehAdmin){
+
+      alert(
+        "Somente o administrador pode excluir cidades."
+      );
+
+      return;
+
+    }
+
+
+    const nomeCidadeAtual =
+      cidade.value;
+
+
+    if(!nomeCidadeAtual){
+
+      alert(
+        "Nenhuma cidade selecionada."
+      );
+
+      return;
+
+    }
+
+
+    try{
+
+      const cidadesRef =
+        doc(
+          db,
+          "configuracao",
+          "cidades"
+        );
+
+
+      const resultado =
+        await getDoc(cidadesRef);
+
+
+      let cidades =
+        [...cidadesIniciais];
+
+
+      if(resultado.exists()){
+
+        const dados =
+          resultado.data();
+
+
+        if(
+          Array.isArray(dados.lista)
+          &&
+          dados.lista.length > 0
+        ){
+
+          cidades =
+            [...dados.lista];
+
+        }
+
+      }
+
+
+      if(cidades.length <= 1){
+
+        alert(
+          "Não é possível excluir a única cidade cadastrada."
+        );
+
+        return;
+
+      }
+
+
+      /*
+        Conta quantas empresas ainda estão
+        cadastradas nessa cidade, para avisar
+        o administrador antes de excluir.
+      */
+
+      const todasEmpresas =
+        await getDocs(
+          collection(
+            db,
+            "empresas"
+          )
+        );
+
+
+      let quantidadeEmpresas = 0;
+
+
+      todasEmpresas.forEach(
+        documento=>{
+
+          const dados =
+            documento.data();
+
+
+          if(
+            dados.cidade ===
+            nomeCidadeAtual
+          ){
+
+            quantidadeEmpresas++;
+
+          }
+
+        }
+      );
+
+
+      let mensagemConfirmacao =
+        "Excluir a cidade \"" +
+        nomeCidadeAtual +
+        "\"?";
+
+
+      if(quantidadeEmpresas > 0){
+
+        mensagemConfirmacao =
+
+          "⚠️ Essa cidade tem " +
+          quantidadeEmpresas +
+          " empresa(s) cadastradas.\n\n" +
+
+          "Elas não serão apagadas, mas você não vai mais conseguir vê-las nem gerenciá-las até adicionar \"" +
+          nomeCidadeAtual +
+          "\" novamente.\n\n" +
+
+          "Deseja excluir mesmo assim?";
+
+      }
+
+
+      if(
+        !confirm(mensagemConfirmacao)
+      ){
+
+        return;
+
+      }
+
+
+      const novaLista =
+        cidades.filter(
+          item =>
+            item !== nomeCidadeAtual
+        );
+
+
+      await setDoc(
+        cidadesRef,
+        {
+          lista:novaLista
+        }
+      );
+
+
+      await carregarCidades();
+
+
+    }catch(error){
+
+      console.error(
+        "Erro ao excluir cidade:",
+        error
+      );
+
+
+      alert(
+        "Não foi possível excluir a cidade."
       );
 
     }
